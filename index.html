@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/wr-portfolio/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    #loading-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #0d0d0d; z-index: 999999;
+      display: flex; align-items: center; justify-content: center;
+      cursor: auto;
+    }
+    #loading-inner {
+      position: relative; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    #loading-ring {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%); pointer-events: none;
+    }
+    #loading-logo {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 1.5rem; font-weight: 500;
+      color: #B7AB98; letter-spacing: 3px;
+      margin-bottom: 80px;
+    }
+    #loading-percent {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.75rem; color: rgba(183,171,152,0.5);
+      letter-spacing: 2px; margin-bottom: 24px;
+    }
+    #loading-start {
+      background: transparent; border: 1px solid rgba(183,171,152,0.3);
+      color: #B7AB98; padding: 12px 40px; border-radius: 4px;
+      font-size: 0.8rem; font-family: "JetBrains Mono", monospace;
+      letter-spacing: 3px; cursor: pointer; text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    #loading-start:hover {
+      background: rgba(183,171,152,0.1); border-color: #B7AB98;
+    }
+      #custom-cursor, #custom-cursor-follower {
+      pointer-events: none; position: fixed; z-index: 9999999;
+      transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s, opacity 0.3s;
+    }
+    #custom-cursor {
+      width: 8px; height: 8px; background: #B7AB98;
+      border-radius: 50%; mix-blend-mode: difference;
+    }
+    #custom-cursor-follower {
+      width: 40px; height: 40px; border: 1px solid rgba(183,171,152,0.3);
+      border-radius: 50%;
+    }
+    #custom-cursor.hover, #custom-cursor-follower.hover {
+      opacity: 1 !important;
+    }
+    #custom-cursor.hover {
+      width: 12px; height: 12px;
+    }
+    #custom-cursor-follower.hover {
+      width: 56px; height: 56px;
+      border-color: #B7AB98; background: rgba(183,171,152,0.06);
+    }
+    @media (hover: none) and (pointer: coarse) {
+      #custom-cursor, #custom-cursor-follower { display: none; }
+    }
+  body { cursor: none; }
+</style>
+  <script type="module" crossorigin src="/wr-portfolio/assets/index-CahjmhA9.js"></script>
+  <link rel="stylesheet" crossorigin href="/wr-portfolio/assets/index-DK6mjR2v.css">
+</head>
+  <body>
+        <div id="custom-cursor"></div>
+  <div id="custom-cursor-follower"></div>
+
+<div id="loading-screen">
+    <div id="loading-inner">
+      <svg width="270" height="270" viewBox="0 0 270 270" fill="none" id="loading-ring">
+        <circle cx="135" cy="135" r="132" stroke="rgba(183,171,152,0.1)" stroke-width="1" />
+        <circle id="loading-circle" cx="135" cy="135" r="132" stroke="#B7AB98" stroke-width="1" stroke-linecap="round" fill="none" />
+      </svg>
+      <div id="loading-logo">WR</div>
+      <span id="loading-percent">0%</span>
+      <button id="loading-start" style="display:none">Start</button>
+    </div>
+  </div>
+
+  <div id="root" style="opacity:0"></div>
+    <script>
+    (function() {
+      var circle = document.getElementById("loading-circle");
+      var percent = document.getElementById("loading-percent");
+      var startBtn = document.getElementById("loading-start");
+      var screen = document.getElementById("loading-screen");
+      var root = document.getElementById("root");
+      var c = 2 * Math.PI * 132;
+      circle.style.strokeDasharray = c;
+      circle.style.strokeDashoffset = c;
+      circle.style.transform = "rotate(-90deg)";
+      circle.style.transformOrigin = "center";
+      circle.style.transition = "stroke-dashoffset 0.1s linear";
+      var p = 0;
+      var timer = setInterval(function() {
+        p = Math.min(p + 5, 100);
+        percent.textContent = p + "%";
+        circle.style.strokeDashoffset = c - (p / 100) * c;
+        if (p >= 100) { clearInterval(timer); startBtn.style.display = ""; }
+      }, 100);
+      startBtn.addEventListener("click", function() {
+        screen.style.opacity = "0";
+        screen.style.transition = "opacity 0.8s ease";
+        setTimeout(function() {
+          screen.style.display = "none";
+          root.style.opacity = "1";
+          root.style.transition = "opacity 0.8s ease";
+        }, 800);
+      });
+    })();
+      // Custom cursor
+      var cursorEl = document.getElementById("custom-cursor");
+      var followerEl = document.getElementById("custom-cursor-follower");
+      var mx = window.innerWidth / 2, my = window.innerHeight / 2;
+      var cx = mx, cy = my, fx = mx, fy = my;
+      document.addEventListener("mousemove", function(e) {
+        mx = e.clientX; my = e.clientY;
+        var t = e.target.closest("a,button,.project-card,.strength-card,.contact-method,.lang-toggle,.nav-cta");
+        if (t) { cursorEl.classList.add("hover"); followerEl.classList.add("hover"); }
+        else { cursorEl.classList.remove("hover"); followerEl.classList.remove("hover"); }
+      });
+      document.addEventListener("mouseleave", function() {
+        cursorEl.style.opacity = "0"; followerEl.style.opacity = "0";
+      });
+      document.addEventListener("mouseenter", function() {
+        cursorEl.style.opacity = "1"; followerEl.style.opacity = "1";
+      });
+      function animCursor() {
+        cx += (mx - cx) * 0.2; cy += (my - cy) * 0.2;
+        fx += (mx - fx) * 0.08; fy += (my - fy) * 0.08;
+        cursorEl.style.transform = "translate(" + (cx - 4) + "px," + (cy - 4) + "px)";
+        followerEl.style.transform = "translate(" + (fx - 20) + "px," + (fy - 20) + "px)";
+        requestAnimationFrame(animCursor);
+      }
+      animCursor();
+  </script>
+</body>
+</html>
