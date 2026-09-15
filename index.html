@@ -49,11 +49,11 @@
       transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s, opacity 0.3s;
     }
     #custom-cursor {
-      width: 8px; height: 8px; background: #B7AB98;
+      width: 8px; height: 8px; background: #EDE5D8; box-shadow: 0 0 14px rgba(237, 229, 216, 0.6);
       border-radius: 50%; mix-blend-mode: difference;
     }
     #custom-cursor-follower {
-      width: 40px; height: 40px; border: 1px solid rgba(183,171,152,0.3);
+      width: 40px; height: 40px; border: 1px solid rgba(214, 202, 182, 0.55);
       border-radius: 50%;
     }
     #custom-cursor.hover, #custom-cursor-follower.hover {
@@ -69,16 +69,42 @@
     @media (hover: none) and (pointer: coarse) {
       #custom-cursor, #custom-cursor-follower { display: none; }
     }
+    #loading-rays {
+      position: absolute; inset: 0; pointer-events: none;
+      background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(183,171,152,0.08) 0deg 0.6deg, transparent 0.6deg 9deg);
+      -webkit-mask: radial-gradient(circle at 50% 50%, #000 0%, transparent 60%);
+      mask: radial-gradient(circle at 50% 50%, #000 0%, transparent 60%);
+      animation: loadingSpin 90s linear infinite;
+    }
+    #loading-glow {
+      position: absolute; top: 50%; left: 50%; width: 540px; height: 540px;
+      transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
+      background: radial-gradient(circle, rgba(183,171,152,0.10) 0%, transparent 60%);
+    }
+    #loading-orbit {
+      position: absolute; top: 50%; left: 50%; width: 312px; height: 312px;
+      margin: -156px 0 0 -156px; border-radius: 50%; pointer-events: none;
+      border: 1px dashed rgba(183,171,152,0.16);
+      animation: loadingSpin 46s linear infinite reverse;
+    }
+    @keyframes loadingSpin { to { transform: rotate(360deg); } }
+    #loading-inner { z-index: 1; }
+    #loading-ring { filter: drop-shadow(0 0 6px rgba(183,171,152,0.25)); }
+    #loading-logo { animation: logoBreath 3.2s ease-in-out infinite; }
+    @keyframes logoBreath { 0%,100% { opacity: .8; } 50% { opacity: 1; } }
   body { cursor: none; }
 </style>
-  <script type="module" crossorigin src="/wr-portfolio/assets/index-3iNlv8-d.js"></script>
-  <link rel="stylesheet" crossorigin href="/wr-portfolio/assets/index-d-xtcKgt.css">
+  <script type="module" crossorigin src="/wr-portfolio/assets/index-DzPlgL9z.js"></script>
+  <link rel="stylesheet" crossorigin href="/wr-portfolio/assets/index-DPBSMkk2.css">
 </head>
   <body>
         <div id="custom-cursor"></div>
   <div id="custom-cursor-follower"></div>
 
 <div id="loading-screen">
+  <div id="loading-rays"></div>
+  <div id="loading-glow"></div>
+  <div id="loading-orbit"></div>
     <div id="loading-inner">
       <svg width="270" height="270" viewBox="0 0 270 270" fill="none" id="loading-ring">
         <circle cx="135" cy="135" r="132" stroke="rgba(183,171,152,0.1)" stroke-width="1" />
