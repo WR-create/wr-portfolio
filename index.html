@@ -5,9 +5,10 @@
     <link rel="icon" type="image/svg+xml" href="/wr-portfolio/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- 20260922 perf: self-hosted fonts, no third-party render-blocking request -->
+    <link rel="stylesheet" href="/wr-portfolio/fonts/fonts.css" />
+    <link rel="preload" href="/wr-portfolio/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/wr-portfolio/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
   <style>
     #loading-screen {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -94,8 +95,8 @@
     @keyframes logoBreath { 0%,100% { opacity: .8; } 50% { opacity: 1; } }
   body { cursor: none; }
 </style>
-  <script type="module" crossorigin src="/wr-portfolio/assets/index-DDFdkytB.js"></script>
-  <link rel="stylesheet" crossorigin href="/wr-portfolio/assets/index-BTQ5EkHG.css">
+  <script type="module" crossorigin src="/wr-portfolio/assets/index-Bvy0RBNJ.js"></script>
+  <link rel="stylesheet" crossorigin href="/wr-portfolio/assets/index-XOUAaFjI.css">
 </head>
   <body>
         <div id="custom-cursor"></div>
