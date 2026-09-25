@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>设计转译 · 两条车道与三条规则 | 王然</title>
+<meta name="description" content="同一份设计，按听众换讲法：专业听众走证据链，业主走价值。">
+<link rel="canonical" href="https://wr-create.github.io/wr-portfolio/translation/">
+<style>(function(){try{var t=localStorage.getItem("wr-theme");if(t!=="light"){t="dark"}document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</style>
+<style>
+:root,[data-theme="dark"]{--bg:#0d0d0d;--panel:#111111;--headbg:#0d0d0d;--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.16);--ink:#ffffff;--ink2:#cccccc;--ink3:#8a8a8a;--ink4:#666666;--accent:#B7AB98;--accentline:rgba(183,171,152,.45);--dim:rgba(183,171,152,.12);color-scheme:dark}
+[data-theme="light"]{--bg:#f2f3f5;--panel:#e9eaec;--headbg:#f2f3f5;--line:rgba(20,23,26,.12);--line2:rgba(20,23,26,.2);--ink:#14171a;--ink2:#23272b;--ink3:#4e5359;--ink4:#6b7076;--accent:#7d6a45;--accentline:rgba(125,106,69,.45);--dim:rgba(125,106,69,.13);color-scheme:light}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink2);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;font-weight:300;line-height:1.85;-webkit-text-size-adjust:100%}
+.mono{font-family:'JetBrains Mono',Consolas,'PingFang SC','Microsoft YaHei',monospace}
+.wrap{max-width:820px;margin:0 auto;padding:0 22px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.top{position:sticky;top:0;background:var(--headbg);border-bottom:1px solid var(--line);padding:13px 0}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.back{font-size:.76rem;letter-spacing:.5px;min-height:44px;display:inline-flex;align-items:center}
+.brand{font-family:'JetBrains Mono',Consolas,monospace;font-size:.78rem;letter-spacing:3px;color:var(--ink)}
+.hero{padding:52px 0 28px;border-bottom:1px solid var(--line)}
+.kicker{font-family:'JetBrains Mono',Consolas,monospace;font-size:.66rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:16px}
+h1{font-size:clamp(1.6rem,4.4vw,2.4rem);font-weight:200;color:var(--ink);letter-spacing:-.01em;line-height:1.32;margin-bottom:14px}
+.sub{font-size:.94rem;color:var(--ink3);max-width:680px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.toc a{font-family:'JetBrains Mono',Consolas,monospace;font-size:.66rem;letter-spacing:.5px;padding:9px 14px;border:1px solid var(--line2);border-radius:999px;color:var(--ink3);min-height:44px;display:inline-flex;align-items:center}
+.cap-block{padding:38px 0;border-bottom:1px solid var(--line);scroll-margin-top:76px}
+.cap-block:target{background:var(--dim)}
+h2{font-size:clamp(1.12rem,2.8vw,1.36rem);font-weight:400;color:var(--ink);line-height:1.5;margin-bottom:6px}
+.lead{font-size:.94rem;color:var(--ink2);margin-bottom:12px}
+.tag{display:inline-block;font-family:'JetBrains Mono',Consolas,monospace;font-size:.62rem;letter-spacing:.5px;padding:4px 10px;border:1px solid var(--line2);border-radius:999px;color:var(--ink3);margin:0 6px 8px 0}
+.tag--t{color:var(--accent);border-color:var(--accentline);background:var(--dim)}
+.ev{padding:20px 0;border-top:1px dashed var(--line)}
+.ev:first-of-type{border-top:0}
+.ev-h{font-family:'JetBrains Mono',Consolas,monospace;font-size:.68rem;letter-spacing:.5px;color:var(--accent);margin-bottom:8px}
+.ev-grid{display:grid;grid-template-columns:74px 1fr;gap:3px 14px}
+.ev-grid dt{font-family:'JetBrains Mono',Consolas,monospace;font-size:.62rem;letter-spacing:.5px;color:var(--ink4);padding-top:6px}
+.ev-grid dd{font-size:.87rem;color:var(--ink2)}
+.note{margin-top:12px;padding-left:13px;border-left:2px solid var(--accentline);font-size:.79rem;color:var(--ink4);line-height:1.8}
+.jump{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:20px;padding:11px 22px;font-family:'JetBrains Mono',Consolas,monospace;font-size:.7rem;letter-spacing:1.5px;color:var(--bg);background:var(--accent);border-radius:2px}
+.jump:hover{text-decoration:none;opacity:.9}
+footer{padding:40px 0 72px;color:var(--ink4);font-size:.82rem}
+footer a{color:var(--accent)}
+@media (max-width:560px){.ev-grid{grid-template-columns:1fr}.ev-grid dt{padding-top:12px}}
+</style>
+</head>
+<body>
+<nav class="top"><div class="wrap"><a class="back" href="../index.html">← 返回主站</a><span class="brand mono">TRANSLATION</span></div></nav>
+<style>
+.lane{padding:38px 0;border-bottom:1px solid var(--line)}
+.lane-h{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.status{font-family:'JetBrains Mono',Consolas,monospace;font-size:.64rem;letter-spacing:.5px;padding:5px 12px;border-radius:999px;border:1px solid var(--line2);color:var(--ink3)}
+.status--done{color:var(--accent);border-color:var(--accentline)}
+.status--wip{border-style:dashed}
+dl.q{margin:14px 0 0}
+dl.q>div{padding:12px 0;border-top:1px dashed var(--line)}
+dl.q>div:first-child{border-top:0}
+dl.q dt{font-family:'JetBrains Mono',Consolas,monospace;font-size:.62rem;letter-spacing:.5px;color:var(--ink4);margin-bottom:3px}
+dl.q dd{font-size:.88rem;color:var(--ink2)}
+ol.path{list-style:none;margin-top:16px;border-top:1px solid var(--line)}
+ol.path li{display:grid;grid-template-columns:34px 74px 1fr;gap:3px 12px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line)}
+ol.path .no{font-family:'JetBrains Mono',Consolas,monospace;font-size:.62rem;color:var(--ink4)}
+ol.path .pg{font-family:'JetBrains Mono',Consolas,monospace;font-size:.68rem;color:var(--accent)}
+ol.path .st{font-size:.92rem;color:var(--ink)}
+ol.path .dt{grid-column:2/-1;font-size:.8rem;color:var(--ink3)}
+.payoff{margin-top:16px;padding-left:13px;border-left:2px solid var(--accentline);font-size:.85rem;color:var(--ink2)}
+.rules{padding:38px 0}
+.rule{padding:20px 0;border-top:1px dashed var(--line)}
+.rule p{font-size:.87rem;color:var(--ink2);margin-top:4px}
+.rule .pr{font-size:.79rem;color:var(--ink4);margin-top:6px}
+@media (max-width:560px){ol.path li{grid-template-columns:30px 66px 1fr}}
+</style>
+<header class="hero"><div class="wrap">
+<div class="kicker">05 / TRANSLATION · 完整讲法</div>
+<h1>同一份设计，我按听众换讲法。</h1>
+<p class="sub">设计做得再准，讲不清就等于没做。我给每个项目准备两条读法：对专业听众讲证据链与方法，对业主讲价值与体验。下面两条车道用的是同一批项目，只是入口不同。</p>
+</div></header>
+<main class="wrap">
+
+<section class="lane" id="professional">
+<div class="lane-h"><h2>车道 A · 评审 / 同行 / 技术负责人</h2><span class="status status--done">已成册</span></div>
+<dl class="q">
+<div><dt>他们要先确认</dt><dd>判断依据在哪，方法能不能迁移。</dd></div>
+<div><dt>我的讲法</dt><dd>按证据链讲——从业主给的原始资料，一路推到能量出来的空间动作，每一步都能翻回上一页复核。</dd></div>
+<div><dt>用哪个项目</dt><dd>适老化住宅改造《勿忘我》｜全国适老化设计竞赛 · 铜奖｜16 页册。<a href="../deck/wuwangwo/index.html">打开 16 页阅读版（手机直接看，不用下载）↗</a></dd></div>
+</dl>
+<ol class="path">
+<li><span class="no">01</span><span class="pg">P2–P3</span><span class="st">项目与用户</span><span class="dt">竞赛档案 + 一份功能量表、两种生活状态</span></li>
+<li><span class="no">02</span><span class="pg">P4–P6</span><span class="st">需求推导</span><span class="dt">24 小时动线 → 九处空间问题 → 七空间需求矩阵</span></li>
+<li><span class="no">03</span><span class="pg">P7–P15</span><span class="st">概念与方案</span><span class="dt">三条策略、记忆宫殿、可量尺寸、辅具选型、三张展板</span></li>
+<li><span class="no">04</span><span class="pg">P16</span><span class="st">复盘</span><span class="dt">做对的、不足的、带走的</span></li>
+</ol>
+<p class="payoff">读完能回答：这个方案为什么必须是这样，换一块场地还成不成立。</p>
+</section>
+
+<section class="lane" id="client">
+<div class="lane-h"><h2>车道 B · 业主 / 甲方 / 不学建筑的人</h2><span class="status status--wip">进行中</span></div>
+<dl class="q">
+<div><dt>他们要先确认</dt><dd>这栋楼对我有什么用，我能不能看懂。</dd></div>
+<div><dt>我的讲法</dt><dd>按价值讲——用业主自己的问题开场，先给三个记得住的回答，再让图和空间自己说话，术语留在附录。</dd></div>
+<div><dt>用哪个项目</dt><dd>高层综合体设计｜课程项目｜14 页展板。业主版重排进行中，完成后在此上线（现在不给假链接）。</dd></div>
+</dl>
+<ol class="path">
+<li><span class="no">01</span><span class="pg">P02</span><span class="st">一个问题</span><span class="dt">开场就是业主原话：「高层办公建筑的价值？」</span></li>
+<li><span class="no">02</span><span class="pg">P03</span><span class="st">三个回答</span><span class="dt">企业形象 / 办公效率 / 长期价值，收口一句「我的方案正是围绕这三点展开」</span></li>
+<li><span class="no">03</span><span class="pg">P05</span><span class="st">看得见的证据</span><span class="dt">北立面 + 东南立面并置，把「价值」落到看得见的立面上</span></li>
+<li><span class="no">04</span><span class="pg">P13</span><span class="st">只留必要的附录</span><span class="dt">风热环境单页，标注「团队专题」，写清哪部分是团队协作</span></li>
+</ol>
+<p class="payoff">读完能回答：这栋楼对我值不值，以及其中哪些是我做的。</p>
+</section>
+
+<section class="rules" id="rules">
+<h2>三条翻译规则（两条车道共用）</h2>
+<div class="rule"><h3>01 标题就是结论</h3><p>页面标题写成完整判断句，不写标签。翻到任何一页，看第一行就知道这页在论证什么。</p><p class="pr">例：「九处空间问题：每一处都对应一个身体动作」「平面与尺寸：每个数字都能量出来」</p></div>
+<div class="rule"><h3>02 每个数字都有出处</h3><p>图和表旁边跟一行来源注，专业听众要复核时不用先来问我。</p><p class="pr">例：「主办方原始平面提供」「无障碍人体尺度规范」「2023 年辅具选择资料」</p></div>
+<div class="rule"><h3>03 专业词换回生活词</h3><p>概念页的名字本身就是「把认知干预翻译成空间语言」；对业主则直接用他的原话提问开场。</p><p class="pr">例：策略写「记忆站」、概念写「记忆宫殿」，而不是只丢一个术语</p></div>
+<p style="margin-top:24px"><a class="jump" href="../index.html#translation">← 回到首页讲法入口</a></p>
+</section>
+</main>
+<footer><div class="wrap">
+<div>王然 · 建筑学本科（2022–2027）· 上海 / 大连</div>
+<div><a href="mailto:wr13331517846@qq.com">wr13331517846@qq.com</a> ｜ <a href="tel:13331517846">133 3151 7846</a></div>
+<div style="margin-top:14px"><a href="../index.html">← 返回主站</a> ｜ <a href="../capabilities/index.html">能力清单 · 完整举证 →</a></div>
+</div></footer>
+</body></html>

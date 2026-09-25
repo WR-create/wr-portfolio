@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>能力清单 · 完整举证 | 王然</title>
+<meta name="description" content="每条能力的背景、我做了什么、结果与可核对出处。">
+<link rel="canonical" href="https://wr-create.github.io/wr-portfolio/capabilities/">
+<style>(function(){try{var t=localStorage.getItem("wr-theme");if(t!=="light"){t="dark"}document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</style>
+<style>
+:root,[data-theme="dark"]{--bg:#0d0d0d;--panel:#111111;--headbg:#0d0d0d;--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.16);--ink:#ffffff;--ink2:#cccccc;--ink3:#8a8a8a;--ink4:#666666;--accent:#B7AB98;--accentline:rgba(183,171,152,.45);--dim:rgba(183,171,152,.12);color-scheme:dark}
+[data-theme="light"]{--bg:#f2f3f5;--panel:#e9eaec;--headbg:#f2f3f5;--line:rgba(20,23,26,.12);--line2:rgba(20,23,26,.2);--ink:#14171a;--ink2:#23272b;--ink3:#4e5359;--ink4:#6b7076;--accent:#7d6a45;--accentline:rgba(125,106,69,.45);--dim:rgba(125,106,69,.13);color-scheme:light}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink2);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;font-weight:300;line-height:1.85;-webkit-text-size-adjust:100%}
+.mono{font-family:'JetBrains Mono',Consolas,'PingFang SC','Microsoft YaHei',monospace}
+.wrap{max-width:820px;margin:0 auto;padding:0 22px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.top{position:sticky;top:0;background:var(--headbg);border-bottom:1px solid var(--line);padding:13px 0}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.back{font-size:.76rem;letter-spacing:.5px;min-height:44px;display:inline-flex;align-items:center}
+.brand{font-family:'JetBrains Mono',Consolas,monospace;font-size:.78rem;letter-spacing:3px;color:var(--ink)}
+.hero{padding:52px 0 28px;border-bottom:1px solid var(--line)}
+.kicker{font-family:'JetBrains Mono',Consolas,monospace;font-size:.66rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:16px}
+h1{font-size:clamp(1.6rem,4.4vw,2.4rem);font-weight:200;color:var(--ink);letter-spacing:-.01em;line-height:1.32;margin-bottom:14px}
+.sub{font-size:.94rem;color:var(--ink3);max-width:680px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.toc a{font-family:'JetBrains Mono',Consolas,monospace;font-size:.66rem;letter-spacing:.5px;padding:9px 14px;border:1px solid var(--line2);border-radius:999px;color:var(--ink3);min-height:44px;display:inline-flex;align-items:center}
+.cap-block{padding:38px 0;border-bottom:1px solid var(--line);scroll-margin-top:76px}
+.cap-block:target{background:var(--dim)}
+h2{font-size:clamp(1.12rem,2.8vw,1.36rem);font-weight:400;color:var(--ink);line-height:1.5;margin-bottom:6px}
+.lead{font-size:.94rem;color:var(--ink2);margin-bottom:12px}
+.tag{display:inline-block;font-family:'JetBrains Mono',Consolas,monospace;font-size:.62rem;letter-spacing:.5px;padding:4px 10px;border:1px solid var(--line2);border-radius:999px;color:var(--ink3);margin:0 6px 8px 0}
+.tag--t{color:var(--accent);border-color:var(--accentline);background:var(--dim)}
+.ev{padding:20px 0;border-top:1px dashed var(--line)}
+.ev:first-of-type{border-top:0}
+.ev-h{font-family:'JetBrains Mono',Consolas,monospace;font-size:.68rem;letter-spacing:.5px;color:var(--accent);margin-bottom:8px}
+.ev-grid{display:grid;grid-template-columns:74px 1fr;gap:3px 14px}
+.ev-grid dt{font-family:'JetBrains Mono',Consolas,monospace;font-size:.62rem;letter-spacing:.5px;color:var(--ink4);padding-top:6px}
+.ev-grid dd{font-size:.87rem;color:var(--ink2)}
+.note{margin-top:12px;padding-left:13px;border-left:2px solid var(--accentline);font-size:.79rem;color:var(--ink4);line-height:1.8}
+.jump{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:20px;padding:11px 22px;font-family:'JetBrains Mono',Consolas,monospace;font-size:.7rem;letter-spacing:1.5px;color:var(--bg);background:var(--accent);border-radius:2px}
+.jump:hover{text-decoration:none;opacity:.9}
+footer{padding:40px 0 72px;color:var(--ink4);font-size:.82rem}
+footer a{color:var(--accent)}
+@media (max-width:560px){.ev-grid{grid-template-columns:1fr}.ev-grid dt{padding-top:12px}}
+</style>
+</head>
+<body>
+<nav class="top"><div class="wrap"><a class="back" href="../index.html">← 返回主站</a><span class="brand mono">CAPABILITIES</span></div></nav>
+<header class="hero"><div class="wrap">
+<div class="kicker">04 / CAPABILITIES · 完整举证</div>
+<h1>每条都做过，每条都能查。</h1>
+<p class="sub">王然 · 大连理工大学建筑学本科（2022–2027）· 全国适老化设计竞赛铜奖 · 上海设计院实习。这一页放的是首页那六行字背后的完整证据：背景 → 我做了什么 → 结果 → 出处。</p>
+<div class="toc">
+<a href="#format-planning">业态配比与动线规划</a>
+<a href="#market-research">AI 辅助市场调研</a>
+<a href="#spatial-data">商圈空间数据分析</a>
+</div>
+</div></header>
+<main class="wrap">
+<section class="cap-block" id="format-planning">
+<h2>业态配比与动线规划</h2>
+<p class="lead">把空间判断算成经营逻辑。</p>
+<p><span class="tag tag--t">商业运营</span><span class="tag tag--t">设计管理</span><span class="tag">竞赛铜奖</span><span class="tag">设计院实习</span><span class="tag">课程项目</span></p>
+<div class="ev"><div class="ev-h">高层综合体设计 · 课程项目（14 页展板）</div>
+<dl class="ev-grid"><dt>背景</dt><dd>垂直城市与混合业态课题：同一栋楼里要同时安排办公、商业与配套，容积率有限。</dd>
+<dt>我做了什么</dt><dd>按「客群 → 功能 → 面积 → 动线」链条推导混合业态配比与垂直分区，体块组织与立面韵律随分区确定。</dd>
+<dt>结果</dt><dd>形成 14 页展板方案；业主版重排（换一套讲法）进行中。</dd>
+<dt>出处</dt><dd>课程展板原件；本站「作品」区高层综合体卡片。</dd></dl>
+<p class="note">团队 4 人；风热环境专题为团队分工，展板中已标注「团队专题」。</p></div>
+<div class="ev"><div class="ev-h">上海日宏 · 建筑设计实习生 2026.07–2026.09</div>
+<dl class="ev-grid"><dt>背景</dt><dd>小型商业项目前期 + 城市设计前中期。</dd>
+<dt>我做了什么</dt><dd>资料调研、案例对标、方案比选与汇报材料。</dd>
+<dt>结果</dt><dd>参与项目前中期推进。</dd>
+<dt>出处</dt><dd>实习证明；具体项目细节受保密约定限制，此处不展开，面试时按约定范围口述。</dd></dl></div>
+<div class="ev"><div class="ev-h">全国适老化设计竞赛 · 铜奖《勿忘我》</div>
+<dl class="ev-grid"><dt>背景</dt><dd>为认知退化长者改造既有住宅。</dd>
+<dt>我做了什么</dt><dd>按房间拆解长者 24 小时日常时序 → 归纳九处空间问题 → 七空间需求矩阵 → 推出功能、设备、可量尺度与动线条件。本人为项目负责人、主责完成。</dd>
+<dt>结果</dt><dd>全国铜奖；16 页阅读版已上线，手机可直接读完。</dd>
+<dt>出处</dt><dd><a href="../deck/wuwangwo/index.html">16 页阅读版（本站）</a></dd></dl></div>
+<a class="jump" href="../index.html#capabilities">← 回到首页能力清单</a>
+</section>
+
+<section class="cap-block" id="market-research">
+<h2>AI 辅助市场调研</h2>
+<p class="lead">10 家标杆，我筛我判。</p>
+<p><span class="tag tag--t">商业运营</span><span class="tag tag--t">市场洞察</span><span class="tag">设计院实习</span><span class="tag">本站自建</span></p>
+<div class="ev"><div class="ev-h">日宏实习 · 案例调研</div>
+<dl class="ev-grid"><dt>背景</dt><dd>项目需要对标商业案例，原始信息散且量大。</dd>
+<dt>我做了什么</dt><dd>先定调研维度（区位 / 配套 / 客群 / 卖点 / 定价），再用 AI 批量搜集，判断、筛选与结论由本人负责，落成标杆对比表并主导二次筛选。</dd>
+<dt>结果</dt><dd>筛出 10 家标杆成对比表交付项目组。</dd>
+<dt>出处</dt><dd>对比表为实习交付物，受保密约定限制不公开内容。</dd></dl>
+<p class="note">分工口径：AI 负责搜集与初筛，维度设定、筛选标准与结论由本人负责——这条能力的关键不是"会用 AI"，是"能给它定验收标准"。</p></div>
+<div class="ev"><div class="ev-h">AI 协作个人作品集网站 2026.07（就是你现在打开的这个站）</div>
+<dl class="ev-grid"><dt>我做了什么</dt><dd>目标、内容结构、素材筛选、反馈与验收由本人负责；技术实现为 AI 协作。</dd>
+<dt>结果</dt><dd>站点上线：中英双语、深浅主题、移动端适配、16 页阅读版与本页这类分层举证结构。</dd>
+<dt>可核对</dt><dd>本站线上地址与 git 提交记录；二维码印刷版。</dd></dl></div>
+<a class="jump" href="../index.html#capabilities">← 回到首页能力清单</a>
+</section>
+
+<section class="cap-block" id="spatial-data">
+<h2>商圈空间数据分析</h2>
+<p class="lead">用 ArcGIS 把问题画成图。</p>
+<p><span class="tag tag--t">选址拓展</span><span class="tag tag--t">数据分析</span><span class="tag">省级大创</span><span class="tag">课程项目</span></p>
+<div class="ev"><div class="ev-h">省级大学生创新创业训练计划 · 核心成员 2025.07–2026.03</div>
+<dl class="ev-grid"><dt>我做了什么</dt><dd>协助主笔中期与结项材料；深度学习部分为团队分工，本人负责其中一部分数据集。</dd>
+<dt>结果</dt><dd>项目通过省级验收。</dd>
+<dt>出处</dt><dd>省级立项与验收材料。</dd></dl></div>
+<div class="ev"><div class="ev-h">滨水城市设计 · 课程项目</div>
+<dl class="ev-grid"><dt>我做了什么</dt><dd>ArcGIS 采集、矢量化与多要素叠加分析。</dd>
+<dt>结果</dt><dd>产出空间特征图与问题识别图，作为开放空间选址依据。</dd>
+<dt>出处</dt><dd>本站「作品」区滨水城市设计卡片（含分析图）。</dd></dl></div>
+<a class="jump" href="../index.html#capabilities">← 回到首页能力清单</a>
+</section>
+</main>
+<footer><div class="wrap">
+<div>王然 · 建筑学本科（2022–2027）· 上海 / 大连</div>
+<div><a href="mailto:wr13331517846@qq.com">wr13331517846@qq.com</a> ｜ <a href="tel:13331517846">133 3151 7846</a></div>
+<div style="margin-top:14px"><a href="../index.html">← 返回主站</a> ｜ <a href="../translation/index.html">同一份设计，我按听众换讲法 →</a></div>
+</div></footer>
+</body></html>
