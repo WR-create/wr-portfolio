@@ -9,374 +9,96 @@
 <title>勿忘我 · 16 页阅读版｜全国适老化设计竞赛铜奖</title>
 <style>
 :root{--fs:18px;--navy:#142138;--ink:#23272c;--muted:#5a6068;--orange:#e0722a;--orange-deep:#a0561f;
---line:rgba(20,33,56,.14);--line-soft:rgba(20,33,56,.08);--bg:#f4f2ee;--max:660px}
+--line:rgba(20,33,56,.14);--line-soft:rgba(20,33,56,.08);--bg:#f4f2ee;--max:680px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;font-size:var(--fs);line-height:1.9;letter-spacing:.01em}
-.hd{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.hd-in{max-width:var(--max);margin:0 auto;padding:0 14px;display:flex;align-items:center;gap:8px;min-height:56px}
-.brand{font-size:.76em;letter-spacing:.1em;color:var(--navy);font-weight:700;line-height:1.35}
-.brand small{display:block;font-size:.74em;letter-spacing:.05em;color:var(--muted);font-weight:400}
-.grow{flex:1}
-.btn{font:inherit;font-size:.74em;min-width:44px;min-height:44px;background:#fff;border:1px solid var(--line);border-radius:8px;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0 10px;text-decoration:none}
+body{background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;
+font-size:var(--fs);line-height:1.9;letter-spacing:.01em}
+/* 顶栏 */
+.hd{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hd-in{max-width:var(--max);margin:0 auto;padding:0 12px;display:flex;align-items:center;gap:6px;min-height:54px}
+.brand{font-size:.74em;letter-spacing:.08em;color:var(--navy);font-weight:700;line-height:1.3;margin-right:auto}
+.brand small{display:block;font-size:.76em;letter-spacing:.04em;color:var(--muted);font-weight:400}
+.btn{font:inherit;font-size:.72em;min-width:42px;min-height:42px;background:#fff;border:1px solid var(--line);border-radius:8px;
+color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0 9px;text-decoration:none;flex:0 0 auto}
 .btn[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
 .btn--txt{color:var(--orange-deep);border-color:rgba(160,86,31,.4)}
-.prog{position:relative;height:4px;background:var(--line-soft)}
-.prog i{display:block;height:100%;width:0;background:var(--orange)}
-.rider{position:absolute;top:2px;transform:translate(-50%,-58%);color:var(--navy);transition:left .12s linear}
-.rider .catsvg{display:block;background:#fff;border-radius:50%}
-main{max-width:var(--max);margin:0 auto;padding:14px 14px 96px}
-.sheet{background:#fff;border:1px solid var(--line-soft);border-radius:6px;padding:24px 20px 28px;margin-bottom:14px;scroll-margin-top:78px}
-.sheet-h{display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--line-soft);padding-bottom:10px;margin-bottom:18px}
-.pageno{font-size:.66em;letter-spacing:.14em;color:var(--muted);font-family:ui-monospace,Consolas,monospace}
-.sheet-t{font-size:.72em;letter-spacing:.1em;color:var(--navy);font-weight:700}
-h1{font-size:2.3em;line-height:1.2;color:var(--navy);letter-spacing:.04em;font-weight:700}
-h2{font-size:1.34em;line-height:1.5;color:var(--navy);font-weight:700;margin:6px 0 14px}
-h3{font-size:.94em;line-height:1.6;color:var(--navy);font-weight:700;margin:20px 0 8px}
+/* 进度条：轨道 + 橙色填充 + 猫形滑块 + 数字读数 */
+.track{position:relative;height:34px;max-width:var(--max);margin:0 auto;padding:0 12px;display:flex;align-items:center;gap:10px}
+.rail{position:relative;flex:1;height:8px;border-radius:99px;background:rgba(20,33,56,.12);overflow:visible}
+.rail i{position:absolute;inset:0 auto 0 0;width:0;border-radius:99px;background:linear-gradient(90deg,var(--orange-deep),var(--orange))}
+.knob{position:absolute;top:50%;left:0;width:30px;height:30px;transform:translate(-50%,-50%);border-radius:50%;
+background:#fff;border:1px solid var(--line);box-shadow:0 2px 6px -2px rgba(20,33,56,.35);color:var(--navy);
+display:flex;align-items:center;justify-content:center;transition:left .12s linear}
+.knob svg{width:20px;height:21px;display:block}
+.read{font-family:ui-monospace,Consolas,monospace;font-size:.78em;letter-spacing:.06em;color:var(--muted);white-space:nowrap;min-width:6.6em;text-align:right}
+main{max-width:var(--max);margin:0 auto;padding:14px 12px 96px}
+.sheet{background:#fff;border:1px solid var(--line-soft);border-radius:6px;padding:22px 18px 26px;margin-bottom:14px;scroll-margin-top:104px}
+.sheet-h{display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--line-soft);padding-bottom:10px;margin-bottom:16px}
+.pageno{font-size:.74em;letter-spacing:.14em;color:var(--muted);font-family:ui-monospace,Consolas,monospace}
+.sheet-t{font-size:.78em;letter-spacing:.1em;color:var(--navy);font-weight:700}
+h1{font-size:2.2em;line-height:1.2;color:var(--navy);letter-spacing:.04em;font-weight:700}
+h2{font-size:1.3em;line-height:1.5;color:var(--navy);font-weight:700;margin:4px 0 12px}
+h3{font-size:.92em;line-height:1.6;color:var(--navy);font-weight:700;margin:18px 0 8px}
 p{margin:0 0 12px}
 .small{font-size:.82em;color:var(--muted);line-height:1.75}
-.vtext{font-size:.8em;letter-spacing:.3em;color:var(--muted)}
-figure{margin:0 0 16px}
+.vtext{font-size:.78em;letter-spacing:.28em;color:var(--muted)}
+figure{margin:0 0 14px}
 figure img{display:block;width:100%;height:auto;border:1px solid var(--line-soft);border-radius:4px;background:#fff}
-.kvrow{display:grid;grid-template-columns:5.4em 1fr;gap:6px 12px;font-size:.9em;padding:7px 0;border-bottom:1px dashed var(--line-soft)}
+.kvrow{display:grid;grid-template-columns:5.2em 1fr;gap:4px 12px;font-size:.88em;padding:7px 0;border-bottom:1px dashed var(--line-soft)}
 .kvrow .k{color:var(--muted);font-size:.86em;letter-spacing:.05em}
+/* 双栏展板：手机按列堆叠（先读完整左栏再读右栏），宽屏才并排 */
+.cols{display:grid;gap:20px}
+.col{min-width:0}
+.col>h2:first-child,.col>h3:first-child{margin-top:0}
+@media (min-width:640px){.cols{grid-template-columns:1fr 1fr;gap:28px;align-items:start}.cols.three{grid-template-columns:1fr 1fr 1fr}}
 #drawer{position:fixed;inset:0;z-index:40;background:rgba(20,33,56,.5);display:none}
 #drawer.on{display:block}
-.drawer-in{position:absolute;right:0;top:0;bottom:0;width:min(320px,86vw);background:#fff;padding:18px 16px;overflow-y:auto}
-.drawer-in h4{font-size:.8em;letter-spacing:.14em;color:var(--muted);margin-bottom:12px}
-.toci{display:flex;gap:10px;align-items:baseline;padding:12px 8px;border-radius:6px;text-decoration:none;color:var(--ink);font-size:.86em}
+.drawer-in{position:absolute;right:0;top:0;bottom:0;width:min(320px,86vw);background:#fff;padding:18px 14px;overflow-y:auto}
+.drawer-in h4{font-size:.78em;letter-spacing:.14em;color:var(--muted);margin-bottom:10px}
+.toci{display:flex;gap:10px;align-items:baseline;padding:12px 8px;border-radius:6px;text-decoration:none;color:var(--ink);font-size:.9em}
 .toci:nth-child(odd){background:#faf8f5}
-.toci b{font-family:ui-monospace,Consolas,monospace;font-size:.82em;color:var(--orange-deep);font-weight:700}
-.top{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:35;width:48px;height:48px;border-radius:50%;background:var(--navy);color:#fff;border:0;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 24px -8px rgba(20,33,56,.55)}
+.toci b{font-family:ui-monospace,Consolas,monospace;font-size:.8em;color:var(--orange-deep)}
+.top{position:fixed;right:14px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:35;width:48px;height:48px;border-radius:50%;
+background:var(--navy);color:#fff;border:0;display:none;align-items:center;justify-content:center;cursor:pointer;
+box-shadow:0 8px 24px -8px rgba(20,33,56,.55)}
 .top.on{display:inline-flex}
-.foot{max-width:var(--max);margin:0 auto;padding:0 14px 40px;font-size:.78em;color:var(--muted);line-height:1.8}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rider{transition:none}}
+.foot{max-width:var(--max);margin:0 auto;padding:0 14px 40px;font-size:.76em;color:var(--muted);line-height:1.8}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.knob,.rail i{transition:none}}
 </style>
 </head>
 <body>
 <div class="hd">
   <div class="hd-in">
     <span class="brand">勿忘我<small>16 页阅读版 · 竞赛铜奖</small></span>
-    <span class="grow"></span>
     <button type="button" class="btn" data-fs="16" aria-pressed="false">A−</button>
     <button type="button" class="btn" data-fs="18" aria-pressed="true">A</button>
     <button type="button" class="btn" data-fs="21" aria-pressed="false">A+</button>
     <button type="button" class="btn btn--txt" id="tocBtn">目录</button>
     <a class="btn btn--txt" href="../../">← 作品集</a>
   </div>
-  <div class="prog"><i id="bar"></i><span class="rider" id="rider"><svg class="catsvg" viewBox="0 0 22.00 22.76" width="22" height="23" fill="none" aria-hidden="true"><path d="M4.08 7.87L1.08 2.50L0.80 11.24A11.00 8.38 0 1 0 21.20 11.24L20.92 1.30L17.92 7.87A11.00 8.38 0 0 0 4.08 7.87" stroke="currentColor" stroke-width="1.4" stroke-linecap="butt" stroke-linejoin="round"/><g fill="currentColor" stroke="none"><rect x="5.72" y="11.87" width="2.20" height="5.03" rx="1.10"/><rect x="14.08" y="10.87" width="2.20" height="5.03" rx="1.10"/></g></svg></span></div>
+  <div class="track">
+    <span class="rail"><i id="fill"></i><span class="knob" id="knob"><svg viewBox="0 0 20.00 20.71" width="20" height="20" fill="none" aria-hidden="true"><path d="M3.71 7.19L0.97 2.26L0.73 10.26A10.00 7.61 0 1 0 19.27 10.26L19.03 1.16L16.29 7.19A10.00 7.61 0 0 0 3.71 7.19" stroke="currentColor" stroke-width="1.5" stroke-linecap="butt" stroke-linejoin="round"/><g fill="currentColor" stroke="none"><rect x="5.20" y="10.82" width="2.00" height="4.56" rx="1.00"/><rect x="12.80" y="9.82" width="2.00" height="4.56" rx="1.00"/></g></svg></span></span>
+    <span class="read" id="read">P01 / 16 · 0%</span>
+  </div>
 </div>
-
-<main><section class="sheet" id="p1" data-n="1"><header class="sheet-h"><span class="pageno">P01 / 16</span><span class="sheet-t">封面</span></header><h1>勿忘我</h1>
-<figure><img src="img/p00_image1.jpg" loading="lazy" decoding="async" alt="第 1 页配图 p00_image1.jpg"></figure>
-<p>适老化住宅室内改造设计</p>
-<p>为一对 94 岁与 86 岁的高龄夫妻，基于给定业主资料完成功能评估、行为动线与需求推导， 输出以「记忆宫殿」为核心概念的整套适老化室内方案：平面布局、设备尺寸、辅具选型与智能系统配置。</p>
-<p class="small">SELECTED WORK 2023–2024</p>
-<p class="small">01 主展板局部 · 爷爷奶奶的生命时间轴（1930–2024）</p>
-<figure><img src="img/p00_image2.jpg" loading="lazy" decoding="async" alt="第 1 页配图 p00_image2.jpg"></figure>
-<p class="small">02 核心概念 · 记忆宫殿</p>
-<p>2023.04 – 2024.11</p>
-<p class="small">项目周期</p>
-<p>项目负责人 · 主责完成</p>
-<p class="small">我的角色</p>
-<p>4 人（王然 / 邱立言 / 朱昊昱 / 丁钰婷）</p>
-<p class="small">团队</p>
-<p class="small">王然 大连理工大学 · 建筑学 · 2027 届 | 求职方向：线下零售 / 商业运营</p>
-<p class="vtext">|适老化住宅改造</p></section>
-<section class="sheet" id="p2" data-n="2"><header class="sheet-h"><span class="pageno">P02 / 16</span><span class="sheet-t">项目档案</span></header><p class="small">PART 01 · 项目档案</p>
-<h2>一份竞赛档案：从业主资料到可核验的空间动作</h2>
-<p>全国适老化设计竞赛铜奖作品。本册按「用户 → 需求 → 概念 → 方案 → 复盘」重排原始展板，所有尺寸与选型均可回溯到源图页码。</p>
-<h3>本册结构</h3>
-<div class="kvrow"><span class="k">奖项</span><span class="v">全国适老化设计竞赛 · 铜奖</span></div>
-<p>项目与用户 	P2–P3 业主功能量表与项目档案</p>
-<div class="kvrow"><span class="k">项目周期</span><span class="v">2023.04 – 2024.11</span></div>
-<div class="kvrow"><span class="k">团队</span><span class="v">4 人（王然 / 邱立言 / 朱昊昱 / 丁钰婷）</span></div>
-<div class="kvrow"><span class="k">我的角色</span><span class="v">项目负责人 · 主责完成</span></div>
-<p>概念与方案	 P7–P14 三策略、记忆宫殿、平面尺寸、辅具选型、三张展板</p>
-<p>复盘	 P15 做对的 / 不足的 / 带走的方法</p>
-<p class="small">基地</p>
-<p class="small">老旧住宅套内；原始测绘面宽 6550、进深 12330</p>
-<p class="small">读册方式</p>
-<p>每页结论均标注源图出处；低清过程图仅作示意并显式标注，不冒充高清成果。</p>
-<div class="kvrow"><span class="k">设计总目标</span><span class="v">抑制老人向阿兹海默症的发展进程</span></div>
-<p class="small">基本信息介绍</p>
-<p class="vtext">勿忘我|</p></section>
-<section class="sheet" id="p3" data-n="3"><header class="sheet-h"><span class="pageno">P03 / 16</span><span class="sheet-t">用户画像</span></header><p class="small">PART 01 · 用户理解</p>
-<h2>两位高龄业主：一份功能量表，两种生活状态</h2>
-<p>主办方提供两位业主的 Barthel 功能评估与病史资料。我们把「谁能做什么、谁在照顾谁」作为一切空间决策的起点。</p>
-<figure><img src="img/p00_image4.jpg" loading="lazy" decoding="async" alt="第 3 页配图 p00_image4.jpg"></figure>
-<figure><img src="img/p00_image3.jpg" loading="lazy" decoding="async" alt="第 3 页配图 p00_image3.jpg"></figure>
-<h3>男性老人 · 主要被照护者</h3>
-<h3>女性老人 · 半自理 + 主要照护者</h3>
-<p class="small">94 岁｜国家机关离休（审计会计）｜身高 1.70m｜月收入约 9000 元 / 轻度认知障碍，需长期定时服药</p>
-<p class="small">86 岁｜国家机关离休（审计会计）｜身高 1.55m｜月收入约 7000 元 / 腰椎间盘突出，需长期定时服药</p>
-<p class="small">洗澡</p>
-<p class="small">大部分需帮助</p>
-<p class="small">穿着</p>
-<p class="small">系鞋带除外</p>
-<p class="small">洗澡</p>
-<p class="small">无需帮助</p>
-<p class="small">穿着</p>
-<p class="small">系鞋带除外</p>
-<p class="small">如厕</p>
-<p class="small">便后需协助</p>
-<p class="small">转移</p>
-<p class="small">上下床需帮助</p>
-<p class="small">如厕</p>
-<p class="small">可拄杖自理</p>
-<p class="small">转移</p>
-<p class="small">上下床需帮助</p>
-<p class="small">控制</p>
-<p class="small">偶尔失控</p>
-<p class="small">进餐</p>
-<p class="small">无需帮助</p>
-<p class="small">控制</p>
-<p class="small">完全控制</p>
-<p class="small">进餐</p>
-<p class="small">无需帮助</p>
-<p class="small">病程趋势：糖尿病 → 失明、中风、下肢截肢 → 卧床、轮椅；关节炎 → 腿脚不便 → 轮椅</p>
-<p class="small">病程趋势：腰椎间盘突出 → 压迫坐骨神经 → 下半身瘫痪、轮椅；现为主要照护者，承担夜间协助</p>
-<p class="small">对设计的含义 A</p>
-<p class="small">对设计的含义 B</p>
-<p>男性老人：行动与如厕全程需协助 → 方案以轮椅回转、坐式操作、床边转移为空间骨架；针对认知障碍植入「记忆站」刺激与触觉安抚。</p>
-<p>女性老人：半自理且是照护者 → 保留她烹饪、清洁、夜间起夜照护的动线，并降低她的弯腰与端持负担，防止「照护者先倒下」。</p>
-<p class="small">数据来源：主办方提供的 Barthel 功能评估表、业主侧写与病史资料。人物插图为团队绘制。</p>
-<p class="vtext">勿忘我|</p></section>
-<section class="sheet" id="p4" data-n="4"><header class="sheet-h"><span class="pageno">P04 / 16</span><span class="sheet-t">24 小时动线</span></header><p class="small">PART 02 · 需求推导</p>
-<h2>24 小时动线：把功能量表读成一天的生活</h2>
-<figure><img src="img/p00_image7.jpg" loading="lazy" decoding="async" alt="第 4 页配图 p00_image7.jpg"></figure>
-<p>极坐标图记录两位老人一日三个时间带的活动与位置；病中变化与新增照护动线在同一张图上叠加读取。</p>
-<figure><img src="img/p00_image6.jpg" loading="lazy" decoding="async" alt="第 4 页配图 p00_image6.jpg"></figure>
-<figure><img src="img/p00_image8.jpg" loading="lazy" decoding="async" alt="第 4 页配图 p00_image8.jpg"></figure>
-<figure><img src="img/p00_image5.jpg" loading="lazy" decoding="async" alt="第 4 页配图 p00_image5.jpg"></figure>
-<p class="small">读图结论</p>
-<p class="small">卧·卧室(蓝)</p>
-<p class="small">卧·卧室(桃)</p>
-<p class="small">卫·卫生间</p>
-<p class="small">餐·餐厅</p>
-<p class="small">厨·厨房</p>
-<p class="small">起·起居室</p>
-<p class="small">玄·玄关</p>
-<p class="small">圆圈＝交汇节点</p>
-<p class="small">病中变化：男卧床时间大增 → 社工上门、子女探望与陪护成为新增动线。尺度：方厅过道容纳两人通过 1500mm 并做防摔倒处理；女端东西行走 → 预留 600mm 小推车宽度；厨房门与卫生间门改感应开启。</p>
-<p class="small">01-24h 行为极坐标图 · 早 / 午 / 晚时间带</p>
-<p class="small">来源： 动线时序图与尺度标注。</p>
-<p class="vtext">勿忘我|</p></section>
-<section class="sheet" id="p5" data-n="5"><header class="sheet-h"><span class="pageno">P05 / 16</span><span class="sheet-t">九处空间问题</span></header><p class="small">PART 02 · 需求推导</p>
-<h2>九处空间问题：每一处都对应一个身体动作</h2>
-<p>从动线中定位的九处障碍，按「动作 → 障碍 → 方向」记录；尺度结论单独成行。</p>
-<figure><img src="img/p00_image9.jpg" loading="lazy" decoding="async" alt="第 5 页配图 p00_image9.jpg"></figure>
-<p class="small">1500mm 方厅过道两人通过 + 防摔倒处理</p>
-<p class="small">600mm 小推车通行宽度</p>
-<p class="small">感应开启 厨房门 / 卫生间门</p>
-<p class="small">来源： 原始 P7 空间问题标注 ①–⑨。</p>
-<p class="vtext">勿忘我|</p></section>
-<section class="sheet" id="p6" data-n="6"><header class="sheet-h"><span class="pageno">P06 / 16</span><span class="sheet-t">七空间需求</span></header><p class="small">PART 02 · 需求推导</p>
-<h2>七空间需求矩阵：谁、在哪个房间、需要什么</h2>
-<p>需求环按空间放射展开；右表为摘选，完整标签见源图。</p>
-<figure><img src="img/p00_image10.jpg" loading="lazy" decoding="async" alt="第 6 页配图 p00_image10.jpg"></figure>
-<div class="kvrow"><span class="k">卧室·男</span><span class="v">夜间不定时起夜（感应夜灯 / 监测显示）；定时翻身（床铺辅助）；更衣（衣柜尺度）；轮椅 / 卧床照护空间</span></div>
-<div class="kvrow"><span class="k">卧室·女</span><span class="v">睡前阅读（床头灯 / 书架）；夜间起夜；睡眠困难（隔音挡光 / 床铺无摩擦声）；饮水更衣</span></div>
-<div class="kvrow"><span class="k">厕所</span><span class="v">洗漱与起夜辅助；智能马桶 + 轮椅尺度；男洗浴需辅助 / 坐浴；女置物台 / 扶手；扫地机器人同置</span></div>
-<div class="kvrow"><span class="k">厨房</span><span class="v">站立可借力滑动椅；滑动空间 / 动线流畅；自动断电炉具；煮草药茶专门操台配电；全自动洗碗机</span></div>
-<p class="small">起居室</p>
-<p class="small">看电视人体尺度 / 视距 / 光照；充电接口 / 信号 / 手机支架；两臂展为直径的圆形无障碍空间；躺椅晒太阳；三到四人坐立空间</p>
-<p class="small">挂立垃圾桶；餐椅人体工程学；轮椅 / 餐车 / 卧床就餐；推车滑动掉头空间；集成式烧水净水机；煎药炉 / 冰箱 / 智能管家读说明</p>
-<p class="small">餐厅</p>
-<div class="kvrow"><span class="k">门厅·户外</span><span class="v">语音智能管家；门口储物 / 买菜小车；温差预防心脑血管；散步运动；轮椅拐杖置物空间</span></div>
-<p class="small">01-需求分析环 · 浅底版（过程稿）</p>
-<p class="small">来源： 原始 P9 需求分析环与空间标签。</p>
-<p class="vtext">勿忘我|</p></section>
-<section class="sheet" id="p7" data-n="7"><header class="sheet-h"><span class="pageno">P07 / 16</span><span class="sheet-t">三条策略</span></header><h2>三条策略：把认知干预翻译成空间语言</h2>
-<p>抑制老人向阿兹海默症的发展进程（竞赛任务书整体指导）；手段注：以智能家居辅助。</p>
-<p class="small">设计总目标</p>
-<p>记忆站</p>
-<p class="small">抓住男性老人注意侧重点</p>
-<p class="small">唤醒男性老人思维活跃度：结合生平经历植入「记忆宫殿」的「记忆站」，抓住男性老人的注意侧重点。</p>
-<p class="small">S1</p>
-<p>散步路径</p>
-<p class="small">运动健康</p>
-<p class="small">室内编写散步路径：颜色 / 材质适当变化给予空间与距离的正确认知指导，缓解意识障碍痛苦，兼顾运动健康。</p>
-<p class="small">S2</p>
-<p>全屋一体化</p>
-<p class="small">两位老人的人体尺度冲突矛盾</p>
-<p class="small">女性老人蹲坐立变动困难 → 全屋活动一体化设计；同时化解两位老人的人体尺度冲突矛盾。</p>
-<p class="small">S3</p>
-<p class="small">转译泡泡 · 原图按疾病 / 活动 / 兴趣分组</p>
-<p class="small">疾病 触觉增强记忆【男性为主】</p>
-<p class="small">疾病 触觉缓解焦虑和压力【男女】</p>
-<p class="small">活动 坐式全屋活动【男女】</p>
-<p class="small">兴趣 室内趣味散步【男女】</p>
-<p class="small">来源： 原始 P12 策略页与转译泡泡图。</p>
-<p class="vtext">勿忘我|</p></section>
-<section class="sheet" id="p8" data-n="8"><header class="sheet-h"><span class="pageno">P08 / 16</span><span class="sheet-t">记忆宫殿</span></header><h2>记忆宫殿：一个「反过程」的概念</h2>
-<p>传统记忆宫殿把抽象记忆绑到熟悉物体上组成空间；我们的版本反过来——用已经熟悉的事物、空间与信息，唤起与之关联的记忆。</p>
-<figure><img src="img/p00_image11.jpg" loading="lazy" decoding="async" alt="第 8 页配图 p00_image11.jpg"></figure>
-<figure><img src="img/p00_image12.jpg" loading="lazy" decoding="async" alt="第 8 页配图 p00_image12.jpg"></figure>
-<p class="small">02记忆宫殿理论环（源图浅底圆）</p>
-<p class="small">落地四件套</p>
-<p>照片墙、藏品陈列柜、智能家居辅助、特殊触摸材料与提示符号，组成室内散步路线。</p>
-<p class="small">01-记忆宫殿路径分析：平面 + 橙色点线散步动线 + 老物件圆片</p>
-<p class="small">来源： 记忆宫殿路径分析图与理论环（过程稿高清版；展板同内容见 B01）。</p>
-<p class="vtext">勿忘我|</p></section>
-<section class="sheet" id="p9" data-n="9"><header class="sheet-h"><span class="pageno">P09 / 16</span><span class="sheet-t">平面与尺寸</span></header><figure><img src="img/p00_image13.jpg" loading="lazy" decoding="async" alt="第 9 页配图 p00_image13.jpg"></figure>
-<figure><img src="img/p00_image9.jpg" loading="lazy" decoding="async" alt="第 9 页配图 p00_image9.jpg"></figure>
-<p class="small">洗衣机</p>
-<p class="small">脏衣篓</p>
-<p class="small">扫地机</p>
-<p class="small">淋浴区</p>
-<p class="small">磨砂玻璃推拉门</p>
-<p class="small">智能检测大屏</p>
-<p class="small">换鞋凳</p>
-<p class="small">鞋柜</p>
-<p class="small">衣柜</p>
-<p class="small">电视柜</p>
-<p class="small">电动床</p>
-<p class="small">电动床</p>
-<p class="small">沙发床</p>
-<p class="small">床头柜</p>
-<p class="small">床头柜</p>
-<p class="small">床头柜</p>
-<p class="small">临时厕所</p>
-<p class="small">垂直握杆</p>
-<p class="small">辅助下床</p>
-<p class="small">陪护床位</p>
-<p class="small">运动康复</p>
-<h2>平面与尺寸：每个数字都能量出来</h2>
-<p>改造后新增点位</p>
-<p class="small">01-改造前平面布置（带尺寸）</p>
-<p class="small">02-清理后平面（带尺寸）</p>
-<p class="small">03-改造后平面布置（带尺寸）</p>
-<p class="small">来源： 主办方原始平面提供</p>
-<p class="vtext">勿忘我|</p></section>
-<section class="sheet" id="p10" data-n="10"><header class="sheet-h"><span class="pageno">P10 / 16</span><span class="sheet-t">平面尺寸续</span></header><h2>平面与尺寸：每个数字都能量出来</h2>
-<figure><img src="img/p00_image18.jpg" loading="lazy" decoding="async" alt="第 10 页配图 p00_image18.jpg"></figure>
-<figure><img src="img/p00_image17.jpg" loading="lazy" decoding="async" alt="第 10 页配图 p00_image17.jpg"></figure>
-<figure><img src="img/p00_image15.jpg" loading="lazy" decoding="async" alt="第 10 页配图 p00_image15.jpg"></figure>
-<figure><img src="img/p00_image17.jpg" loading="lazy" decoding="async" alt="第 10 页配图 p00_image17.jpg"></figure>
-<figure><img src="img/p00_image16.jpg" loading="lazy" decoding="async" alt="第 10 页配图 p00_image16.jpg"></figure>
-<p class="small">01改造后平面布置（带尺寸）</p>
-<p class="small">来源： 人体尺度，无障碍人体尺度规范</p>
-<p class="vtext">勿忘我|</p></section>
-<section class="sheet" id="p11" data-n="11"><header class="sheet-h"><span class="pageno">P11 / 16</span><span class="sheet-t">辅具选型 A</span></header><h2>辅具选型 A：卧寝与床边转移</h2>
-<div class="kvrow"><span class="k">规格</span><span class="v">1.2m 床型 2130 × 1350 × 800–1150mm；床面内长 2000 × 1200mm</span></div>
-<figure><img src="img/p00_image19.jpg" loading="lazy" decoding="async" alt="第 11 页配图 p00_image19.jpg"></figure>
-<div class="kvrow"><span class="k">床围 / 床架</span><span class="v">红橡实木边框 + 25mm 实木多层板 + 科技皮软包；碳素钢喷塑床架</span></div>
-<p class="small">承重 / 脚轮</p>
-<p class="small">200KG；3 寸双排静音脚轮</p>
-<div class="kvrow"><span class="k">角度 / 升降</span><span class="v">背 0–70°、腿 0–40°；整床升降 300–650mm</span></div>
-<p class="small">电机 / 控制</p>
-<p class="small">德国 okin × 4；无线遥控；床底 LED 夜灯</p>
-<p class="small">01男性老人卧室爆炸轴测：护理床 + 折叠床 + 衣柜</p>
-<figure><img src="img/p00_image20.jpg" loading="lazy" decoding="async" alt="第 11 页配图 p00_image20.jpg"></figure>
-<div class="kvrow"><span class="k">床边辅助</span><span class="v">起床辅助器：免打孔、扶手不分左右</span></div>
-<div class="kvrow"><span class="k">选型比价</span><span class="v">世道护理床，售价 13810 元</span></div>
-<p class="small">02-两卧室立面渲染（过程稿 1440×810，低清仅示意）</p>
-<p class="small">来源： 2023年辅具选择资料；爆炸轴测为过程稿。</p>
-<p class="vtext">勿忘我|</p></section>
-<section class="sheet" id="p12" data-n="12"><header class="sheet-h"><span class="pageno">P12 / 16</span><span class="sheet-t">辅具选型 B</span></header><h2>辅具选型 B：行走、卫浴与家务</h2>
-<p>四类辅具落到型号级尺寸，与平面点位一一对应。</p>
-<p>双臂托助行器</p>
-<p>智能马桶</p>
-<p class="small">折叠尺寸</p>
-<p class="small">84×60×12cm</p>
-<div class="kvrow"><span class="k">净重</span><span class="v">10.9KG</span></div>
-<p class="small">承重</p>
-<p class="small">宽</p>
-<p class="small">300 斤</p>
-<p class="small">392mm</p>
-<div class="kvrow"><span class="k">承重</span><span class="v">100KG</span></div>
-<p class="small">材质</p>
-<p class="small">高</p>
-<p class="small">铝合金 + 碳钢</p>
-<p class="small">697mm</p>
-<p class="small">主架净重</p>
-<p class="small">坑距</p>
-<p class="small">4.15KG（不含座板）</p>
-<p class="small">305 / 400mm</p>
-<div class="kvrow"><span class="k">折叠</span><span class="v">40×53×66cm</span></div>
-<div class="kvrow"><span class="k">高度调节</span><span class="v">多档可调，106–121cm</span></div>
-<div class="kvrow"><span class="k">图示尺寸</span><span class="v">926 / 1050–1100 / 390 / 515</span></div>
-<p>风暖浴霸</p>
-<div class="kvrow"><span class="k">05</span><span class="v">06</span></div>
-<p>洗烘一体 + 脏衣篮架</p>
-<p>扫地机器人</p>
-<p class="small">换气</p>
-<p class="small">20–22W</p>
-<p class="small">风量</p>
-<p class="small">洗烘一体</p>
-<p class="small">机身</p>
-<p class="small">140–155m³/h</p>
-<p class="small">465×480×795mm</p>
-<p class="small">347×352×103mm</p>
-<p class="small">噪音</p>
-<p class="small">脏衣篮架</p>
-<p class="small">预留位</p>
-<p class="small">39–40dB</p>
-<p class="small">44×33×79cm</p>
-<p class="small">500×500×350</p>
-<div class="kvrow"><span class="k">机身厚</span><span class="v">150mm（预留 ≥170mm）</span></div>
-<div class="kvrow"><span class="k">面板</span><span class="v">300×300mm</span></div>
-<p class="small">来源：  辅具参数页。</p>
-<p class="vtext">勿忘我|</p></section>
-<section class="sheet" id="p13" data-n="13"><header class="sheet-h"><span class="pageno">P13 / 16</span><span class="sheet-t">展板 01</span></header><p class="small">PART 03 · 竞赛展板</p>
-<h2>展板 01：业主与需求</h2>
-<figure><img src="img/p00_image21.jpg" loading="lazy" decoding="async" alt="第 13 页配图 p00_image21.jpg"></figure>
-<p class="small">标题与老照片拼贴、生命时间轴胶片带（1930–2024）</p>
-<p class="small">基本信息与 Barthel 雷达六边形</p>
-<p class="small">需求分析圆环与记忆宫殿理论环</p>
-<p class="small">业主侧写：插图 + 性格爱好 + 病程趋势</p>
-<p class="small">与本册的关系</p>
-<p>P2–P6 的用户与需求分析即源自此板；此处保留整板以呈现竞赛原貌。</p>
-<p class="small">来源： 竞赛展板 01（1-1A095 01.jpg，9933 × 14043）。</p>
-<p class="vtext">勿忘我|</p></section>
-<section class="sheet" id="p14" data-n="14"><header class="sheet-h"><span class="pageno">P14 / 16</span><span class="sheet-t">展板 02</span></header><p class="small">PART 03 · 竞赛展板</p>
-<h2>展板 02：平面与空间</h2>
-<figure><img src="img/p00_image22.jpg" loading="lazy" decoding="async" alt="第 14 页配图 p00_image22.jpg"></figure>
-<p class="small">行为 / 辅具分析</p>
-<p class="small">平面布置图（带尺寸）</p>
-<p class="small">卫生间 / 卧室 / 起居室圆片渲染</p>
-<p class="small">厨房 &amp;amp; 餐厅说明</p>
-<p class="small">与本册的关系</p>
-<p>P9–P11 的尺寸与辅具选型源自此板。</p>
-<p class="small">来源： 竞赛展板 02（1-1A095 02.jpg，9933 × 14043）。</p>
-<p class="vtext">勿忘我|</p></section>
-<section class="sheet" id="p15" data-n="15"><header class="sheet-h"><span class="pageno">P15 / 16</span><span class="sheet-t">展板 03</span></header><p class="small">PART 03 · 竞赛展板</p>
-<h2>展板 03：方案与渲染</h2>
-<figure><img src="img/p00_image23.jpg" loading="lazy" decoding="async" alt="第 15 页配图 p00_image23.jpg"></figure>
-<p class="small">主卧大渲染 + 轴测剖切</p>
-<p class="small">智能家居产品分析</p>
-<p class="small">记忆宫殿路径分析</p>
-<p class="small">智能家具设计思路与渲染组图</p>
-<p class="small">与本册的关系</p>
-<p>P8、P10 的主图源自此板。</p>
-<p class="small">来源： 竞赛展板 03（1-1A095 03.jpg，9933 × 14043）。</p>
-<p class="vtext">勿忘我|</p></section>
-<section class="sheet" id="p16" data-n="16"><header class="sheet-h"><span class="pageno">P16 / 16</span><span class="sheet-t">复盘</span></header><p class="small">PART 04 · 复盘</p>
-<h2>复盘：做对的、不足的、带走的</h2>
-<p>以下为作者自述反思，非竞赛评审意见。</p>
-<p class="small">A</p>
-<p class="small">B</p>
-<p class="small">C</p>
-<p>做对的</p>
-<p>不足的</p>
-<p>带走的方法</p>
-<p class="small">把量表读成生活动线</p>
-<p class="small">无真实访谈与问卷，需求验证靠时序推演</p>
-<p class="small">先明确需求再画平面</p>
-<p class="small">记忆宫殿把认知干预翻译成空间语言</p>
-<p class="small">过程留稿不充分，项目回顾时，有断档</p>
-<p class="small">每个设计动作对应一条业主证据</p>
-<p class="small">辅具落到型号与尺寸</p>
-<p class="small">尺度冲突的取舍记录不够显性</p>
-<p class="small">「谁照顾谁」是照护设计的起点</p>
-<p class="small">求职衔接</p>
-<p>证据 → 需求 → 空间动作 → 可核验尺寸，与零售 / 运营的「现场观察 → 需求 → 动线陈列 → 指标」同构。</p>
-<p class="small">来源： 本人复盘自述（2026-09），非竞赛评审意见。</p>
-<p class="vtext">勿忘我|</p></section></main>
-
-<p class="foot">本页是《勿忘我》16 页册子的移动端阅读版：内容取自 v8 终版，图片按移动端压缩并懒加载；打印／投递用 PDF 由作者本人提供，本站不托管文件。</p>
-
+<main><section class="sheet" id="p1"><header class="sheet-h"><span class="pageno">P01 / 16</span><span class="sheet-t">封面</span></header><h1>勿忘我</h1><figure><a href="img/image1.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image1.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><p>适老化住宅室内改造设计</p><p>为一对 94 岁与 86 岁的高龄夫妻，基于给定业主资料完成功能评估、行为动线与需求推导， 输出以「记忆宫殿」为核心概念的整套适老化室内方案：平面布局、设备尺寸、辅具选型与智能系统配置。</p><p class="small">SELECTED WORK 2023–2024</p><p class="small">01 主展板局部 · 爷爷奶奶的生命时间轴（1930–2024）</p><figure><a href="img/image2.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image2.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><p class="small">02 核心概念 · 记忆宫殿</p><p>2023.04 – 2024.11</p><p class="small">项目周期</p><p>项目负责人 · 主责完成</p><p class="small">我的角色</p><p>4 人（王然 / 邱立言 / 朱昊昱 / 丁钰婷）</p><p class="small">团队</p><p class="small">王然 大连理工大学 · 建筑学 · 2027 届 | 求职方向：线下零售 / 商业运营</p><p class="vtext">适老化住宅改造</p></section>
+<section class="sheet" id="p2"><header class="sheet-h"><span class="pageno">P02 / 16</span><span class="sheet-t">项目档案</span></header><div class="cols"><div class="col"><p>全国适老化设计竞赛铜奖作品。本册按「用户 → 需求 → 概念 → 方案 → 复盘」重排原始展板，所有尺寸与选型均可回溯到源图页码。</p><p class="small">奖项</p><div class="kvrow"><span class="k">项目周期</span><span class="v">2023.04 – 2024.11</span></div><div class="kvrow"><span class="k">团队</span><span class="v">4 人（王然 / 邱立言 / 朱昊昱 / 丁钰婷）</span></div><div class="kvrow"><span class="k">我的角色</span><span class="v">项目负责人 · 主责完成</span></div><div class="kvrow"><span class="k">业主</span><span class="v">94 岁男性（轻度认知障碍）＋ 86 岁女性（腰椎间盘突出）</span></div><div class="kvrow"><span class="k">基地</span><span class="v">老旧住宅套内；原始测绘面宽 6550、进深 12330</span></div><div class="kvrow"><span class="k">设计总目标</span><span class="v">抑制老人向阿兹海默症的发展进程</span></div></div><div class="col"><p class="small">PART 01 · 项目档案</p><h2>一份竞赛档案：从业主资料到可核验的空间动作</h2><h3>本册结构</h3><p>项目与用户 	P2–P3 业主功能量表与项目档案</p><p>需求推导 	P4–P6 24h 动线、九处空间问题、七空间需求矩阵</p><p>概念与方案	 P7–P14 三策略、记忆宫殿、平面尺寸、辅具选型、三张展板</p><p>复盘	 P15 做对的 / 不足的 / 带走的方法</p><p class="small">读册方式</p><p>每页结论均标注源图出处；低清过程图仅作示意并显式标注，不冒充高清成果。</p><p class="small">基本信息介绍</p></div></div></section>
+<section class="sheet" id="p3"><header class="sheet-h"><span class="pageno">P03 / 16</span><span class="sheet-t">用户画像</span></header><div class="cols"><div class="col"><p>主办方提供两位业主的 Barthel 功能评估与病史资料。我们把「谁能做什么、谁在照顾谁」作为一切空间决策的起点。</p><figure><a href="img/image4.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image4.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><figure><a href="img/image3.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image3.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><h3>男性老人 · 主要被照护者</h3><p class="small">94 岁｜国家机关离休（审计会计）｜身高 1.70m｜月收入约 9000 元 / 轻度认知障碍，需长期定时服药</p><div class="kvrow"><span class="k">洗澡</span><span class="v">大部分需帮助</span></div><div class="kvrow"><span class="k">穿着</span><span class="v">系鞋带除外</span></div><div class="kvrow"><span class="k">如厕</span><span class="v">便后需协助</span></div><div class="kvrow"><span class="k">转移</span><span class="v">上下床需帮助</span></div><div class="kvrow"><span class="k">控制</span><span class="v">偶尔失控</span></div><div class="kvrow"><span class="k">进餐</span><span class="v">无需帮助</span></div><p class="small">病程趋势：糖尿病 → 失明、中风、下肢截肢 → 卧床、轮椅；关节炎 → 腿脚不便 → 轮椅</p><p class="small">对设计的含义 A</p><p>男性老人：行动与如厕全程需协助 → 方案以轮椅回转、坐式操作、床边转移为空间骨架；针对认知障碍植入「记忆站」刺激与触觉安抚。</p></div><div class="col"><p class="small">PART 01 · 用户理解</p><h2>两位高龄业主：一份功能量表，两种生活状态</h2><figure><a href="img/image4.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image4.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><figure><a href="img/image3.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image3.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><h3>女性老人 · 半自理 + 主要照护者</h3><p class="small">86 岁｜国家机关离休（审计会计）｜身高 1.55m｜月收入约 7000 元 / 腰椎间盘突出，需长期定时服药</p><div class="kvrow"><span class="k">洗澡</span><span class="v">无需帮助</span></div><div class="kvrow"><span class="k">穿着</span><span class="v">系鞋带除外</span></div><div class="kvrow"><span class="k">如厕</span><span class="v">可拄杖自理</span></div><div class="kvrow"><span class="k">转移</span><span class="v">上下床需帮助</span></div><div class="kvrow"><span class="k">控制</span><span class="v">完全控制</span></div><div class="kvrow"><span class="k">进餐</span><span class="v">无需帮助</span></div><p class="small">病程趋势：腰椎间盘突出 → 压迫坐骨神经 → 下半身瘫痪、轮椅；现为主要照护者，承担夜间协助</p><p class="small">对设计的含义 B</p><p>女性老人：半自理且是照护者 → 保留她烹饪、清洁、夜间起夜照护的动线，并降低她的弯腰与端持负担，防止「照护者先倒下」。</p><p class="small">数据来源：主办方提供的 Barthel 功能评估表、业主侧写与病史资料。人物插图为团队绘制。</p></div></div></section>
+<section class="sheet" id="p4"><header class="sheet-h"><span class="pageno">P04 / 16</span><span class="sheet-t">24 小时动线</span></header><div class="cols"><div class="col"><figure><a href="img/image7.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image7.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><p>极坐标图记录两位老人一日三个时间带的活动与位置；病中变化与新增照护动线在同一张图上叠加读取。</p><figure><a href="img/image6.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image6.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><figure><a href="img/image5.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image5.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><div class="kvrow"><span class="k">卧·卧室(蓝)</span><span class="v">卧·卧室(桃)</span></div><div class="kvrow"><span class="k">卫·卫生间</span><span class="v">餐·餐厅</span></div><div class="kvrow"><span class="k">厨·厨房</span><span class="v">起·起居室</span></div><p class="small">01-24h 行为极坐标图 · 早 / 午 / 晚时间带</p></div><div class="col"><p class="small">PART 02 · 需求推导</p><h2>24 小时动线：把功能量表读成一天的生活</h2><figure><a href="img/image7.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image7.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><figure><a href="img/image6.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image6.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><figure><a href="img/image8.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image8.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><figure><a href="img/image5.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image5.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><p class="small">读图结论</p><div class="kvrow"><span class="k">玄·玄关</span><span class="v">圆圈＝交汇节点</span></div><p class="small">病中变化：男卧床时间大增 → 社工上门、子女探望与陪护成为新增动线。尺度：方厅过道容纳两人通过 1500mm 并做防摔倒处理；女端东西行走 → 预留 600mm 小推车宽度；厨房门与卫生间门改感应开启。</p><p class="small">来源： 动线时序图与尺度标注。</p></div></div></section>
+<section class="sheet" id="p5"><header class="sheet-h"><span class="pageno">P05 / 16</span><span class="sheet-t">九处空间问题</span></header><p>餐厅座位过小</p><p class="small">餐厅座位过小，需要调整身体方向才能坐下。 / 考虑开放式厨房</p><p>厨房—餐厅过道</p><p class="small">从厨房到餐厅过道狭窄且要转弯， / 能不能让老人坐在厨房里吃饭？</p><p>洗衣机位置</p><p class="small">洗衣机的位置不合理，从取衣服到晾衣服的动线长而且曲折（默认在北阳台晾衣）</p><p>冰箱无过渡台面</p><p class="small">东西多，冰箱附近无过渡台面。 / 冰箱位置应该靠近方厅</p><div class="kvrow"><span class="k">07</span><span class="v">饭后洗手清洁</span></div><p class="small">饭后洗手清洁，要开门不方便</p><div class="kvrow"><span class="k">05</span><span class="v">餐具多、转移困难</span></div><p class="small">餐具多，转移困难，流线曲折</p><div class="kvrow"><span class="k">08</span><span class="v">去起居室需开门</span></div><p class="small">去起居室要开门，护栏</p><div class="kvrow"><span class="k">06</span><span class="v">两卧室仅隔一扇门</span></div><p class="small">路过两扇门，开门不便，两卧室只隔一扇门？</p><div class="kvrow"><span class="k">09</span><span class="v">黑暗中找开关</span></div><p class="small">黑暗中通过触觉找多个开关</p><p class="small">PART 02 · 需求推导</p><h2>九处空间问题：每一处都对应一个身体动作</h2><p>从动线中定位的九处障碍，按「动作 → 障碍 → 方向」记录；尺度结论单独成行。</p><figure><a href="img/image9.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image9.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><p class="small">1500mm 方厅过道两人通过 + 防摔倒处理</p><p class="small">600mm 小推车通行宽度</p><p class="small">感应开启 厨房门 / 卫生间门</p><p class="small">来源： 原始 P7 空间问题标注 ①–⑨。</p></section>
+<section class="sheet" id="p6"><header class="sheet-h"><span class="pageno">P06 / 16</span><span class="sheet-t">七空间需求</span></header><p class="small">PART 02 · 需求推导</p><h2>七空间需求矩阵：谁、在哪个房间、需要什么</h2><p>需求环按空间放射展开；右表为摘选，完整标签见源图。</p><figure><a href="img/image10.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image10.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><div class="kvrow"><span class="k">卧室·男</span><span class="v">夜间不定时起夜（感应夜灯 / 监测显示）；定时翻身（床铺辅助）；更衣（衣柜尺度）；轮椅 / 卧床照护空间</span></div><div class="kvrow"><span class="k">卧室·女</span><span class="v">睡前阅读（床头灯 / 书架）；夜间起夜；睡眠困难（隔音挡光 / 床铺无摩擦声）；饮水更衣</span></div><div class="kvrow"><span class="k">厕所</span><span class="v">洗漱与起夜辅助；智能马桶 + 轮椅尺度；男洗浴需辅助 / 坐浴；女置物台 / 扶手；扫地机器人同置</span></div><div class="kvrow"><span class="k">厨房</span><span class="v">站立可借力滑动椅；滑动空间 / 动线流畅；自动断电炉具；煮草药茶专门操台配电；全自动洗碗机</span></div><div class="kvrow"><span class="k">起居室</span><span class="v">看电视人体尺度 / 视距 / 光照；充电接口 / 信号 / 手机支架；两臂展为直径的圆形无障碍空间；躺椅晒太阳；三到四人坐立空间</span></div><div class="kvrow"><span class="k">餐厅</span><span class="v">挂立垃圾桶；餐椅人体工程学；轮椅 / 餐车 / 卧床就餐；推车滑动掉头空间；集成式烧水净水机；煎药炉 / 冰箱 / 智能管家读说明</span></div><div class="kvrow"><span class="k">门厅·户外</span><span class="v">语音智能管家；门口储物 / 买菜小车；温差预防心脑血管；散步运动；轮椅拐杖置物空间</span></div><p class="small">01-需求分析环 · 浅底版（过程稿）</p><p class="small">来源： 原始 P9 需求分析环与空间标签。</p></section>
+<section class="sheet" id="p7"><header class="sheet-h"><span class="pageno">P07 / 16</span><span class="sheet-t">三条策略</span></header><div class="cols"><div class="col"><p>抑制老人向阿兹海默症的发展进程（竞赛任务书整体指导）；手段注：以智能家居辅助。</p><p class="small">设计总目标</p><p>记忆站</p><p class="small">S1</p><p>散步路径</p><p class="small">S2</p><p>全屋一体化</p><p class="small">S3</p><p class="small">疾病 触觉增强记忆【男性为主】</p><p class="small">疾病 触觉缓解焦虑和压力【男女】</p><p class="small">活动 坐式全屋活动【男女】</p></div><div class="col"><h2>三条策略：把认知干预翻译成空间语言</h2><p class="small">唤醒男性老人思维活跃度：结合生平经历植入「记忆宫殿」的「记忆站」，抓住男性老人的注意侧重点。</p><p class="small">抓住男性老人注意侧重点</p><p class="small">室内编写散步路径：颜色 / 材质适当变化给予空间与距离的正确认知指导，缓解意识障碍痛苦，兼顾运动健康。</p><p class="small">运动健康</p><p class="small">女性老人蹲坐立变动困难 → 全屋活动一体化设计；同时化解两位老人的人体尺度冲突矛盾。</p><p class="small">两位老人的人体尺度冲突矛盾</p><p class="small">转译泡泡 · 原图按疾病 / 活动 / 兴趣分组</p><p class="small">兴趣 室内趣味散步【男女】</p><p class="small">来源： 原始 P12 策略页与转译泡泡图。</p></div></div></section>
+<section class="sheet" id="p8"><header class="sheet-h"><span class="pageno">P08 / 16</span><span class="sheet-t">记忆宫殿</span></header><h2>记忆宫殿：一个「反过程」的概念</h2><p>传统记忆宫殿把抽象记忆绑到熟悉物体上组成空间；我们的版本反过来——用已经熟悉的事物、空间与信息，唤起与之关联的记忆。</p><figure><a href="img/image11.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image11.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><figure><a href="img/image12.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image12.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><p class="small">02记忆宫殿理论环（源图浅底圆）</p><p class="small">落地四件套</p><p>照片墙、藏品陈列柜、智能家居辅助、特殊触摸材料与提示符号，组成室内散步路线。</p><p class="small">01-记忆宫殿路径分析：平面 + 橙色点线散步动线 + 老物件圆片</p><p class="small">来源： 记忆宫殿路径分析图与理论环（过程稿高清版；展板同内容见 B01）。</p></section>
+<section class="sheet" id="p9"><header class="sheet-h"><span class="pageno">P09 / 16</span><span class="sheet-t">平面与尺寸</span></header><figure><a href="img/image9.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image9.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><figure><a href="img/image13.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image13.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><div class="kvrow"><span class="k">洗衣机</span><span class="v">临时厕所</span></div><div class="kvrow"><span class="k">脏衣篓</span><span class="v">垂直握杆</span></div><div class="kvrow"><span class="k">扫地机</span><span class="v">淋浴区</span></div><div class="kvrow"><span class="k">辅助下床</span><span class="v">磨砂玻璃推拉门</span></div><div class="kvrow"><span class="k">陪护床位</span><span class="v">智能检测大屏</span></div><div class="kvrow"><span class="k">换鞋凳</span><span class="v">鞋柜</span></div><div class="kvrow"><span class="k">衣柜</span><span class="v">电视柜</span></div><div class="kvrow"><span class="k">运动康复</span><span class="v">电动床</span></div><div class="kvrow"><span class="k">电动床</span><span class="v">沙发床</span></div><div class="kvrow"><span class="k">床头柜</span><span class="v">床头柜</span></div><p class="small">床头柜</p><h2>平面与尺寸：每个数字都能量出来</h2><p>改造后新增点位</p><p class="small">01-改造前平面布置（带尺寸）</p><p class="small">02-清理后平面（带尺寸）</p><p class="small">03-改造后平面布置（带尺寸）</p><p class="small">来源： 主办方原始平面提供</p></section>
+<section class="sheet" id="p10"><header class="sheet-h"><span class="pageno">P10 / 16</span><span class="sheet-t">平面尺寸（续）</span></header><h2>平面与尺寸：每个数字都能量出来</h2><figure><a href="img/image18.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image18.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><figure><a href="img/image17.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image17.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><figure><a href="img/image15.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image15.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><figure><a href="img/image17.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image17.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><figure><a href="img/image16.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image16.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><p class="small">01改造后平面布置（带尺寸）</p><p class="small">来源： 人体尺度，无障碍人体尺度规范</p></section>
+<section class="sheet" id="p11"><header class="sheet-h"><span class="pageno">P11 / 16</span><span class="sheet-t">辅具选型 A</span></header><h2>辅具选型 A：卧寝与床边转移</h2><div class="kvrow"><span class="k">规格</span><span class="v">1.2m 床型 2130 × 1350 × 800–1150mm；床面内长 2000 × 1200mm</span></div><figure><a href="img/image19.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image19.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><div class="kvrow"><span class="k">床围 / 床架</span><span class="v">红橡实木边框 + 25mm 实木多层板 + 科技皮软包；碳素钢喷塑床架</span></div><div class="kvrow"><span class="k">承重 / 脚轮</span><span class="v">200KG；3 寸双排静音脚轮</span></div><div class="kvrow"><span class="k">角度 / 升降</span><span class="v">背 0–70°、腿 0–40°；整床升降 300–650mm</span></div><div class="kvrow"><span class="k">电机 / 控制</span><span class="v">德国 okin × 4；无线遥控；床底 LED 夜灯</span></div><p class="small">01男性老人卧室爆炸轴测：护理床 + 折叠床 + 衣柜</p><figure><a href="img/image20.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image20.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><div class="kvrow"><span class="k">床边辅助</span><span class="v">起床辅助器：免打孔、扶手不分左右</span></div><div class="kvrow"><span class="k">选型比价</span><span class="v">世道护理床，售价 13810 元</span></div><p class="small">02-两卧室立面渲染（过程稿 1440×810，低清仅示意）</p><p class="small">来源： 2023年辅具选择资料；爆炸轴测为过程稿。</p></section>
+<section class="sheet" id="p12"><header class="sheet-h"><span class="pageno">P12 / 16</span><span class="sheet-t">辅具选型 B</span></header><div class="cols"><div class="col"><p>四类辅具落到型号级尺寸，与平面点位一一对应。</p><p>双臂托助行器</p><p class="small">坐垫宽</p><div class="kvrow"><span class="k">折叠尺寸</span><span class="v">84×60×12cm</span></div><p class="small">净重</p><div class="kvrow"><span class="k">承重</span><span class="v">300 斤</span></div><p class="small">承重</p><div class="kvrow"><span class="k">材质</span><span class="v">铝合金 + 碳钢</span></div><p class="small">展开</p><div class="kvrow"><span class="k">主架净重</span><span class="v">4.15KG（不含座板）</span></div><p class="small">折叠</p><div class="kvrow"><span class="k">高度调节</span><span class="v">多档可调，106–121cm</span></div><p class="small">图示尺寸</p><p>风暖浴霸</p><div class="kvrow"><span class="k">取暖</span><span class="v">2100W</span></div><div class="kvrow"><span class="k">换气</span><span class="v">20–22W</span></div><div class="kvrow"><span class="k">风量</span><span class="v">洗烘一体</span></div><p class="small">140–155m³/h</p><div class="kvrow"><span class="k">噪音</span><span class="v">脏衣篮架</span></div><p class="small">39–40dB</p><div class="kvrow"><span class="k">机身厚</span><span class="v">150mm（预留 ≥170mm）</span></div><div class="kvrow"><span class="k">面板</span><span class="v">300×300mm</span></div></div><div class="col"><h2>辅具选型 B：行走、卫浴与家务</h2><p>轻便轮椅</p><div class="kvrow"><span class="k">41cm</span><span class="v">智能马桶</span></div><p class="small">10.9KG</p><div class="kvrow"><span class="k">宽</span><span class="v">392mm</span></div><p class="small">100KG</p><div class="kvrow"><span class="k">高</span><span class="v">697mm</span></div><p class="small">86×53×89cm</p><div class="kvrow"><span class="k">坑距</span><span class="v">305 / 400mm</span></div><p class="small">40×53×66cm</p><p class="small">926 / 1050–1100 / 390 / 515</p><div class="kvrow"><span class="k">05</span><span class="v">06</span></div><p>洗烘一体 + 脏衣篮架</p><p>扫地机器人</p><div class="kvrow"><span class="k">机身</span><span class="v">465×480×795mm</span></div><p class="small">347×352×103mm</p><div class="kvrow"><span class="k">预留位</span><span class="v">44×33×79cm</span></div><p class="small">500×500×350</p><p class="small">来源：  辅具参数页。</p></div></div></section>
+<section class="sheet" id="p13"><header class="sheet-h"><span class="pageno">P13 / 16</span><span class="sheet-t">展板 01</span></header><p class="small">PART 03 · 竞赛展板</p><h2>展板 01：业主与需求</h2><figure><a href="img/image21.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image21.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><p class="small">标题与老照片拼贴、生命时间轴胶片带（1930–2024）</p><p class="small">基本信息与 Barthel 雷达六边形</p><p class="small">需求分析圆环与记忆宫殿理论环</p><p class="small">业主侧写：插图 + 性格爱好 + 病程趋势</p><p class="small">与本册的关系</p><p>P2–P6 的用户与需求分析即源自此板；此处保留整板以呈现竞赛原貌。</p><p class="small">来源： 竞赛展板 01（1-1A095 01.jpg，9933 × 14043）。</p></section>
+<section class="sheet" id="p14"><header class="sheet-h"><span class="pageno">P14 / 16</span><span class="sheet-t">展板 02</span></header><p class="small">PART 03 · 竞赛展板</p><h2>展板 02：平面与空间</h2><figure><a href="img/image22.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image22.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><p class="small">行为 / 辅具分析</p><p class="small">平面布置图（带尺寸）</p><p class="small">卫生间 / 卧室 / 起居室圆片渲染</p><p class="small">厨房 &amp;amp; 餐厅说明</p><p class="small">与本册的关系</p><p>P9–P11 的尺寸与辅具选型源自此板。</p><p class="small">来源： 竞赛展板 02（1-1A095 02.jpg，9933 × 14043）。</p></section>
+<section class="sheet" id="p15"><header class="sheet-h"><span class="pageno">P15 / 16</span><span class="sheet-t">展板 03</span></header><p class="small">PART 03 · 竞赛展板</p><h2>展板 03：方案与渲染</h2><figure><a href="img/image23.jpg" target="_blank" rel="noopener" aria-label="点开放大这张图"><img src="img/image23.jpg" loading="lazy" decoding="async" alt="展板配图"></a></figure><p class="small">主卧大渲染 + 轴测剖切</p><p class="small">智能家居产品分析</p><p class="small">记忆宫殿路径分析</p><p class="small">智能家具设计思路与渲染组图</p><p class="small">与本册的关系</p><p>P8、P10 的主图源自此板。</p><p class="small">来源： 竞赛展板 03（1-1A095 03.jpg，9933 × 14043）。</p></section>
+<section class="sheet" id="p16"><header class="sheet-h"><span class="pageno">P16 / 16</span><span class="sheet-t">复盘</span></header><div class="cols"><div class="col"><p>以下为作者自述反思，非竞赛评审意见。</p><p class="small">A</p><p>做对的</p><p class="small">把量表读成生活动线</p><p class="small">记忆宫殿把认知干预翻译成空间语言</p><p class="small">辅具落到型号与尺寸</p></div><div class="col"><p class="small">PART 04 · 复盘</p><h2>复盘：做对的、不足的、带走的</h2><div class="kvrow"><span class="k">B</span><span class="v">C</span></div><p>不足的</p><p>带走的方法</p><p class="small">无真实访谈与问卷，需求验证靠时序推演</p><p class="small">先明确需求再画平面</p><p class="small">过程留稿不充分，项目回顾时，有断档</p><p class="small">每个设计动作对应一条业主证据</p><p class="small">尺度冲突的取舍记录不够显性</p><p class="small">「谁照顾谁」是照护设计的起点</p><p class="small">求职衔接</p><p>证据 → 需求 → 空间动作 → 可核验尺寸，与零售 / 运营的「现场观察 → 需求 → 动线陈列 → 指标」同构。</p><p class="small">来源： 本人复盘自述（2026-09），非竞赛评审意见。</p></div></div></section></main>
+<p class="foot">本页是《勿忘我》16 页册子的移动端阅读版：内容取自 v8 终版，双栏展板按「先左栏、后右栏」的顺序读；图片按移动端压缩并懒加载。打印／投递用 PDF 由作者本人提供，本站不托管文件。</p>
 <div id="drawer"><div class="drawer-in"><h4>目录 · 16 页</h4><a class="toci" href="#p1"><b>P01</b>封面</a>
 <a class="toci" href="#p2"><b>P02</b>项目档案</a>
 <a class="toci" href="#p3"><b>P03</b>用户画像</a>
@@ -386,7 +108,7 @@ figure img{display:block;width:100%;height:auto;border:1px solid var(--line-soft
 <a class="toci" href="#p7"><b>P07</b>三条策略</a>
 <a class="toci" href="#p8"><b>P08</b>记忆宫殿</a>
 <a class="toci" href="#p9"><b>P09</b>平面与尺寸</a>
-<a class="toci" href="#p10"><b>P10</b>平面尺寸续</a>
+<a class="toci" href="#p10"><b>P10</b>平面尺寸（续）</a>
 <a class="toci" href="#p11"><b>P11</b>辅具选型 A</a>
 <a class="toci" href="#p12"><b>P12</b>辅具选型 B</a>
 <a class="toci" href="#p13"><b>P13</b>展板 01</a>
@@ -394,7 +116,6 @@ figure img{display:block;width:100%;height:auto;border:1px solid var(--line-soft
 <a class="toci" href="#p15"><b>P15</b>展板 03</a>
 <a class="toci" href="#p16"><b>P16</b>复盘</a></div></div>
 <button type="button" class="top" id="toTop" aria-label="回到顶部"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><ellipse cx="12" cy="15.4" rx="4.6" ry="3.9"/><ellipse cx="5.9" cy="10.6" rx="2.1" ry="2.6"/><ellipse cx="10.1" cy="7.4" rx="2.1" ry="2.7"/><ellipse cx="14.6" cy="7.4" rx="2.1" ry="2.7"/><ellipse cx="18.6" cy="10.9" rx="2.1" ry="2.6"/></svg></button>
-
 <script>
 (function(){
   var KEY="deck-font", btns=document.querySelectorAll("[data-fs]");
@@ -404,17 +125,22 @@ figure img{display:block;width:100%;height:auto;border:1px solid var(--line-soft
   for(var i=0;i<btns.length;i++)btns[i].addEventListener("click",function(){fs(+this.dataset.fs)});
   var s=18;try{s=+localStorage.getItem(KEY)||18}catch(e){}fs(s);
 
-  var bar=document.getElementById("bar"),rider=document.getElementById("rider"),top=document.getElementById("toTop");
-  function prog(){var de=document.documentElement,max=de.scrollHeight-de.clientHeight;
+  var fill=document.getElementById("fill"),knob=document.getElementById("knob"),rd=document.getElementById("read"),top=document.getElementById("toTop");
+  var sheets=[].slice.call(document.querySelectorAll(".sheet"));
+  function prog(){
+    var de=document.documentElement,max=de.scrollHeight-de.clientHeight;
     var p=max>0?Math.min(100,de.scrollTop/max*100):0;
-    bar.style.width=p+"%";rider.style.left=p+"%";
-    top.classList.toggle("on",de.scrollTop>600);}
+    fill.style.width=p+"%";knob.style.left=p+"%";
+    var n=1;
+    for(var i=0;i<sheets.length;i++){if(sheets[i].getBoundingClientRect().top<=140)n=i+1;}
+    rd.textContent="P"+("0"+n).slice(-2)+" / 16 · "+Math.round(p)+"%";
+    top.classList.toggle("on",de.scrollTop>600);
+  }
   addEventListener("scroll",prog,{passive:true});addEventListener("resize",prog);prog();
   top.addEventListener("click",function(){scrollTo({top:0,behavior:"smooth"})});
-
   var d=document.getElementById("drawer");
   document.getElementById("tocBtn").addEventListener("click",function(){d.classList.add("on")});
-  d.addEventListener("click",function(e){if(e.target===d||e.target.tagName==="A")d.classList.remove("on")});
+  d.addEventListener("click",function(e){if(e.target===d||e.target.closest("a"))d.classList.remove("on")});
 })();
 </script>
 </body>
