@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>一张动线图，三层读法 · 适老化 24 小时 | 王然</title>
-<meta name="description" content="把适老化项目的 24 小时动线拆成时间带与房间：看每个房间一天被用到几次，再看我为它做的改造决策。">
+<title>先数，再改：适老化 24 小时动线 | 王然</title>
+<meta name="description" content="我把适老化项目 24 小时动线里的 77 个房间标记数了一遍：换个时段，第一名就会换。改造顺序是从这里来的。">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="canonical" href="https://wr-create.github.io/wr-portfolio/interactive/">
 <style>(function(){try{var t=localStorage.getItem("wr-theme");if(t!=="light"){t="dark"}document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</style>
@@ -12,103 +12,99 @@
 :root,[data-theme="dark"]{--bg:#0d0d0d;--panel:#111111;--headbg:#0d0d0d;--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.16);--ink:#ffffff;--ink2:#cccccc;--ink3:#8a8a8a;--ink4:#666666;--accent:#B7AB98;--accentline:rgba(183,171,152,.45);--dim:rgba(183,171,152,.12);color-scheme:dark}
 [data-theme="light"]{--bg:#f2f3f5;--panel:#e9eaec;--headbg:#f2f3f5;--line:rgba(20,23,26,.12);--line2:rgba(20,23,26,.2);--ink:#14171a;--ink2:#23272b;--ink3:#4e5359;--ink4:#6b7076;--accent:#7d6a45;--accentline:rgba(125,106,69,.45);--dim:rgba(125,106,69,.13);color-scheme:light}
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink2);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;font-weight:300;line-height:1.85;-webkit-text-size-adjust:100%}
 .mono{font-family:'JetBrains Mono',Consolas,'PingFang SC','Microsoft YaHei',monospace}
-.wrap{max-width:880px;margin:0 auto;padding:0 22px}
+.wrap{max-width:820px;margin:0 auto;padding:0 22px}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 strong{color:var(--ink);font-weight:400}
 .top{position:sticky;top:0;background:var(--headbg);border-bottom:1px solid var(--line);padding:13px 0;z-index:5}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.back{font-size:.76rem;letter-spacing:.5px;min-height:44px;display:inline-flex;align-items:center}
-.brand{font-family:'JetBrains Mono',Consolas,monospace;font-size:.78rem;letter-spacing:3px;color:var(--ink)}
-.hero{padding:52px 0 26px;border-bottom:1px solid var(--line)}
-.kicker{font-family:'JetBrains Mono',Consolas,monospace;font-size:.66rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:16px}
-h1{font-size:clamp(1.6rem,4.4vw,2.4rem);font-weight:200;color:var(--ink);letter-spacing:-.01em;line-height:1.32;margin-bottom:14px}
-.sub{font-size:.94rem;color:var(--ink3);max-width:700px}
-.src{font-family:'JetBrains Mono',Consolas,monospace;font-size:.62rem;letter-spacing:.5px;color:var(--ink4);margin-top:18px;line-height:1.9}
-.ctl{padding:30px 0 6px;position:sticky;top:63px;background:var(--bg);border-bottom:1px solid var(--line);z-index:4}
-.ctl-h{font-family:'JetBrains Mono',Consolas,monospace;font-size:.62rem;letter-spacing:2px;color:var(--ink4);margin-bottom:10px}
-.bands{display:flex;flex-wrap:wrap;gap:8px;padding-bottom:16px}
-.band{font:inherit;font-size:.82rem;color:var(--ink3);background:transparent;border:1px solid var(--line2);border-radius:999px;padding:0 16px;min-height:44px;cursor:pointer;letter-spacing:.4px}
-.band:hover{color:var(--ink);border-color:var(--accentline)}
-.band[aria-pressed="true"]{color:var(--bg);background:var(--accent);border-color:var(--accent)}
-.band:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;padding:26px 0 8px}
-.room{border:1px solid var(--line);background:var(--panel);padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px}
-.room--on{border-color:var(--accentline);background:var(--dim)}
-.room-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
-.room-n{font-size:1.02rem;color:var(--ink);font-weight:400;letter-spacing:.5px}
-.room-c{font-family:'JetBrains Mono',Consolas,monospace;font-size:1.5rem;color:var(--accent);line-height:1}
-.room-c small{font-size:.6rem;letter-spacing:1px;color:var(--ink4);margin-left:4px}
-.split{display:flex;flex-wrap:wrap;gap:14px;font-family:'JetBrains Mono',Consolas,monospace;font-size:.64rem;letter-spacing:.5px;color:var(--ink4)}
-.seq{display:flex;flex-wrap:wrap;gap:3px}
-.seq b{font-weight:400;width:19px;height:19px;line-height:17px;text-align:center;border:1px solid var(--line2);font-size:.62rem;color:var(--ink3)}
-.seq b.hi{border-color:var(--accent);color:var(--accent);background:var(--dim)}
-.seq i{font-style:normal;font-family:'JetBrains Mono',Consolas,monospace;font-size:.58rem;letter-spacing:1px;color:var(--ink4);width:100%;margin-top:4px}
-.act{font-size:.8rem;color:var(--ink2);border-top:1px dashed var(--line);padding-top:9px;margin-top:auto}
-.act.none{color:var(--ink4)}
-.act em{font-style:normal;color:var(--accent)}
-.concl{padding:34px 0 10px;border-top:1px solid var(--line);margin-top:22px}
-h2{font-size:clamp(1.06rem,2.6vw,1.28rem);font-weight:400;color:var(--ink);margin-bottom:12px}
-.lead{font-size:.92rem;color:var(--ink2);margin-bottom:16px}
-.tbl{display:grid;gap:8px;margin:6px 0 18px}
-.kv{display:grid;grid-template-columns:132px 1fr;gap:4px 14px;border:1px solid var(--line);padding:11px 14px}
-.kv .k{font-family:'JetBrains Mono',Consolas,monospace;font-size:.64rem;letter-spacing:.5px;color:var(--ink4);align-self:center}
-.kv .v{font-size:.86rem;color:var(--ink2)}
-.jump{display:inline-flex;align-items:center;min-height:44px;font-family:'JetBrains Mono',Consolas,monospace;font-size:.7rem;letter-spacing:1px;color:var(--accent)}
-.note{font-size:.8rem;color:var(--ink4);line-height:1.9;border-left:2px solid var(--line2);padding-left:12px;margin-top:18px}
-.thumb{display:block;margin-top:22px;border:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.back{font-size:.76rem;min-height:44px;display:inline-flex;align-items:center}
+.brand{font-family:'JetBrains Mono',Consolas,monospace;font-size:.76rem;letter-spacing:3px;color:var(--ink3)}
+.hero{padding:46px 0 30px}
+.kicker{font-family:'JetBrains Mono',Consolas,monospace;font-size:.64rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:14px}
+h1{font-size:clamp(1.9rem,5.6vw,2.9rem);font-weight:200;color:var(--ink);line-height:1.24;margin-bottom:14px}
+.sub{font-size:1rem;color:var(--ink2);max-width:640px}
+.q{padding:26px 0 22px;border-top:1px solid var(--line)}
+.q-h{font-size:1.06rem;color:var(--ink);line-height:1.6;margin-bottom:4px}
+.q-s{font-size:.8rem;color:var(--ink3);margin-bottom:16px}
+.rooms{display:flex;flex-wrap:wrap;gap:8px}
+.room{font:inherit;font-size:.86rem;color:var(--ink2);background:transparent;border:1px solid var(--line2);border-radius:999px;padding:0 17px;min-height:44px;cursor:pointer}
+.room:hover{border-color:var(--accentline);color:var(--ink)}
+.room[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.room:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.verdict{margin-top:18px;border-left:2px solid var(--accent);background:var(--dim);padding:16px 18px;font-size:.94rem;color:var(--ink2);line-height:1.9;min-height:60px}
+.verdict b{color:var(--ink);font-weight:400}
+.verdict .mono{color:var(--accent)}
+.bands{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 20px}
+.band{font:inherit;font-size:.8rem;color:var(--ink3);background:transparent;border:1px solid var(--line2);border-radius:999px;padding:0 15px;min-height:44px;cursor:pointer}
+.band[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.bars{display:flex;flex-direction:column;gap:9px}
+.bar{display:grid;grid-template-columns:112px 1fr 62px;align-items:center;gap:12px;font-size:.86rem;color:var(--ink2)}
+.bar .tk{height:20px;background:rgba(var(--rgb-accent),.16);position:relative}
+.bar .fl{position:absolute;left:0;top:0;bottom:0;background:var(--accent);transition:width .5s cubic-bezier(.22,.61,.36,1)}
+.bar.top .fl{background:var(--accent)}
+.bar .vl{font-family:'JetBrains Mono',Consolas,monospace;font-size:.76rem;color:var(--ink3);text-align:right}
+.bar.top .nm{color:var(--ink)}
+.take{margin:18px 0 0;font-size:1.02rem;color:var(--ink);line-height:1.7}
+.sec{padding:28px 0;border-top:1px solid var(--line)}
+h2{font-size:.78rem;font-family:'JetBrains Mono',Consolas,monospace;letter-spacing:2px;color:var(--ink4);text-transform:uppercase;margin-bottom:14px}
+.kv{display:grid;grid-template-columns:126px 1fr;gap:4px 14px;border:1px solid var(--line);padding:11px 14px;margin-bottom:8px;font-size:.86rem}
+.kv .k{font-family:'JetBrains Mono',Consolas,monospace;font-size:.64rem;color:var(--ink4);align-self:center}
+.jump{display:inline-flex;align-items:center;min-height:44px;font-size:.76rem;color:var(--accent);font-family:'JetBrains Mono',Consolas,monospace}
+.thumb{display:block;margin-top:16px;border:1px solid var(--line)}
 .thumb img{display:block;width:100%;height:auto}
-footer{border-top:1px solid var(--line);margin-top:38px;padding:26px 0 46px;font-size:.78rem;color:var(--ink3);line-height:3}
-@media (max-width:640px){.grid{grid-template-columns:1fr}.ctl{position:static}}
-@media (max-width:520px){.kv{grid-template-columns:1fr}}
-@media (prefers-reduced-motion:no-preference){.room,.band{transition:border-color .25s ease,background .25s ease,color .25s ease}}
+.note{font-size:.72rem;color:var(--ink4);line-height:1.9;margin-top:16px}
+footer{border-top:1px solid var(--line);padding:24px 0 46px;font-size:.78rem;color:var(--ink3);line-height:2.6}
+@media (max-width:560px){.bar{grid-template-columns:86px 1fr 48px;font-size:.8rem}}
+@media (prefers-reduced-motion:no-preference){.room,.band{transition:border-color .2s,background .2s,color .2s}}
 </style>
 </head>
 <body>
 <header class="top"><div class="wrap">
-<a class="back" href="../index.html#capabilities">← 返回主站</a>
+<a class="back" href="../index.html#interact">← 返回主站</a>
 <div class="brand">WANG RAN / 24H</div>
 </div></header>
 
 <section class="hero"><div class="wrap">
-<div class="kicker">Interaction · 适老化设计竞赛 铜奖</div>
-<h1>一张动线图，三层读法</h1>
-<p class="sub">我把两位老人的一天拆成三个时间带、六个房间。下面每一格是那个房间<strong>一天被用到的次数</strong>——次数不是估的，是把可编辑源文件里的每一个房间标记数出来的。选一个时间带，看它怎么变。</p>
-<div class="src">数据口径：适老化项目《24 小时动线》重绘 v1（可编辑 PPTX · slide1 的 77 个房间标记）｜男/女按图内左右两列统计｜本页所有数字由序列现算，不手填</div>
+<div class="kicker">适老化设计竞赛 铜奖 · 第 4 页</div>
+<h1>先数，再改。</h1>
+<p class="sub">这张 24 小时动线我数过一遍：<strong>77 个房间标记</strong>。数完得到的不是漂亮的图，是一个顺序——<strong>换个时段，"谁用得最多"的第一名就会换人</strong>。改造清单是按这个顺序排的。</p>
 </div></section>
 
-<section class="ctl"><div class="wrap">
-<div class="ctl-h">时间带 / TIME BAND</div>
+<section class="q"><div class="wrap">
+  <div class="q-h">先猜一下：这对 94 岁和 86 岁的夫妻，一天里最该先改造哪个房间？</div>
+  <div class="q-s">点一个房间，我把我数出来的名次给你看。</div>
+  <div class="rooms" id="rooms" role="group" aria-label="选择一个房间"></div>
+  <div class="verdict" id="verdict" aria-live="polite"></div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+<h2>换个时段再看 / switch the time band</h2>
 <div class="bands" id="bands" role="group" aria-label="选择时间带"></div>
+<div class="bars" id="bars"></div>
+<p class="take" id="take"></p>
 </div></section>
 
-<main class="wrap"><div class="grid" id="grid"></div></main>
-
-<section class="concl"><div class="wrap">
-<h2>读图结论（原册第 4 页）</h2>
-<p class="lead">病中变化：男卧床时间大增 → 社工上门、子女探望与陪护成为<strong>新增动线</strong>。极坐标图记录两位老人一日三个时间带的活动与位置；病中变化与新增照护动线在同一张图上叠加读取。</p>
-<div class="tbl">
-<div class="kv"><span class="k">方厅过道</span><span class="v">容纳两人通过 1500mm 并做防摔倒处理</span></div>
-<div class="kv"><span class="k">女端东西行走</span><span class="v">预留 600mm 小推车宽度</span></div>
-<div class="kv"><span class="k">厨房门 / 卫生间门</span><span class="v">改感应开启</span></div>
-</div>
-<p class="note"><strong>这一页想说明的方法</strong>：先按时序把房间使用次数数出来，再决定钱花在哪扇门上。卫生间全天次数最多、早晚各有一轮，所以「门改感应开启」不是审美选择，是从次数推出来的。卧室、餐厅、玄关这三层只标注次数、不下改造结论——原册没有给它们单独的改造项。</p>
-<a class="jump" href="../deck/wuwangwo/index.html#p4">← 打开适老化 16 页阅读版（第 4 页就是这张图）↗</a>
-<a class="thumb" href="../deck/wuwangwo/zoom/p04.jpg" target="_blank" rel="noopener"><img src="../deck/wuwangwo/page/p04.jpg" width="1600" height="900" loading="lazy" decoding="async" alt="适老化竞赛展板第 4 页：24 小时动线（左为行为极坐标图，右为早午晚三个时间带）"></a>
+<section class="sec"><div class="wrap">
+<h2>原册给的改造清单（不是我编的）</h2>
+<div class="kv"><span class="k">厨房门 / 卫生间门</span><span>改感应开启</span></div>
+<div class="kv"><span class="k">方厅过道</span><span>容纳两人通过 1500mm 并做防摔倒处理</span></div>
+<div class="kv"><span class="k">女端东西行走</span><span>预留 600mm 小推车宽度</span></div>
+<div class="kv"><span class="k">病中变化</span><span>男卧床时间大增 → 社工上门、子女探望与陪护成为新增动线</span></div>
+<a class="jump" href="../deck/wuwangwo/index.html#p4">← 打开 16 页阅读版，看这张图原样 ↗</a>
+<a class="thumb" href="../deck/wuwangwo/zoom/p04.jpg" target="_blank" rel="noopener"><img src="../deck/wuwangwo/page/p04.jpg" width="1600" height="900" loading="lazy" decoding="async" alt="适老化竞赛展板第 4 页：24 小时动线，左侧行为极坐标图，右侧早午晚三个时间带"></a>
+<p class="note">数据口径：《24 小时动线》重绘 v1（可编辑 PPTX · slide1 的 77 个房间标记），按图内男/女两列自上而下转录成序列，本页所有次数与名次都由序列现算；改造清单四条摘自阅读版第 4 页原文。</p>
 </div></section>
 
 <footer><div class="wrap">
-<div>王然 · 建筑学本科（2022–2027）· 上海 / 大连</div>
-<div><a href="mailto:wr13331517846@qq.com">wr13331517846@qq.com</a> ｜ <a href="tel:13331517846">133 3151 7846</a></div>
-<div style="margin-top:14px"><a href="../index.html">← 返回主站</a> ｜ <a href="../capabilities/index.html">完整能力举证 →</a> ｜ <a href="../translation/index.html">同一份设计，我按听众换讲法 →</a></div>
+<div>王然 · 建筑学本科（2022–2027）· 上海 / 大连 ｜ <a href="mailto:wr13331517846@qq.com">wr13331517846@qq.com</a> ｜ <a href="tel:13331517846">133 3151 7846</a></div>
+<div><a href="../index.html">← 返回主站</a> ｜ <a href="../capabilities/index.html">完整能力举证 →</a> ｜ <a href="../translation/index.html">同一份设计，我按听众换讲法 →</a></div>
 </div></footer>
 
 <script>
-/* 序列＝图内房间标记按上→下的原样转录（一个字符＝一个房间标记）。
-   次数由本文件现算，不手填，避免抄错。改序列请同步台账 #176 让用户复核。 */
+/* 序列＝图内房间标记按上→下的原样转录（一个字符＝一个房间标记）；次数与名次全部现算，不手填。 */
 var SEQ = {
   '早': { '男': '卧卧卫餐餐卫起卫起卫起', '女': '卧卫卫厨餐卫起餐厨玄玄卫厨起卫厨' },
   '午': { '男': '餐餐卫卧卧卧卫起起卧卫起', '女': '餐餐厨卫卧卧卧卧卫起卫卧玄厨' },
@@ -116,57 +112,94 @@ var SEQ = {
 };
 var BANDS = ['全天', '早 5:00–10:30', '午 11:00–16:00', '晚 16:30–20:30'];
 var ROOMS = [
-  { k: '卫', n: '卫生间', act: '门 <em>改感应开启</em>', src: '原册尺度表' },
-  { k: '卧', n: '卧室', act: '' },
-  { k: '起', n: '起居室 / 方厅', act: '过道 <em>1500mm</em> 两人通过 + 防摔倒', src: '原册尺度表' },
-  { k: '餐', n: '餐厅', act: '' },
-  { k: '厨', n: '厨房', act: '门 <em>改感应开启</em>', src: '原册尺度表' },
-  { k: '玄', n: '玄关', act: '' }
+  { k: '卫', n: '卫生间', chg: '门改成感应开启' },
+  { k: '卧', n: '卧室', chg: '' },
+  { k: '餐', n: '餐厅', chg: '' },
+  { k: '厨', n: '厨房', chg: '门改成感应开启' },
+  { k: '起', n: '起居室 / 方厅', chg: '过道留到 1500mm 两人通过，并做防摔倒' },
+  { k: '玄', n: '玄关', chg: '' }
 ];
 function pick(key) {
-  var out = {}, ks = Object.keys(SEQ);
+  var out = {};
   ROOMS.forEach(function (r) {
     var m = '', f = '';
-    ks.forEach(function (k) {
+    Object.keys(SEQ).forEach(function (k) {
       if (key && k !== key) return;
       m += SEQ[k]['男']; f += SEQ[k]['女'];
     });
     var c = function (s) { var n = 0, i; for (i = 0; i < s.length; i++) { if (s.charAt(i) === r.k) n++; } return n; };
-    out[r.k] = { m: m, f: f, n: c(m) + c(f), cm: c(m), cf: c(f) };
+    out[r.k] = { n: c(m) + c(f), cm: c(m), cf: c(f) };
   });
   return out;
 }
 var ALL = { '全天': pick(null), '早 5:00–10:30': pick('早'), '午 11:00–16:00': pick('午'), '晚 16:30–20:30': pick('晚') };
-function seqHtml(s, k) {
-  var h = '', i;
-  for (i = 0; i < s.length; i++) h += '<b' + (s.charAt(i) === k ? ' class="hi"' : '') + '>' + s.charAt(i) + '</b>';
-  return h;
+function order(band) {
+  return ROOMS.slice().sort(function (a, b) { return ALL[band][b.k].n - ALL[band][a.k].n; });
 }
-var cur = '全天';
-function render() {
-  var d = ALL[cur], h = '';
-  ROOMS.forEach(function (r) {
-    var v = d[r.k];
-    var mini = '早' + ALL['早 5:00–10:30'][r.k].n + ' 午' + ALL['午 11:00–16:00'][r.k].n + ' 晚' + ALL['晚 16:30–20:30'][r.k].n;
-    h += '<article class="room' + (cur === '全天' ? '' : ' room--on') + '">'
-      + '<div class="room-h"><span class="room-n">' + r.n + '</span><span class="room-c">' + v.n + '<small>次</small></span></div>'
-      + '<div class="split"><span>男 ' + v.cm + '</span><span>女 ' + v.cf + '</span><span>' + (cur === '全天' ? mini : cur) + '</span></div>'
-      + '<div class="seq"><i>男 · 上→下</i>' + seqHtml(v.m, r.k) + '<i>女 · 上→下</i>' + seqHtml(v.f, r.k) + '</div>'
-      + '<div class="act' + (r.act ? '' : ' none') + '">' + (r.act ? '改造：' + r.act + '（' + r.src + '）' : '这一层只标注次数，不下改造结论') + '</div>'
-      + '</article>';
-  });
-  document.getElementById('grid').innerHTML = h;
+function rankOf(k, band) {
+  var o = order(band), i;
+  for (i = 0; i < o.length; i++) { if (o[i].k === k) return i + 1; }
+  return 0;
 }
-var bb = document.getElementById('bands'), bh = '', i;
+var SHORT = { '全天': '全天', '早 5:00–10:30': '早', '午 11:00–16:00': '午', '晚 16:30–20:30': '晚' };
+var cur = '全天', picked = '';
+function renderVerdict() {
+  var el = document.getElementById('verdict');
+  if (!picked) {
+    el.innerHTML = '全天看：<b>卫生间 22 次</b>排第一，卧室 20 第二。你猜的是哪个？点上面一格，我把它的次数和名次给你。';
+    return;
+  }
+  var r = null, i;
+  for (i = 0; i < ROOMS.length; i++) { if (ROOMS[i].k === picked) r = ROOMS[i]; }
+  var v = ALL[cur][picked], rk = rankOf(picked, cur);
+  var h = '<b>' + r.n + '</b> 在「' + cur + '」出现 <span class="mono">' + v.n + '</span> 次（男 ' + v.cm + ' · 女 ' + v.cf + '），六个房间排<b>第 ' + rk + '</b>。';
+  if (rk === 1) h += '这一档它是第一名。';
+  else {
+    var top = order(cur)[0];
+    h += '第一名是<b>' + top.n + '</b>（' + ALL[cur][top.k].n + ' 次）。';
+  }
+  h += r.chg ? '原册为它定的改造：' + r.chg + '。' : '原册没有给它单独的改造项，所以这一格我不下结论。';
+  el.innerHTML = h;
+}
+function renderBars() {
+  var o = order(cur), max = ALL[cur][o[0].k].n, h = '', i;
+  for (i = 0; i < o.length; i++) {
+    var r = o[i], v = ALL[cur][r.k];
+    h += '<div class="bar' + (i === 0 ? ' top' : '') + '"><span class="nm">' + (i + 1) + '. ' + r.n + '</span>'
+      + '<span class="tk"><span class="fl" style="width:' + (max ? (v.n / max * 100).toFixed(1) : 0) + '%"></span></span>'
+      + '<span class="vl">' + v.n + ' 次</span></div>';
+  }
+  document.getElementById('bars').innerHTML = h;
+  var t = order(cur)[0], s = order(cur)[1];
+  var msg = cur === '全天'
+    ? '全天：<b>' + t.n + ' ' + ALL[cur][t.k].n + ' 次</b>第一，' + s.n + ' ' + ALL[cur][s.k].n + ' 次第二。'
+    : '「' + cur + '」这一档：<b>' + t.n + ' ' + ALL[cur][t.k].n + ' 次</b>第一。';
+  var now = order(cur)[0].k;
+  var diff = null, di;
+  for (di = 0; di < BANDS.length; di++) { if (BANDS[di] !== cur && order(BANDS[di])[0].k !== now) { diff = BANDS[di]; break; } }
+  if (diff) msg += ' 换成<b>' + SHORT[diff] + '</b>那一档，第一名就不是它了。';
+  else msg += ' 这一档的第一名，到其他档不一定还成立。';
+  document.getElementById('take').innerHTML = msg;
+}
+var rb = document.getElementById('rooms'), rh = '', i;
+for (i = 0; i < ROOMS.length; i++) rh += '<button type="button" class="room" data-k="' + ROOMS[i].k + '" aria-pressed="false">' + ROOMS[i].n + '</button>';
+rb.innerHTML = rh;
+rb.addEventListener('click', function (e) {
+  var t = e.target.closest ? e.target.closest('.room') : null; if (!t) return;
+  picked = t.getAttribute('data-k');
+  for (var j = 0; j < rb.children.length; j++) rb.children[j].setAttribute('aria-pressed', rb.children[j] === t ? 'true' : 'false');
+  renderVerdict();
+});
+var bb = document.getElementById('bands'), bh = '';
 for (i = 0; i < BANDS.length; i++) bh += '<button type="button" class="band" data-b="' + BANDS[i] + '" aria-pressed="' + (BANDS[i] === cur) + '">' + BANDS[i] + '</button>';
 bb.innerHTML = bh;
 bb.addEventListener('click', function (e) {
   var t = e.target.closest ? e.target.closest('.band') : null; if (!t) return;
   cur = t.getAttribute('data-b');
   for (var j = 0; j < bb.children.length; j++) bb.children[j].setAttribute('aria-pressed', bb.children[j] === t ? 'true' : 'false');
-  render();
+  renderBars(); renderVerdict();
 });
-render();
+renderBars(); renderVerdict();
 </script>
 </body>
 </html>
