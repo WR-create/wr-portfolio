@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>一张动线图，三层读法 · 适老化 24 小时 | 王然</title>
+<meta name="description" content="把适老化项目的 24 小时动线拆成时间带与房间：看每个房间一天被用到几次，再看我为它做的改造决策。">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="canonical" href="https://wr-create.github.io/wr-portfolio/interactive/">
+<style>(function(){try{var t=localStorage.getItem("wr-theme");if(t!=="light"){t="dark"}document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</style>
+<style>
+:root,[data-theme="dark"]{--bg:#0d0d0d;--panel:#111111;--headbg:#0d0d0d;--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.16);--ink:#ffffff;--ink2:#cccccc;--ink3:#8a8a8a;--ink4:#666666;--accent:#B7AB98;--accentline:rgba(183,171,152,.45);--dim:rgba(183,171,152,.12);color-scheme:dark}
+[data-theme="light"]{--bg:#f2f3f5;--panel:#e9eaec;--headbg:#f2f3f5;--line:rgba(20,23,26,.12);--line2:rgba(20,23,26,.2);--ink:#14171a;--ink2:#23272b;--ink3:#4e5359;--ink4:#6b7076;--accent:#7d6a45;--accentline:rgba(125,106,69,.45);--dim:rgba(125,106,69,.13);color-scheme:light}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink2);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;font-weight:300;line-height:1.85;-webkit-text-size-adjust:100%}
+.mono{font-family:'JetBrains Mono',Consolas,'PingFang SC','Microsoft YaHei',monospace}
+.wrap{max-width:880px;margin:0 auto;padding:0 22px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+strong{color:var(--ink);font-weight:400}
+.top{position:sticky;top:0;background:var(--headbg);border-bottom:1px solid var(--line);padding:13px 0;z-index:5}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.back{font-size:.76rem;letter-spacing:.5px;min-height:44px;display:inline-flex;align-items:center}
+.brand{font-family:'JetBrains Mono',Consolas,monospace;font-size:.78rem;letter-spacing:3px;color:var(--ink)}
+.hero{padding:52px 0 26px;border-bottom:1px solid var(--line)}
+.kicker{font-family:'JetBrains Mono',Consolas,monospace;font-size:.66rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:16px}
+h1{font-size:clamp(1.6rem,4.4vw,2.4rem);font-weight:200;color:var(--ink);letter-spacing:-.01em;line-height:1.32;margin-bottom:14px}
+.sub{font-size:.94rem;color:var(--ink3);max-width:700px}
+.src{font-family:'JetBrains Mono',Consolas,monospace;font-size:.62rem;letter-spacing:.5px;color:var(--ink4);margin-top:18px;line-height:1.9}
+.ctl{padding:30px 0 6px;position:sticky;top:63px;background:var(--bg);border-bottom:1px solid var(--line);z-index:4}
+.ctl-h{font-family:'JetBrains Mono',Consolas,monospace;font-size:.62rem;letter-spacing:2px;color:var(--ink4);margin-bottom:10px}
+.bands{display:flex;flex-wrap:wrap;gap:8px;padding-bottom:16px}
+.band{font:inherit;font-size:.82rem;color:var(--ink3);background:transparent;border:1px solid var(--line2);border-radius:999px;padding:0 16px;min-height:44px;cursor:pointer;letter-spacing:.4px}
+.band:hover{color:var(--ink);border-color:var(--accentline)}
+.band[aria-pressed="true"]{color:var(--bg);background:var(--accent);border-color:var(--accent)}
+.band:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;padding:26px 0 8px}
+.room{border:1px solid var(--line);background:var(--panel);padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px}
+.room--on{border-color:var(--accentline);background:var(--dim)}
+.room-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.room-n{font-size:1.02rem;color:var(--ink);font-weight:400;letter-spacing:.5px}
+.room-c{font-family:'JetBrains Mono',Consolas,monospace;font-size:1.5rem;color:var(--accent);line-height:1}
+.room-c small{font-size:.6rem;letter-spacing:1px;color:var(--ink4);margin-left:4px}
+.split{display:flex;flex-wrap:wrap;gap:14px;font-family:'JetBrains Mono',Consolas,monospace;font-size:.64rem;letter-spacing:.5px;color:var(--ink4)}
+.seq{display:flex;flex-wrap:wrap;gap:3px}
+.seq b{font-weight:400;width:19px;height:19px;line-height:17px;text-align:center;border:1px solid var(--line2);font-size:.62rem;color:var(--ink3)}
+.seq b.hi{border-color:var(--accent);color:var(--accent);background:var(--dim)}
+.seq i{font-style:normal;font-family:'JetBrains Mono',Consolas,monospace;font-size:.58rem;letter-spacing:1px;color:var(--ink4);width:100%;margin-top:4px}
+.act{font-size:.8rem;color:var(--ink2);border-top:1px dashed var(--line);padding-top:9px;margin-top:auto}
+.act.none{color:var(--ink4)}
+.act em{font-style:normal;color:var(--accent)}
+.concl{padding:34px 0 10px;border-top:1px solid var(--line);margin-top:22px}
+h2{font-size:clamp(1.06rem,2.6vw,1.28rem);font-weight:400;color:var(--ink);margin-bottom:12px}
+.lead{font-size:.92rem;color:var(--ink2);margin-bottom:16px}
+.tbl{display:grid;gap:8px;margin:6px 0 18px}
+.kv{display:grid;grid-template-columns:132px 1fr;gap:4px 14px;border:1px solid var(--line);padding:11px 14px}
+.kv .k{font-family:'JetBrains Mono',Consolas,monospace;font-size:.64rem;letter-spacing:.5px;color:var(--ink4);align-self:center}
+.kv .v{font-size:.86rem;color:var(--ink2)}
+.jump{display:inline-flex;align-items:center;min-height:44px;font-family:'JetBrains Mono',Consolas,monospace;font-size:.7rem;letter-spacing:1px;color:var(--accent)}
+.note{font-size:.8rem;color:var(--ink4);line-height:1.9;border-left:2px solid var(--line2);padding-left:12px;margin-top:18px}
+.thumb{display:block;margin-top:22px;border:1px solid var(--line)}
+.thumb img{display:block;width:100%;height:auto}
+footer{border-top:1px solid var(--line);margin-top:38px;padding:26px 0 46px;font-size:.78rem;color:var(--ink3);line-height:3}
+@media (max-width:640px){.grid{grid-template-columns:1fr}.ctl{position:static}}
+@media (max-width:520px){.kv{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){.room,.band{transition:border-color .25s ease,background .25s ease,color .25s ease}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+<a class="back" href="../index.html#capabilities">← 返回主站</a>
+<div class="brand">WANG RAN / 24H</div>
+</div></header>
+
+<section class="hero"><div class="wrap">
+<div class="kicker">Interaction · 适老化设计竞赛 铜奖</div>
+<h1>一张动线图，三层读法</h1>
+<p class="sub">我把两位老人的一天拆成三个时间带、六个房间。下面每一格是那个房间<strong>一天被用到的次数</strong>——次数不是估的，是把可编辑源文件里的每一个房间标记数出来的。选一个时间带，看它怎么变。</p>
+<div class="src">数据口径：适老化项目《24 小时动线》重绘 v1（可编辑 PPTX · slide1 的 77 个房间标记）｜男/女按图内左右两列统计｜本页所有数字由序列现算，不手填</div>
+</div></section>
+
+<section class="ctl"><div class="wrap">
+<div class="ctl-h">时间带 / TIME BAND</div>
+<div class="bands" id="bands" role="group" aria-label="选择时间带"></div>
+</div></section>
+
+<main class="wrap"><div class="grid" id="grid"></div></main>
+
+<section class="concl"><div class="wrap">
+<h2>读图结论（原册第 4 页）</h2>
+<p class="lead">病中变化：男卧床时间大增 → 社工上门、子女探望与陪护成为<strong>新增动线</strong>。极坐标图记录两位老人一日三个时间带的活动与位置；病中变化与新增照护动线在同一张图上叠加读取。</p>
+<div class="tbl">
+<div class="kv"><span class="k">方厅过道</span><span class="v">容纳两人通过 1500mm 并做防摔倒处理</span></div>
+<div class="kv"><span class="k">女端东西行走</span><span class="v">预留 600mm 小推车宽度</span></div>
+<div class="kv"><span class="k">厨房门 / 卫生间门</span><span class="v">改感应开启</span></div>
+</div>
+<p class="note"><strong>这一页想说明的方法</strong>：先按时序把房间使用次数数出来，再决定钱花在哪扇门上。卫生间全天次数最多、早晚各有一轮，所以「门改感应开启」不是审美选择，是从次数推出来的。卧室、餐厅、玄关这三层只标注次数、不下改造结论——原册没有给它们单独的改造项。</p>
+<a class="jump" href="../deck/wuwangwo/index.html#p4">← 打开适老化 16 页阅读版（第 4 页就是这张图）↗</a>
+<a class="thumb" href="../deck/wuwangwo/zoom/p04.jpg" target="_blank" rel="noopener"><img src="../deck/wuwangwo/page/p04.jpg" width="1600" height="900" loading="lazy" decoding="async" alt="适老化竞赛展板第 4 页：24 小时动线（左为行为极坐标图，右为早午晚三个时间带）"></a>
+</div></section>
+
+<footer><div class="wrap">
+<div>王然 · 建筑学本科（2022–2027）· 上海 / 大连</div>
+<div><a href="mailto:wr13331517846@qq.com">wr13331517846@qq.com</a> ｜ <a href="tel:13331517846">133 3151 7846</a></div>
+<div style="margin-top:14px"><a href="../index.html">← 返回主站</a> ｜ <a href="../capabilities/index.html">完整能力举证 →</a> ｜ <a href="../translation/index.html">同一份设计，我按听众换讲法 →</a></div>
+</div></footer>
+
+<script>
+/* 序列＝图内房间标记按上→下的原样转录（一个字符＝一个房间标记）。
+   次数由本文件现算，不手填，避免抄错。改序列请同步台账 #176 让用户复核。 */
+var SEQ = {
+  '早': { '男': '卧卧卫餐餐卫起卫起卫起', '女': '卧卫卫厨餐卫起餐厨玄玄卫厨起卫厨' },
+  '午': { '男': '餐餐卫卧卧卧卫起起卧卫起', '女': '餐餐厨卫卧卧卧卧卫起卫卧玄厨' },
+  '晚': { '男': '餐卫玄玄起卫卧卧卧卫', '女': '餐餐厨卫玄玄卧卫卧卫卧卧卫卧' }
+};
+var BANDS = ['全天', '早 5:00–10:30', '午 11:00–16:00', '晚 16:30–20:30'];
+var ROOMS = [
+  { k: '卫', n: '卫生间', act: '门 <em>改感应开启</em>', src: '原册尺度表' },
+  { k: '卧', n: '卧室', act: '' },
+  { k: '起', n: '起居室 / 方厅', act: '过道 <em>1500mm</em> 两人通过 + 防摔倒', src: '原册尺度表' },
+  { k: '餐', n: '餐厅', act: '' },
+  { k: '厨', n: '厨房', act: '门 <em>改感应开启</em>', src: '原册尺度表' },
+  { k: '玄', n: '玄关', act: '' }
+];
+function pick(key) {
+  var out = {}, ks = Object.keys(SEQ);
+  ROOMS.forEach(function (r) {
+    var m = '', f = '';
+    ks.forEach(function (k) {
+      if (key && k !== key) return;
+      m += SEQ[k]['男']; f += SEQ[k]['女'];
+    });
+    var c = function (s) { var n = 0, i; for (i = 0; i < s.length; i++) { if (s.charAt(i) === r.k) n++; } return n; };
+    out[r.k] = { m: m, f: f, n: c(m) + c(f), cm: c(m), cf: c(f) };
+  });
+  return out;
+}
+var ALL = { '全天': pick(null), '早 5:00–10:30': pick('早'), '午 11:00–16:00': pick('午'), '晚 16:30–20:30': pick('晚') };
+function seqHtml(s, k) {
+  var h = '', i;
+  for (i = 0; i < s.length; i++) h += '<b' + (s.charAt(i) === k ? ' class="hi"' : '') + '>' + s.charAt(i) + '</b>';
+  return h;
+}
+var cur = '全天';
+function render() {
+  var d = ALL[cur], h = '';
+  ROOMS.forEach(function (r) {
+    var v = d[r.k];
+    var mini = '早' + ALL['早 5:00–10:30'][r.k].n + ' 午' + ALL['午 11:00–16:00'][r.k].n + ' 晚' + ALL['晚 16:30–20:30'][r.k].n;
+    h += '<article class="room' + (cur === '全天' ? '' : ' room--on') + '">'
+      + '<div class="room-h"><span class="room-n">' + r.n + '</span><span class="room-c">' + v.n + '<small>次</small></span></div>'
+      + '<div class="split"><span>男 ' + v.cm + '</span><span>女 ' + v.cf + '</span><span>' + (cur === '全天' ? mini : cur) + '</span></div>'
+      + '<div class="seq"><i>男 · 上→下</i>' + seqHtml(v.m, r.k) + '<i>女 · 上→下</i>' + seqHtml(v.f, r.k) + '</div>'
+      + '<div class="act' + (r.act ? '' : ' none') + '">' + (r.act ? '改造：' + r.act + '（' + r.src + '）' : '这一层只标注次数，不下改造结论') + '</div>'
+      + '</article>';
+  });
+  document.getElementById('grid').innerHTML = h;
+}
+var bb = document.getElementById('bands'), bh = '', i;
+for (i = 0; i < BANDS.length; i++) bh += '<button type="button" class="band" data-b="' + BANDS[i] + '" aria-pressed="' + (BANDS[i] === cur) + '">' + BANDS[i] + '</button>';
+bb.innerHTML = bh;
+bb.addEventListener('click', function (e) {
+  var t = e.target.closest ? e.target.closest('.band') : null; if (!t) return;
+  cur = t.getAttribute('data-b');
+  for (var j = 0; j < bb.children.length; j++) bb.children[j].setAttribute('aria-pressed', bb.children[j] === t ? 'true' : 'false');
+  render();
+});
+render();
+</script>
+</body>
+</html>
