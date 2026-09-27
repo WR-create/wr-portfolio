@@ -204,43 +204,29 @@ code{font-family:var(--mono);font-size:12px;color:var(--accent);
 <header class="top">
   <div class="kicker">Cursor Lab · wr-portfolio</div>
   <h1>光标重做选型：逗猫棒 × 猫头</h1>
-  <p class="lede">
-    这一页是本站光标系统（红外红点 W8 ＋ 猫头 C5）的选型全过程。
-    下面 8 版光标（W6–W8 是红外小圆点，主推）＋ 8 版猫头（C7 / C8 是手绘原稿的位图版），
-    点任意卡片即可在 C 区实时试玩——试玩区用的是网站里<b style="color:var(--txt)">完全相同的跟随参数</b>（棒 lerp 0.2 / 猫 lerp 0.08），所见即所得。
-  </p>
+  <p class="lede">这一页是本站光标系统的定稿记录：为什么用红点＋这只猫，以及一套可以当场试玩的参数。试玩区左右对半＝深色主背景／浅色区对比，跨过中线光标会实时换脸；下面写清了每条取舍的理由。</p>
   <div class="steps">
-    <span>① A/B 区看形象（4× 放大 + 1:1 真实大小）</span>
-    <span>② 点卡片切换</span>
-    <span>③ C 区试玩 · 看 FPS</span>
+    <span>① 看定稿与理由</span>
+    <span>② 试玩 · 跨线换脸 · 看 FPS</span>
+    <span>③ 复制这套参数</span>
   </div>
 </header>
 
+
+
+
+
+
+
 <section>
-  <h2><span class="no">00</span> 现在的样子（对照组）</h2>
-  <div class="nowstrip">
-    <div class="prev"><div class="nowdot"></div><em>8px 点 · lerp .2</em></div>
-    <div class="prev"><div class="nowring"></div><em>40px 圈 · lerp .08</em></div>
-    <p>现状：小点用了 <code>mix-blend-mode: difference</code> 反色，所以在任何背景上都看得见；
-    换成有形状的光标后这个反色技巧就不能再用了（会把猫脸糊掉），必须改用「浅色区自动加深」。</p>
+  <h2><span class="no">A</span> 为什么是这一套</h2>
+  <p class="sub">不摆候选、只记定稿理由——光标为什么是红点、猫为什么是这一只、停多久扑、给多少表情。</p>
+  <div class="cols">
+    <div class="box"><h4>光标＝红点，不画箭头</h4><ul><li><b>热点在圆心</b>，点击不会"差一点点"；图形光标的尖端容易对不准。</li><li>红点是<b>发光体、只在深色底上成立</b>；所以光标一进浅色区就自动换羽毛逗猫棒（反射体）——这不是 bug，是规则。</li></ul></div>
+    <div class="box"><h4>猫头＝C5，矢量重绘自手稿</h4><ul><li>按手绘原稿的三条语法重画：<b>一笔连续轮廓、断轮廓当胡须、略扁椭圆</b>。</li><li>矢量用 <code>currentColor</code> 上色，<b>跟着站点主色反色</b>，深浅底都不会看不见；位图做不到。</li></ul></div>
+    <div class="box"><h4>停手 0.35 秒扑上去</h4><ul><li>正好是"手停了、还没开始读内容"的空档，<b>扑一下不打断阅读</b>。</li></ul></div>
+    <div class="box"><h4>四态表情＋悬停放大</h4><ul><li><b>眯眼笑／嘴努子（扑到）／耷拉眼（等久了）／眨眼</b>，悬停放大 1.32×——有生命感但克制。</li></ul></div>
   </div>
-</section>
-
-<section>
-  <h2><span class="no">A</span> 光标 · 8 版</h2>
-  <p class="sub">替换现在的 8px 小点。<b style="color:var(--txt)">红色十字＝热点（真正的点击落点）</b>，
-  这一点对光标来说比好看更重要：热点必须落在图形最尖的那一处，你点按钮才不会「差一点点」。左边大图是 4× 放大看细节，右边是 24px 真实大小看能不能认出来。<br />
-  <b style="color:var(--txt)">本站现在用的就是 W8（红点+软晕）。</b>红点的热点就在圆心，不存在「尖端对不准」的问题。<br />
-  <b style="color:var(--txt)">新增一条规则：红点是「发光体」，只在深色底上成立；光标一进浅色区就自动换成 W1 羽毛逗猫棒（「反射体」，浅色底上才看得见）。</b>右侧勾选框可以关掉这个换法，两种你都试一下。</p>
-  <div class="grid" id="wandGrid"></div>
-</section>
-
-<section>
-  <h2><span class="no">B</span> 猫头 · 8 版</h2>
-  <p class="sub">替换现在的 40px 描边圈，跟随滞后（lerp 0.08）所以它是「被逗的那只猫」。
-  C5/C6 每版给六个视图：3× 放大、<b style="color:var(--txt)">眯眼笑／嘴努子（扑到红点）／耷拉眼（等久了）</b>三张表情、真实 44px、悬停放大后。<br />
-  <b style="color:var(--txt)">本站现在用的就是 C5——按手绘原稿的三条语法重画的矢量版：耳朵和脸一笔连续、胡须＝轮廓断开的短撇、脸改成略扁椭圆，五官尺寸逐像素实测你的六张原稿。</b>矢量能跟着站点主色自动反色（深色底上不会再看不见）；C7/C8 是手绘原稿的位图版，只能靠预先导出「象牙白＋黑墨」两套资产来反色，留作对照。</p>
-  <div class="grid" id="catGrid"></div>
 </section>
 
 <section>
@@ -306,7 +292,6 @@ code{font-family:var(--mono);font-size:12px;color:var(--accent);
           <div class="rng"><input type="range" id="rLerp" min="4" max="20" step="1" value="4" /><output id="oLerp">0.04</output></div>
         </div>
         <div class="row">
-          <label class="sw"><input type="checkbox" id="cbHot" checked /> 卡片里显示热点十字</label>
           <label class="sw" style="margin-top:8px"><input type="checkbox" id="cbDark" checked /> 浅色区自动加深（降级方案）</label>
           <label class="sw" style="margin-top:8px"><input type="checkbox" id="cbWand" checked /> 浅色区把红点换成羽毛逗猫棒</label>
         </div>
@@ -664,38 +649,6 @@ function svgFor(kind, key, px, o){
     (o.hot ? hotMark(d.hot) : "") + '</svg>';
 }
 
-function wandCard(k){
-  var d = WANDS[k];
-  return '<button type="button" class="card" data-kind="wand" data-key="'+k+'">'+
-    '<span class="cname">'+d.name+(d.tag?' <span class="badge">'+d.tag+'</span>':'')+'</span>'+
-    '<span class="prevrow">'+
-      '<span class="prev">'+svgFor("wand",k,96,{glow:state.glow,hot:state.hot})+'<em>4× · 96px</em></span>'+
-      '<span class="prev">'+svgFor("wand",k,state.wandPx,{glow:state.glow,hot:state.hot})+'<em>1:1 · '+state.wandPx+'px</em></span>'+
-    '</span>'+
-    '<p class="note">'+d.note+'</p>'+
-    '<p class="pc pro">'+d.pro+'</p>'+
-    '<p class="pc con">'+d.con+'</p>'+
-  '</button>';
-}
-
-function catCard(k){
-  var d = CATS[k];
-  return '<button type="button" class="card" data-kind="cat" data-key="'+k+'">'+
-    '<span class="cname">'+d.name+(d.tag?' <span class="badge">'+d.tag+'</span>':'')+'</span>'+
-    '<span class="prevrow">'+
-      '<span class="prev">'+svgFor("cat",k,132,{glow:state.glow,hot:state.hot})+'<em>3× · 132px</em></span>'+
-      '<span class="prev">'+svgFor("cat",k,132,{glow:state.glow,extraClass:"squint"})+'<em>眯眼笑</em></span>'+
-      (d.four ? '<span class="prev">'+svgFor("cat",k,132,{glow:state.glow,extraClass:"pout"})+'<em>嘴努子·扑到</em></span>'+
-                '<span class="prev">'+svgFor("cat",k,132,{glow:state.glow,extraClass:"droop"})+'<em>耷拉眼·等久了</em></span>' : '')+
-      '<span class="prev">'+svgFor("cat",k,state.catPx,{glow:state.glow})+'<em>1:1 · '+state.catPx+'px</em></span>'+
-      '<span class="prev">'+svgFor("cat",k,Math.round(state.catPx*1.32),{glow:state.glow})+'<em>悬停 '+Math.round(state.catPx*1.32)+'px</em></span>'+
-    '</span>'+
-    '<p class="note">'+d.note+'</p>'+
-    '<p class="pc pro">'+d.pro+'</p>'+
-    '<p class="pc con">'+d.con+'</p>'+
-  '</button>';
-}
-
 var state = {
   wand:"W8", cat:"C5", color:"cool", glow:"filter", dyn:"full",
   catOff:"pounce",
@@ -705,9 +658,9 @@ var state = {
 var LIGHT_WAND = "W1";
 
 var el = {};
-["wandGrid","catGrid","qs","pg","pgWand","pgCat","fps","mGlow","mWand","mCat","mHover",
+["pg","pgWand","pgCat","fps","mGlow","mWand","mCat","mHover",
  "segColor","segGlow","segDyn","segOff","rWand","oWand","rCat","oCat","rLerp","oLerp",
- "cbHot","cbDark","cbWand","bSquint","bBlink","bPout","bDroop","bTwitch","cfg","bCopy"].forEach(function(id){
+ "cbDark","cbWand","bSquint","bBlink","bPout","bDroop","bTwitch","cfg","bCopy"].forEach(function(id){
   el[id] = document.getElementById(id);
 });
 
@@ -739,17 +692,7 @@ function syncSegs(){
   });
 }
 
-function paintCards(){
-  el.wandGrid.innerHTML = Object.keys(WANDS).map(wandCard).join("");
-  el.catGrid.innerHTML = Object.keys(CATS).map(catCard).join("");
-  var all = document.querySelectorAll(".card");
-  for (var i=0;i<all.length;i++){
-    var c = all[i];
-    var on = (c.getAttribute("data-kind")==="wand" && c.getAttribute("data-key")===state.wand) ||
-             (c.getAttribute("data-kind")==="cat"  && c.getAttribute("data-key")===state.cat);
-    c.classList.toggle("sel", on);
-  }
-}
+
 
 /* ---------- 试玩区 ---------- */
 
@@ -950,7 +893,7 @@ function paintConfig(){
       : "不换，保持 " + state.wand);
 }
 
-function refreshAll(){ paintCards(); paintPlayground(); paintConfig(); syncSegs(); }
+function refreshAll(){ paintPlayground(); paintConfig(); syncSegs(); }
 
 el.segColor.addEventListener("click", function(e){
   var b = e.target.closest("button"); if(!b) return;
@@ -987,9 +930,7 @@ el.rCat.addEventListener("input", function(){
 });
 el.rLerp.addEventListener("input", function(){
   state.folLerp = (+this.value)/100; el.oLerp.textContent = state.folLerp.toFixed(2); paintConfig();
-});
-el.cbHot.addEventListener("change", function(){ state.hot = this.checked; paintCards(); });
-el.cbDark.addEventListener("change", function(){ state.autoDark = this.checked; lastHalf=null; paintConfig(); });
+});el.cbDark.addEventListener("change", function(){ state.autoDark = this.checked; lastHalf=null; paintConfig(); });
 el.cbDark.addEventListener("change", function(){ applyHalf(lastHalf); });
 el.cbWand.addEventListener("change", function(){ state.autoWand = this.checked; renderWand(wandKeyFor(lastHalf)); paintConfig(); });
 
@@ -1015,14 +956,7 @@ el.bCopy.addEventListener("click", function(){
   }
 });
 
-document.addEventListener("click", function(e){
-  var c = e.target.closest ? e.target.closest(".card") : null;
-  if (!c) return;
-  var k = c.getAttribute("data-key");
-  if (c.getAttribute("data-kind") === "wand") state.wand = k; else state.cat = k;
-  lastHalf = null;
-  refreshAll();
-});
+
 
 /* ---------- 启动 ---------- */
 buildSegs(); refreshAll(); measure();
