@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>光标选型实验室 · 逗猫棒 × 猫头</title>
+<style>
+:root{
+  --bg:#0d0d0d; --panel:#131313; --panel2:#181818;
+  --line:rgba(237,229,216,.13); --line2:rgba(237,229,216,.26);
+  --txt:#EDE5D8; --dim:rgba(237,229,216,.60); --dim2:rgba(237,229,216,.38);
+  --accent:#B7AB98; --hot:#FF7A6B; --ok:#93C0A3;
+  --mono:"JetBrains Mono","SFMono-Regular",Consolas,"Courier New",monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);line-height:1.75;
+  font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding:52px 26px 130px}
+a{color:var(--accent)}
+
+header.top{border-bottom:1px solid var(--line);padding-bottom:26px;margin-bottom:38px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:12px}
+h1{font-size:30px;font-weight:500;margin:0 0 12px;letter-spacing:.5px}
+.lede{color:var(--dim);font-size:14.5px;max-width:820px;margin:0}
+.steps{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.steps span{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--dim);
+  border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+
+section{margin-bottom:52px}
+h2{font-size:19px;font-weight:500;margin:0 0 6px;display:flex;align-items:baseline;gap:12px}
+h2 .no{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px}
+.sub{color:var(--dim);font-size:13.5px;margin:0 0 22px;max-width:860px}
+h3{font-size:14px;font-weight:500;margin:30px 0 12px;color:var(--dim);
+  font-family:var(--mono);letter-spacing:1.5px;text-transform:uppercase}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;
+  padding:16px;cursor:pointer;transition:border-color .25s,background .25s,transform .18s;
+  position:relative;text-align:left;color:inherit;font:inherit;line-height:1.7;width:100%}
+.card:hover{border-color:var(--line2);transform:translateY(-2px)}
+.card.sel{border-color:var(--accent);background:#16150f}
+.card.sel::after{content:"当前选择";position:absolute;top:-1px;right:-1px;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:1.5px;color:#0d0d0d;
+  background:var(--accent);padding:3px 8px;border-radius:0 6px 0 6px}
+.cname{font-size:14.5px;margin-bottom:2px;display:flex;align-items:center;gap:8px}
+.badge{font-family:var(--mono);font-size:9.5px;letter-spacing:1px;padding:2px 6px;
+  border-radius:3px;border:1px solid var(--accent);color:var(--accent)}
+.prevrow{display:flex;align-items:flex-end;gap:18px;margin:14px 0 12px;
+  padding:14px 10px;background:#0a0a0a;border:1px solid rgba(237,229,216,.07);border-radius:4px;
+  flex-wrap:wrap}
+.prev{display:flex;flex-direction:column;align-items:center;gap:7px}
+.prev em{font-family:var(--mono);font-size:9.5px;font-style:normal;color:var(--dim2);letter-spacing:1px}
+.note{font-size:12.5px;color:var(--dim);margin:0 0 8px}
+.pc{font-size:12px;margin:0;color:var(--dim2);padding-left:12px;position:relative}
+.pc::before{position:absolute;left:0;font-family:var(--mono);font-size:10px}
+.pc.pro::before{content:"+";color:var(--ok)}
+.pc.con::before{content:"−";color:var(--hot)}
+
+.csvg{display:block;overflow:visible}
+.gu{opacity:.16}
+.gu *{stroke-width:9}
+.gu2{opacity:.22}
+.gu2 *{stroke-width:3.8}
+.hot{stroke:var(--hot);stroke-width:.7;fill:none;opacity:.95}
+.eyes-squint{display:none}
+.squint .eyes-open{display:none}
+.squint .eyes-squint{display:block}
+.blink .eyes-open{transform:scaleY(.1);transform-box:fill-box;transform-origin:center}
+.twitch .ear-l{animation:tw .5s ease-in-out 2;transform-box:fill-box;transform-origin:50% 100%}
+.twitch .ear-r{animation:tw .5s ease-in-out 2 .06s;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes tw{0%,100%{transform:rotate(0)}35%{transform:rotate(-7deg)}70%{transform:rotate(5deg)}}
+
+/* 手稿猫（C5/C6）：第三态眨眼、表情换嘴、腮红 */
+.eyes-blink{display:none}
+.blink .eyes-blink{display:block}
+.blink .xb .eyes-open{display:none;transform:none}
+.m-happy,.m-scrunch{display:none}
+.squint .m-idle{display:none}
+.squint .m-happy{display:block}
+.blink .m-idle{display:none}
+.blink .m-scrunch{display:block}
+.blush{stroke:none}
+
+/* 手稿猫四态：pout＝扑到红点叼住（复用 ＞＜+ω），droop＝长时间不动换耷拉眼（你原稿猫1） */
+.eyes-droop{display:none}
+.droop .xb .eyes-open{display:none}
+.droop .eyes-droop{display:block}
+.pout .xb .eyes-open{display:none}
+.pout .xb .eyes-blink{display:block}
+.pout .m-idle{display:none}
+.pout .m-scrunch{display:block}
+.pout .f-idle{display:none}
+.pout .f-blink{display:block}
+/* 轮廓一笔连续后耳朵不再是独立元素 → 抖耳朵改成整张头微抖 */
+.twitch .headcont{animation:tw2 .55s ease-in-out 2;transform-box:fill-box;transform-origin:50% 88%}
+@keyframes tw2{0%,100%{transform:rotate(0)}30%{transform:rotate(-3.4deg)}65%{transform:rotate(2.6deg)}}
+/* 手稿猫本身线就粗，双层描边会把线和眼睛糊粗 → C5/C6 标 flat，发光只走 drop-shadow */
+
+/* 原稿位图猫（C7/C8）：三张脸切换显隐 */
+.f-squint,.f-blink{display:none}
+.squint .f-idle{display:none}
+.squint .f-squint{display:block}
+.blink .f-idle{display:none}
+.blink .f-blink{display:block}
+
+.nowstrip{display:flex;flex-wrap:wrap;align-items:center;gap:26px;background:var(--panel);
+  border:1px solid var(--line);border-radius:6px;padding:16px 18px;margin-bottom:14px}
+.nowdot{width:8px;height:8px;border-radius:50%;background:#EDE5D8;
+  box-shadow:0 0 14px rgba(237,229,216,.6)}
+.nowring{width:40px;height:40px;border-radius:50%;border:1px solid rgba(214,202,182,.55)}
+.nowstrip p{margin:0;font-size:12.5px;color:var(--dim)}
+
+.lay{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px;align-items:start}
+@media(max-width:940px){.lay{grid-template-columns:1fr}}
+#pg{position:relative;height:420px;border:1px solid var(--line2);border-radius:6px;
+  overflow:hidden;cursor:none;display:grid;grid-template-columns:1fr 1fr}
+.half{padding:26px 22px;position:relative}
+.half.d{background:#0d0d0d}
+.half.l{background:#EDE5D8;color:#1a1a1a}
+.half h4{font-size:11px;font-family:var(--mono);letter-spacing:2px;margin:0 0 4px;
+  text-transform:uppercase;opacity:.55}
+.half .hint{font-size:12px;margin:0 0 22px;opacity:.6}
+.fk-card{border:1px solid currentColor;border-radius:4px;padding:14px;margin-bottom:14px;
+  opacity:.75;font-size:12.5px}
+.fk-btn{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:2px;
+  text-transform:uppercase;border:1px solid currentColor;border-radius:3px;padding:9px 20px;
+  margin-right:10px;background:none;color:inherit;cursor:none}
+.fk-link{font-size:12.5px;border-bottom:1px solid currentColor;padding-bottom:1px}
+.cur{position:absolute;left:0;top:0;width:0;height:0;pointer-events:none;
+  opacity:0;transition:opacity .25s;will-change:transform;z-index:5}
+#pg.live .cur{opacity:1}
+#pgWand{z-index:6}
+.cur-in{position:absolute;left:0;top:0;transform:scale(1);
+  transition:transform .28s cubic-bezier(.22,1,.36,1)}
+#pg.hov .cur-in.c{transform:scale(1.32)}
+#pg.hov .cur-in.w{transform:scale(1.12)}
+.pgbar b{color:var(--accent)}
+.pgbar{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  font-family:var(--mono);font-size:11px;color:var(--dim2);letter-spacing:1px;
+  margin-top:9px;flex-wrap:wrap}
+.pgbar b{color:var(--accent);font-weight:400}
+
+.ctl{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px 16px 6px}
+.ctl .row{margin-bottom:15px}
+.ctl label.k{display:block;font-family:var(--mono);font-size:10px;letter-spacing:1.6px;
+  color:var(--dim2);text-transform:uppercase;margin-bottom:7px}
+.segs{display:flex;flex-wrap:wrap;gap:5px}
+.segs button{flex:1 1 auto;font:inherit;font-size:11.5px;color:var(--dim);background:#0e0e0e;
+  border:1px solid var(--line);border-radius:3px;padding:6px 8px;cursor:pointer;transition:.2s;
+  font-family:var(--mono);letter-spacing:.5px;white-space:nowrap}
+.segs button:hover{border-color:var(--line2);color:var(--txt)}
+.segs button.on{border-color:var(--accent);color:var(--accent);background:#17150f}
+.rng{display:flex;align-items:center;gap:10px}
+.rng input[type=range]{flex:1;accent-color:var(--accent);height:2px}
+.rng output{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:44px;text-align:right}
+.sw{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dim);cursor:pointer}
+.sw input{accent-color:var(--accent)}
+.mini{display:flex;gap:6px;margin-top:8px}
+.mini button{font:inherit;font-size:11px;color:var(--dim);background:#0e0e0e;
+  border:1px solid var(--line);border-radius:3px;padding:5px 9px;cursor:pointer}
+.mini button:hover{color:var(--txt);border-color:var(--line2)}
+
+#cfg{background:#0a0a0a;border:1px solid var(--line);border-radius:6px;padding:14px 16px;
+  font-family:var(--mono);font-size:11.5px;line-height:2;color:var(--dim);
+  white-space:pre-wrap;word-break:break-all;margin-top:14px}
+#cfg b{color:var(--txt);font-weight:400}
+.copybtn{width:100%;margin-top:9px;font:inherit;font-family:var(--mono);font-size:11px;
+  letter-spacing:1.5px;color:#0d0d0d;background:var(--accent);border:none;border-radius:3px;
+  padding:10px;cursor:pointer;text-transform:uppercase}
+
+.qs{counter-reset:q;display:grid;gap:11px}
+.q{background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--accent);
+  border-radius:0 5px 5px 0;padding:15px 18px}
+.q .t{font-size:14px;margin-bottom:7px}
+.q .t::before{counter-increment:q;content:"Q" counter(q) " ";font-family:var(--mono);
+  color:var(--accent);font-size:12px;letter-spacing:1px}
+.q .o{font-size:12.5px;color:var(--dim);margin:0}
+.q .o b{color:var(--accent);font-weight:400}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:820px){.cols{grid-template-columns:1fr}}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px 20px}
+.box h4{margin:0 0 12px;font-size:13px;font-family:var(--mono);letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--accent);font-weight:400}
+.box ul{margin:0;padding-left:17px;font-size:13px;color:var(--dim)}
+.box li{margin-bottom:9px}
+.box li b{color:var(--txt);font-weight:500}
+ol.plan{margin:0;padding-left:18px;font-size:13px;color:var(--dim)}
+ol.plan li{margin-bottom:10px}
+ol.plan b{color:var(--txt);font-weight:500}
+code{font-family:var(--mono);font-size:12px;color:var(--accent);
+  background:rgba(183,171,152,.09);padding:1px 5px;border-radius:3px}
+.foot{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--dim2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<p style="margin:0 0 18px"><a href="../index.html#interact" style="font-family:var(--mono);font-size:12px;color:var(--accent);text-decoration:none">← 返回主站</a></p>
+
+<header class="top">
+  <div class="kicker">Cursor Lab · wr-portfolio</div>
+  <h1>光标重做选型：逗猫棒 × 猫头</h1>
+  <p class="lede">
+    这一页是本站光标系统（红外红点 W8 ＋ 猫头 C5）的选型全过程。
+    下面 8 版光标（W6–W8 是红外小圆点，主推）＋ 8 版猫头（C7 / C8 是手绘原稿的位图版），
+    点任意卡片即可在 C 区实时试玩——试玩区用的是网站里<b style="color:var(--txt)">完全相同的跟随参数</b>（棒 lerp 0.2 / 猫 lerp 0.08），所见即所得。
+  </p>
+  <div class="steps">
+    <span>① A/B 区看形象（4× 放大 + 1:1 真实大小）</span>
+    <span>② 点卡片切换</span>
+    <span>③ C 区试玩 · 看 FPS</span>
+  </div>
+</header>
+
+<section>
+  <h2><span class="no">00</span> 现在的样子（对照组）</h2>
+  <div class="nowstrip">
+    <div class="prev"><div class="nowdot"></div><em>8px 点 · lerp .2</em></div>
+    <div class="prev"><div class="nowring"></div><em>40px 圈 · lerp .08</em></div>
+    <p>现状：小点用了 <code>mix-blend-mode: difference</code> 反色，所以在任何背景上都看得见；
+    换成有形状的光标后这个反色技巧就不能再用了（会把猫脸糊掉），必须改用「浅色区自动加深」。</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="no">A</span> 光标 · 8 版</h2>
+  <p class="sub">替换现在的 8px 小点。<b style="color:var(--txt)">红色十字＝热点（真正的点击落点）</b>，
+  这一点对光标来说比好看更重要：热点必须落在图形最尖的那一处，你点按钮才不会「差一点点」。左边大图是 4× 放大看细节，右边是 24px 真实大小看能不能认出来。<br />
+  <b style="color:var(--txt)">本站现在用的就是 W8（红点+软晕）。</b>红点的热点就在圆心，不存在「尖端对不准」的问题。<br />
+  <b style="color:var(--txt)">新增一条规则：红点是「发光体」，只在深色底上成立；光标一进浅色区就自动换成 W1 羽毛逗猫棒（「反射体」，浅色底上才看得见）。</b>右侧勾选框可以关掉这个换法，两种你都试一下。</p>
+  <div class="grid" id="wandGrid"></div>
+</section>
+
+<section>
+  <h2><span class="no">B</span> 猫头 · 8 版</h2>
+  <p class="sub">替换现在的 40px 描边圈，跟随滞后（lerp 0.08）所以它是「被逗的那只猫」。
+  C5/C6 每版给六个视图：3× 放大、<b style="color:var(--txt)">眯眼笑／嘴努子（扑到红点）／耷拉眼（等久了）</b>三张表情、真实 44px、悬停放大后。<br />
+  <b style="color:var(--txt)">本站现在用的就是 C5——按手绘原稿的三条语法重画的矢量版：耳朵和脸一笔连续、胡须＝轮廓断开的短撇、脸改成略扁椭圆，五官尺寸逐像素实测你的六张原稿。</b>矢量能跟着站点主色自动反色（深色底上不会再看不见）；C7/C8 是手绘原稿的位图版，只能靠预先导出「象牙白＋黑墨」两套资产来反色，留作对照。</p>
+  <div class="grid" id="catGrid"></div>
+</section>
+
+<section>
+  <h2><span class="no">C</span> 实时试玩区</h2>
+  <p class="sub">鼠标移进下面这块，原生光标会消失、换成你选的组合（和网站上一样）。
+  左半深色＝你网站现在的背景，右半浅色＝测试对比度。里面有假的按钮 / 链接 / 卡片，用来触发悬停表情。</p>
+  <div class="lay">
+    <div>
+      <div id="pg">
+        <div class="half d">
+          <h4>Dark · 站点主背景 #0d0d0d</h4>
+          <p class="hint">在这里正常移动、点一下看看</p>
+          <div class="fk-card"><b>Selected Works</b><br />适老化重设计 / 高层住宅 / 商圈练习</div>
+          <button class="fk-btn" type="button">View Project</button>
+          <a class="fk-link" href="javascript:void(0)">联系我是外链</a>
+        </div>
+        <div class="half l">
+          <h4>Light · 浅色区测试</h4>
+          <p class="hint">同一样光标移到浅色上会怎样</p>
+          <div class="fk-card"><b>Capabilities</b><br />会设计才能看懂设计</div>
+          <button class="fk-btn" type="button">Read More</button>
+          <a class="fk-link" href="javascript:void(0)">浅色区链接</a>
+        </div>
+        <div class="cur" id="pgWand"><div class="cur-in"></div></div>
+        <div class="cur" id="pgCat"><div class="cur-in"></div></div>
+      </div>
+      <div class="pgbar">
+        <span>FPS <b id="fps">--</b></span>
+        <span>发光方式 <b id="mGlow">--</b></span>
+        <span>棒 <b id="mWand">--</b> · 猫 <b id="mCat">--</b></span>
+        <span>悬停 <b id="mHover">无</b></span>
+      </div>
+    </div>
+
+    <div>
+      <div class="ctl">
+        <div class="row">
+          <label class="k">发光色系</label>
+          <div class="segs" id="segColor"></div>
+        </div>
+        <div class="row">
+          <label class="k">发光方式（重点看 FPS 差多少）</label>
+          <div class="segs" id="segGlow"></div>
+        </div>
+        <div class="row">
+          <label class="k">猫头动态</label>
+         <div class="segs" id="segDyn"></div>
+       </div>
+        <div class="row">
+          <label class="k">猫头静止位置（鼠标停下时）</label>
+          <div class="segs" id="segOff"></div>
+        </div>
+        <div class="row">
+          <label class="k">逗猫棒尺寸</label>
+          <div class="rng"><input type="range" id="rWand" min="18" max="34" step="1" value="21" /><output id="oWand">21px</output></div>
+        </div>
+        <div class="row">
+          <label class="k">猫头尺寸（悬停自动 ×1.32）</label>
+          <div class="rng"><input type="range" id="rCat" min="34" max="64" step="1" value="41" /><output id="oCat">41px</output></div>
+        </div>
+        <div class="row">
+          <label class="k">猫的跟随滞后 lerp（现在 .08）</label>
+          <div class="rng"><input type="range" id="rLerp" min="4" max="20" step="1" value="4" /><output id="oLerp">0.04</output></div>
+        </div>
+        <div class="row">
+          <label class="sw"><input type="checkbox" id="cbHot" checked /> 卡片里显示热点十字</label>
+          <label class="sw" style="margin-top:8px"><input type="checkbox" id="cbDark" checked /> 浅色区自动加深（降级方案）</label>
+          <label class="sw" style="margin-top:8px"><input type="checkbox" id="cbWand" checked /> 浅色区把红点换成羽毛逗猫棒</label>
+        </div>
+        <div class="row">
+          <label class="k">手动预览表情</label>
+          <div class="mini">
+            <button type="button" id="bSquint">眯眼笑 1.5s</button>
+            <button type="button" id="bBlink">眨一次</button>
+            <button type="button" id="bPout">嘴努子 1.5s</button>
+            <button type="button" id="bDroop">耷拉眼 1.5s</button>
+            <button type="button" id="bTwitch">抖耳朵</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="cfg"></div>
+      <button class="copybtn" type="button" id="bCopy">复制这套参数</button>
+    </div>
+  </div>
+</section>
+
+
+
+<section>
+  <h2><span class="no">E</span> 优缺点 · 重点难点</h2>
+  <div class="cols">
+    <div class="box">
+      <h4>这样做的好处</h4>
+      <ul>
+        <li><b>叙事闭环了。</b>红点在前面跑、猫在后面追、手一停猫就扑上去——三个动作有明确因果，光标本身就在演示「逗」这件事，正好呼应你「会设计才能看懂设计」这个能力板块。</li>
+        <li><b>笔触是你的，反色是白送的。</b>C5 按你原稿的三条语法重画（一笔连续轮廓、断轮廓当胡须、略扁椭圆），用 <code>currentColor</code> 上色：站点主色改了它跟着改，进浅色区自动换深墨，深色底上不可能再看不见。位图版 C7/C8 只能预先导出两套资产才能做到同样的事。</li>
+        <li><b>几乎不增加加载成本。</b>W8 红点和 C5 猫头都是内联 SVG，合计约 3KB、零图片零请求；只有对照用的 C7/C8 位图需要预加载（约 74KB / 56KB）。</li>
+        <li><b>叙事多了一层。</b>扑点不再是「猫脸中心压住红点」，而是把<b>嘴</b>送到红点上（按每只猫的 <code>mouth</code> 坐标反算偏移），所以「叼住」是真的成立；停手满 4s 再换耷拉眼，变成「扑 → 叼 → 等累了」三层。</li>
+        <li><b>可降级。</b>关掉动效就是一个静态红点 + 一张静态猫脸，最坏情况也不比现在的圆点差。</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h4>代价与风险</h4>
+      <ul>
+        <li><b>重画毕竟不是原样描。</b>C5 保留了你的断笔、胡须接法、脸形和五官比例，但铅笔的毛边和压感只做到「像」，不是「就是」。要 100% 原样只能上位图（C7/C8），代价是换不了色、放大会糊。两条路都在页面上，随时可切。</li>
+        <li><b>红点是全站唯一的高饱和色。</b>暖金 + 米白的站色里突然出现一个 #FF2D2D，可能是点睛，也可能是刺眼——试玩区可以对比 W6 亮红 / 深红外红 / 暖金三种，你看了再定。</li>
+        <li><b>比几何图形更抢注意力。</b>招聘方一天看几十份作品集，一个会扑的猫头可能让人分心，也可能让人觉得幼稚。所以扑点默认 0.35s 才触发、只在你真停手时发生，不做无意义的持续动画。</li>
+        <li><b>丢掉反色后，浅色区会变瞎。</b>现在的 <code>mix-blend-mode: difference</code> 保证任何背景都可见；红点在米白底上对比度不够、猫头位图又不能加深，必须做「浅色区自动换深色资产 / 加描边」，比矢量版多一层处理。</li>
+        <li><b>位图放大会糊。</b>源图按 256px 导出，132px 预览已经接近上限，再大就有锯齿；44px 实际使用尺寸下没问题。</li>
+        <li><b>发光是有性能成本的。</b><code>drop-shadow</code> 每帧移动会触发重绘。红点和位图默认都不套双层描边发光（对它俩没意义），要发光只用 filter，并带 FPS 实测。</li>
+        <li><b>触屏 / 无障碍。</b>触屏必须整个隐藏（现在已经做了）；另外要尊重系统的「减少动态效果」设置——开启时直接关掉扑点、只留静态跟随，以及 <code>cursor:none</code> 失效时要有原生光标兜底。</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>实施时的重点难点（按风险排序）</h3>
+  <div class="box">
+    <ul>
+      <li><b>① 热点对齐。</b>SVG 的 viewBox 原点在左上角，热点却在羽尖 (4.2, 4.2)，所以定位不能再用 <code>translate(x - size/2)</code>，要改成 <code>translate(x - hotX × 缩放比)</code>，并且旋转也必须以热点为轴心（否则一转就偏）。这是最容易出 bug 的地方，我会做像素级校准。</li>
+      <li><b>② 发光性能。</b>方案 A <code>filter: drop-shadow()</code> 好看但每帧重绘；方案 B 双层描边（同一路径画三遍：宽而淡 → 中 → 细而实）零滤镜、几乎无成本，光晕略硬。选型页两个都能试并显示 FPS，我按你机器上的实测数字来定。</li>
+      <li><b>③ 猫看棒的每帧计算。</b>要算两个 lerp 后的位置差 → 角度 → 瞳孔偏移 + 头部倾斜。必须限制：瞳孔偏移 ≤2.4 单位、头转 ≤8°、且只在变化超过阈值时写 DOM，否则每帧改一堆属性反而更卡。</li>
+      <li><b>④ 浅色区对比度。</b>需要判断光标当前在深色还是浅色背景上。可靠做法不是算坐标，而是给浅色区块加一个 <code>data-cursor-theme="light"</code>，用 <code>mouseover</code> 冒泡读取——这样以后你新增浅色板块只要加一个属性。</li>
+      <li><b>⑤ 表情状态机。</b>现在是四态（眯眼笑／眨眼／嘴努子／耷拉眼）＋抖耳朵，同一时刻只能有一张脸。所以不用 class 叠加，而是每帧按优先级算出唯一的 <code>faceNow</code> 再挂 class；眨眼 170ms 后要让位，手动预览按钮还要能同步生效（不等下一帧）。</li>
+      <li><b>⑥ 降级兜底。</b>触屏隐藏、<code>prefers-reduced-motion</code> 关动效只留静态图形、JS 挂掉时保留原生光标（现在站点是 CSS 里写死 <code>cursor:none</code>，一旦 JS 报错光标就彻底消失，这次要改成由 JS 加 class 才隐藏）。</li>
+      <li><b>⑦ 和模态框的冲突。</b><code>Projects.jsx</code> 的拖拽模态里有内联 <code>cursor: grab / grabbing</code>，会和 <code>cursor:none</code> 打架，需要一并处理。</li>
+      <li><b>⑧ 原稿位图的资产管线（新）。</b>你给的六张脸位置、留白、线条粗细都不一样，直接贴会出现「一换表情整张脸就跳一下」。所以每张都要走同一套处理：按 alpha 裁到最小外接框 → 补成正方形（×1.06 留边）→ 统一缩到 256px → 三态用同一个中心点对齐。这条管线已经写好并跑通，产物在 <code>cursor-lab/assets/</code>，以后你换脸只要重跑一次。</li>
+      <li><b>⑨ 扑到之后要「叼住」。</b>猫头不能再用几何中心对齐红点，得把 <code>mouth</code> 坐标（C5 是 20.8,28.4）反算成位移偏移，红点才会正好落在嘴上；这条偏移只在扑到的瞬间生效，手一动就退回右下。</li>
+      <li><b>⑩ 一笔轮廓的代价。</b>你要的「耳朵和脸之间不要有线」意味着耳朵不再是独立元素，所以「抖耳朵」只能改成整张头微抖（约 3°）。几何版 C1–C4 仍然只抖耳朵，可以对比一下你更喜欢哪种。</li>
+      <li><b>⑨ 扑点的手感调参（新）。</b>扑的触发阈值（0.35s）、扑过去的 lerp（0.3）、判定「扑到了」的距离（3px）、松口后退回的 lerp（0.08）四个数要一起调：太快像抽搐，太慢像卡了。这几个数我都提到配置里，你试玩区停手感受一下，报一个「感觉对」的档位即可。</li>
+    </ul>
+  </div>
+
+  <h3>你选定之后我会怎么做</h3>
+  <div class="box">
+    <ol class="plan">
+      <li><b>资产落地。</b>W8 红点和 C5 猫头都是内联 SVG，直接写进 <code>portfolio/index.html</code>，零图片零请求；替掉 <code>#custom-cursor</code> 和 <code>#custom-cursor-follower</code> 两层，保留现有 id 和 hover 判定选择器，改动面尽量小。浅色区换羽毛棒由 <code>data-cursor-theme="light"</code> 一个属性驱动。</li>
+      <li><b>定位与热点。</b>改 <code>animCursor()</code> 的偏移算法，按热点缩放比定位；旋转轴心设在热点。</li>
+      <li><b>动态层。</b>看棒 / 眯眼 / 眨眼 / 抖耳朵状态机，全部用 class 切换，加阈值节流。</li>
+      <li><b>浅色区与降级。</b>加 <code>data-cursor-theme</code> 机制、<code>prefers-reduced-motion</code>、触屏隐藏、JS 失败时的原生光标兜底，处理模态框 grab 冲突。</li>
+      <li><b>实测。</b>headless 跑 0 报错，FPS 对比，1920 / 1440 / 390 三档视口回归，<code>npm run build</code> 通过。</li>
+      <li><b>同步与提交。</b>robocopy 同步到 <code>GitHub\wr-portfolio</code> 并 commit；<b>push 仍然由你在 GitHub Desktop 点</b>（我不会替你 push）。目前还有 2 个提交（性能优化 <code>fd5c9f4</code>、LazyMotion <code>c11bdd5</code>）在等你 push。</li>
+    </ol>
+  </div>
+</section>
+
+<p class="foot">
+  这个文件放在 <code>实验1个人网站成功，4个半小时左右\cursor-lab\</code>，在 portfolio 仓库之外，不会被打包也不会被部署。<br />
+  生成时间 2026-09-22 · 仅用于选型，选定后代码会重写进站点。
+</p>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- 数据 ---------- */
+
+var COLORSETS = {
+  warm:  { label:"暖金", main:"#B7AB98", glow:"rgba(183,171,152,.55)", ink:"#4A4436", desc:"站点主色，最协调" },
+  ivory: { label:"象牙白", main:"#EDE5D8", glow:"rgba(237,229,216,.55)", ink:"#3A382F", desc:"现在光标点的颜色" },
+  cool:  { label:"冷白银", main:"#D8E0E8", glow:"rgba(216,224,232,.50)", ink:"#33383D", desc:"你 9/23 选定；站点主色是暖金，冷色光标会有一层「贴上去」的对比感" }
+};
+
+var GLOWS = {
+  double:{ label:"双层描边", desc:"零滤镜" },
+  filter:{ label:"drop-shadow", desc:"柔和但吃性能" },
+  none:  { label:"无发光", desc:"最快最干" }
+};
+
+var DYN = {
+  off:  { label:"关", desc:"纯静态跟随" },
+  look: { label:"看棒", desc:"瞳孔+头朝向棒" },
+  full: { label:"全套", desc:"看棒+眯眼+眨眼+抖耳+棒摆" }
+};
+
+var CATOFF = {
+  center:{ label:"正对指针", desc:"和现在的圆环一样居中" },
+  near:  { label:"偏右下", desc:"静止时坐在指针右下方，不挡住点击目标（推荐）" },
+  far:   { label:"更远", desc:"离得更远，像跟班" },
+  pounce:{ label:"扑点", desc:"静止 0.35s 后猫扑向红外圆点，扑到＝眯眼笑（按你的新想法主推）" }
+};
+
+function eyes(pts, r){
+  r = r || 1.8;
+  var open = "", sq = "";
+  for (var i=0;i<pts.length;i++){
+    var x = pts[i][0], y = pts[i][1];
+    open += '<ellipse cx="'+x+'" cy="'+y+'" rx="'+(r*0.82).toFixed(2)+'" ry="'+r.toFixed(2)+'"/>';
+    sq   += '<path d="M'+(x-2.1).toFixed(1)+' '+(y+0.9).toFixed(1)+'Q'+x+' '+(y-1.1).toFixed(1)+' '+(x+2.1).toFixed(1)+' '+(y+0.9).toFixed(1)+'"/>';
+  }
+  return '<g class="eyes">'+
+           '<g class="eyes-open" fill="currentColor" stroke="none">'+open+'</g>'+
+           '<g class="eyes-squint" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">'+sq+'</g>'+
+         '</g>';
+}
+
+function eyesX(o){
+  return '<g class="eyes'+(o.blink?' xb':'')+'">'+
+           '<g class="eyes-open" fill="currentColor" stroke="none">'+o.open+'</g>'+
+           '<g class="eyes-squint" fill="none" stroke="currentColor" stroke-width="'+(o.sqW||1.9)+'" stroke-linecap="round" stroke-linejoin="round">'+o.squint+'</g>'+
+           (o.blink ? '<g class="eyes-blink" fill="none" stroke="currentColor" stroke-width="'+(o.blW||1.9)+'" stroke-linecap="round" stroke-linejoin="round">'+o.blink+'</g>' : '')+
+           (o.droop ? '<g class="eyes-droop" fill="currentColor" stroke="none">'+o.droop+'</g>' : '')+
+         '</g>';
+}
+
+function mouths(idle, happy, scrunch){
+  return '<g class="m-idle" fill="currentColor" stroke="none">'+idle+'</g>'+
+         '<g class="m-happy" fill="currentColor" stroke="none">'+happy+'</g>'+
+         '<g class="m-scrunch" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">'+scrunch+'</g>';
+}
+
+function rasterFace(set){
+  function img(cls, face){
+    var base = 'assets/'+set+'_'+face;
+    return '<image class="'+cls+'" data-base="'+base+'" href="'+base+'.png" x="0" y="0" width="40" height="40"/>';
+  }
+  return img("f-idle","idle")+img("f-squint","squint")+img("f-blink","blink");
+}
+
+/* ---------- 手稿猫（C5/C6）：按你原稿的三条语法重画 ----------
+   ① 耳朵和脸一笔连续，耳根不穿越线   ② 右颊「胡须」＝轮廓自己断开的短撇（左下同理），断口用方头线帽 butt、短撇半径外移 0.8
+   ③ 脸是略扁的椭圆（实测颅形 宽/高≈1.15）   尺寸全部来自 __measure-cats*.py 的逐像素实测
+   呆毛按她 9/23 的意见去掉，腮红保留 */
+function handCat(decor){
+  var hd =
+    '<path d="M4.64 23.34C3.62 17.60 3.72 12.90 4.55 8.70L5.15 8.35C7.70 9.90 10.00 11.40 11.75 12.55C14.30 10.60 17.00 9.20 19.55 8.55L21.55 4.25C25.60 5.80 30.20 8.60 32.55 12.45C34.20 14.30 35.20 16.50 34.80 18.71"/>'+
+    '<path d="M33.72 28.48A15.4 13.4 0 0 1 8.18 31.02"/>';
+  /* 四截断口短撇：半径外移 0.8、比主线粗 0.2，让它读作「胡须」而不只是「线断了」 */
+  var dash =
+    '<g stroke-width="2.5">'+
+    '<path d="M36.00 20.18A16.2 14.2 0 0 1 36.14 23.64"/>'+
+    '<path d="M35.90 25.11A16.2 14.2 0 0 1 35.22 27.26"/>'+
+    '<path d="M6.56 30.35A16.2 14.2 0 0 1 5.23 28.18"/>'+
+    '<path d="M4.60 26.79A16.2 14.2 0 0 1 3.96 24.38"/></g>';
+  var blush = '<g class="blush" fill="#F7BDB5" opacity=".8">'+
+    '<ellipse cx="12.00" cy="25.80" rx="2.10" ry="1.20" transform="rotate(-10 12 25.8)"/>'+
+    '<ellipse cx="28.40" cy="22.50" rx="2.10" ry="1.20" transform="rotate(-10 28.4 22.5)"/></g>';
+  var mouth = mouths(
+    '<path d="M19.50 26.10L21.70 26.60L20.30 29.50Z"/>',
+    '<path d="M17.90 22.90L24.50 24.20L20.90 31.50Z"/>',
+    '<path stroke-width="1.9" d="M16.70 26.00C15.90 29.40 17.60 31.40 19.30 30.60C20.20 30.20 20.60 29.00 20.80 27.60C21.00 29.00 21.40 30.20 22.30 30.60C24.00 31.40 25.70 29.40 24.90 26.00"/>');
+  var eyes = eyesX({
+    open:'<g transform="translate(14.6 22.0) rotate(-6)"><rect x="-1.60" y="-4.6" width="3.2" height="9.2" rx="1.6"/></g>'+
+         '<g transform="translate(25.0 19.3) rotate(5)"><rect x="-1.58" y="-4.7" width="3.16" height="9.4" rx="1.58"/></g>',
+    squint:'<path d="M13.30 22.60L15.50 19.20L17.70 22.60"/><path d="M24.60 20.80L26.80 17.40L29.00 20.80"/>',
+    blink:'<path d="M13.90 21.70L17.50 23.90L13.80 26.10"/><path d="M27.60 21.00L24.00 23.20L27.70 25.40"/>',
+    droop:'<g transform="translate(14.7 24.6) rotate(-10)"><path d="M-1.65 -1.95H1.65V0.10A1.65 1.85 0 0 1 -1.65 0.10Z"/></g>'+
+          '<g transform="translate(25.1 21.9) rotate(-10)"><path d="M-1.65 -1.95H1.65V0.10A1.65 1.85 0 0 1 -1.65 0.10Z"/></g>',
+    sqW:2.3, blW:2.1});
+  return '<g class="headcont"><g transform="translate(20 20) scale(1.16) translate(-20 -20)">'+
+         '<g class="hd" stroke-width="2.3" stroke-linecap="butt">'+hd+dash+'</g>'+
+         (decor ? blush : '')+mouth+eyes+'</g></g>';
+}
+
+
+var WANDS = {
+  W1:{ name:"W1 · 羽毛斜出", tag:"浅色区", vb:32, hot:[4.2,4.2],
+    note:"羽尖就是热点。最像一支真的逗猫棒，羽毛斜向展开，动起来最有「逗」的感觉。",
+    pro:"点击落点和视觉尖端完全重合，最符合直觉；辨识度最高，一眼知道这是逗猫棒。",
+    con:"羽毛占了不小面积，24px 下细节会糊；比原来的 8px 点更抢眼。",
+    body:'<path d="M4.2 4.2C9.6 5.4 13.8 9.8 12.6 15.4C7 14.8 3.2 9.8 4.2 4.2Z"/>'+
+         '<path d="M5.4 6L11 13.4"/>'+
+         '<path d="M12.2 15L27.5 29.5" stroke-width="2.1"/>' },
+  W2:{ name:"W2 · 杆尖直指", tag:"", vb:32, hot:[3.5,3.5],
+    note:"热点在杆的最尖端，羽毛挂在手柄那头。最接近传统指针的逻辑，精确感最强。",
+    pro:"尖端细长，指哪点哪的心理预期最准；轮廓干净，小尺寸下不糊。",
+    con:"羽毛在后面，「逗猫棒」的识别度弱一些，更像魔法棒 / 指挥棒。",
+    body:'<path d="M3.5 3.5L22 22" stroke-width="1.8"/>'+
+         '<path d="M21.5 21.5C26 21.5 29.8 25 29.5 29.5C25 29.8 21.5 26 21.5 21.5Z"/>'+
+         '<path d="M23.2 23.2L27.8 27.8"/>' },
+  W3:{ name:"W3 · 极简两笔", tag:"稳妥", vb:32, hot:[5,5],
+    note:"一根杆 + 一片小羽，一共两笔。24px 下最清楚的一版。",
+    pro:"小尺寸可读性最好，重绘面积最小，性能最省；低调不抢作品的视线。",
+    con:"信息量最少，「逗猫棒」只剩暗示；放大看略显单薄。",
+    body:'<path d="M5 5L22.5 22.5" stroke-width="2"/>'+
+         '<path d="M22 22C27 22.2 30.2 25.6 29 29.6C24.8 30 21.4 26.2 22 22Z"/>'+
+         '<path d="M23.6 23.8L27.4 27.8" stroke-width="1.2"/>' },
+  W4:{ name:"W4 · 羽毛 + 铃铛", tag:"", vb:32, hot:[4.2,4.2],
+    note:"W1 加了缠绳和铃铛。最「玩具」、最有故事感的一版。",
+    pro:"最有记忆点，放大看很精致，能体现手工感。",
+    con:"24px 下铃铛基本认不出来，只剩一个疙瘩；笔画最多、最容易显脏。",
+    body:'<path d="M4.2 4.2C9.6 5.4 13.8 9.8 12.6 15.4C7 14.8 3.2 9.8 4.2 4.2Z"/>'+
+         '<path d="M5.4 6L11 13.4"/>'+
+         '<path d="M12.2 15L27.5 29.5" stroke-width="2.1"/>'+
+         '<path d="M15.4 15.4L12.6 18.2"/>'+
+         '<circle cx="16.2" cy="18.8" r="2.4"/>'+
+         '<path d="M16.2 19.9V21"/>' },
+  W5:{ name:"W5 · 竖直羽毛", tag:"对照", vb:32, hot:[16,3.5],
+    note:"羽毛竖直对称，热点在正上方中间。放在这里当反面对照。",
+    pro:"形态最平衡、最像一枚书签 / 魔杖，静止时好看。",
+    con:"热点在顶部中间而不是尖端，视觉上没有「指向」，点按钮时容易觉得落点飘。",
+    body:'<path d="M16 3.5C21 8 21.5 13.5 16 17C10.5 13.5 11 8 16 3.5Z"/>'+
+         '<path d="M16 5L16 16"/>'+
+         '<path d="M16 17L16 29.5" stroke-width="2.1"/>' },
+  W6:{ name:"W6 · 红外小圆点", tag:"红点", vb:16, hot:[8,8], flat:true, red:true,
+    note:"就是激光笔打在墙上那个红点：实心亮红 + 中心一小点高光。你说「光标改为红外射线的那种小圆点，猫猫头扑红外小圆点也算得上合理」，这一版是照这句话做的。",
+    pro:"猫扑红点是所有养猫人的共通直觉，不用解释就成立；16px 内画完、零滤镜零图片，几乎不吃性能；热点就是圆心，不存在对不准的问题。",
+    con:"它是全站唯一的高饱和彩色，会和暖金色系打架；红点落在浅色板块上对比度反而不够，需要单独处理；没有「尖端」，比羽毛少一层指向暗示。",
+    body:'<circle cx="8" cy="8" r="2.6" fill="#FF2D2D" stroke="none"/>'+
+         '<circle cx="8" cy="8" r="1.1" fill="#FFD9D4" stroke="none"/>' },
+  W7:{ name:"W7 · 红点 + 细环", tag:"红点", vb:16, hot:[8,8], flat:true, red:true,
+    note:"W6 外面加一圈极细的红环，像激光点的散射圈。",
+    pro:"16px 下比纯点更容易被眼睛抓到，快速移动时不容易跟丢；仍然只有红点一个颜色。",
+    con:"多一圈就多一层视觉噪音，放大看有点像「靶心」，玩具感下降、工具感上升。",
+    body:'<circle cx="8" cy="8" r="2.6" fill="#FF2D2D" stroke="none"/>'+
+         '<circle cx="8" cy="8" r="1.1" fill="#FFD9D4" stroke="none"/>'+
+         '<circle cx="8" cy="8" r="5.4" stroke="#FF2D2D" stroke-width="0.7" fill="none" opacity="0.5"/>' },
+  W8:{ name:"W8 · 红点 + 软晕", tag:"已选", vb:16, hot:[8,8], flat:true, red:true,
+    note:"W6 底下垫一片半透明红晕，模拟激光打在墙上扩散开的光斑。",
+    pro:"最接近真实激光笔的观感，暗色底上「发光」的说服力最强；边缘柔和，不刺眼。",
+    con:"光晕会糊掉红点的边界，判断点击落点比 W6 模糊；浅色底上光晕几乎看不见，只剩一个点。",
+    body:'<circle cx="8" cy="8" r="4.8" fill="#FF2D2D" stroke="none" opacity="0.16"/>'+
+         '<circle cx="8" cy="8" r="2.6" fill="#FF2D2D" stroke="none"/>'+
+         '<circle cx="8" cy="8" r="1.1" fill="#FFD9D4" stroke="none"/>' }
+};
+
+var CATS = {
+  C1:{ name:"C1 · 圆脸三件组", tag:"推荐", vb:40, hot:[20,21],
+    note:"一个圆脸 + 两只耳 + ω 嘴。最标准的猫脸，元素分开所以耳朵能单独抖。",
+    pro:"40px 下五官齐全、一眼是猫；耳朵是独立元素，可以做抖动动效。",
+    con:"笔画数量中等，圆脸 + 耳朵的连接处是断开的（描边风格如此），近看略生硬。",
+    body:'<circle cx="20" cy="22" r="12.5"/>'+
+         '<path class="ear ear-l" d="M9.8 14.8L7.9 6.2L15.7 10.3"/>'+
+         '<path class="ear ear-r" d="M30.2 14.8L32.1 6.2L24.3 10.3"/>'+
+         '<path d="M18.7 25.4H21.3L20 26.9Z"/>'+
+         '<path d="M20 26.9V28.2M20 28.2C18.6 30 16.6 29.8 15.8 28.4M20 28.2C21.4 30 23.4 29.8 24.2 28.4"/>'+
+         eyes([[15,20],[25,20]]) },
+  C2:{ name:"C2 · 方脸 + 胡须", tag:"", vb:40, hot:[20,21],
+    note:"整条外轮廓一笔画完（耳朵和脸连在一起），加三根胡须。最「插画」的一版。",
+    pro:"轮廓连续，看起来最完整、最有手作插画感；胡须让猫的身份没有歧义。",
+    con:"笔画最多，44px 下胡须会挤成一片；耳朵和脸是一条路径，没法单独抖耳朵。",
+    body:'<path d="M8.5 24V17.2C8.5 15.4 9 14.3 10 13.8L8 5.2L15.8 11.5C18.5 10.9 21.5 10.9 24.2 11.5L32 5.2L30 13.8C31 14.3 31.5 15.4 31.5 17.2V24C31.5 29.5 26.5 33.5 20 33.5C13.5 33.5 8.5 29.5 8.5 24Z"/>'+
+         '<path d="M18.7 25.2H21.3L20 26.7Z"/>'+
+         '<path d="M20 26.7V28M20 28C18.6 29.8 16.6 29.6 15.8 28.2M20 28C21.4 29.8 23.4 29.6 24.2 28.2"/>'+
+         '<path d="M9.6 22.4L3.2 20.6M9.4 24.6L2.4 24.6M9.6 26.8L3.2 28.6" stroke-width="1.1" opacity=".75"/>'+
+         '<path d="M30.4 22.4L36.8 20.6M30.6 24.6L37.6 24.6M30.4 26.8L36.8 28.6" stroke-width="1.1" opacity=".75"/>'+
+         eyes([[15,20],[25,20]]) },
+  C3:{ name:"C3 · 3/4 侧脸", tag:"", vb:40, hot:[19,21],
+    note:"脸转向左上，五官整体偏左，后面补一条颈线。天生就在「看」逗猫棒。",
+    pro:"因为逗猫棒基本在猫的左上方，这一版不用做旋转就自带视线方向，最自然。",
+    con:"方向写死了，如果棒跑到右边就会显得别扭（要靠水平翻转补救）；五官偏一侧，居中感差。",
+    body:'<ellipse cx="18.5" cy="22" rx="12" ry="11.6"/>'+
+         '<path class="ear ear-l" d="M8.6 15.6L7.2 6.6L15.6 11.2"/>'+
+         '<path class="ear ear-r" d="M28.4 15.6L30 7L22.8 11.6"/>'+
+         '<path d="M15.4 25.6H18L16.7 27.1Z"/>'+
+         '<path d="M16.7 27.1V28.3M16.7 28.3C15.3 30.1 13.3 29.9 12.5 28.5M16.7 28.3C18.1 30.1 20.1 29.9 20.9 28.5"/>'+
+         eyes([[12.6,20.4],[21.4,20.4]]) },
+  C4:{ name:"C4 · 极简两耳两眼", tag:"稳妥", vb:40, hot:[20,21],
+    note:"一条连续外轮廓 + 两个眼点，没有鼻子嘴。40px 下最清楚的一版。",
+    pro:"小尺寸可读性最好；笔画最少、重绘最省；最克制，不会显得幼稚。",
+    con:"没有表情基础（没嘴），眯眼 / 眨眼的变化幅度小，「逗」的戏剧性弱。",
+    body:'<path d="M8.6 16.4L7 6.6L15.6 11.4C18.4 10.6 21.6 10.6 24.4 11.4L33 6.6L31.4 16.4C33 18.8 33.6 22 32.8 25C31.4 30.6 26.2 34 20 34C13.8 34 8.6 30.6 7.2 25C6.4 22 7 18.8 8.6 16.4Z"/>'+
+         eyes([[15,21],[25,21]], 2.0) },
+  C5:{ name:"C5 · 你的手稿 · 重画版", tag:"已选", vb:40, hot:[20,20], mouth:[20.93,29.74], flat:true, four:true,
+    note:"照你原稿的三条语法重画：① 耳朵和脸是一笔连续的轮廓，耳根不再有一条弧线穿过去；② 右颊那几撇「胡须」就是轮廓自己断开的短撇（左下同理），不是贴在脸外的独立线条；③ 脸改成略扁的椭圆（实测你原稿颅形 宽/高≈1.15）。五官尺寸全部从原稿逐像素量：常态竖瞳 3.2×9.4（占颅宽 10.8%、颅高 31%，和你猫2 实测一致）、眯眼 ^^ 收小到 4.4×3.4、大▼ 放到 6.0×8.0、ω 画成真的两个圈。<b>9/23 又按你反馈改了三处：断口线帽圆头→方头、四截短撇外移 0.8 并加粗到 2.5（让胡须读得出来）、呆毛去掉、腮红留着并提到 #F7BDB5 / 80%（深底上要读得出是粉色）。</b>",
+    pro:"四态表情都在：常态竖瞳、悬停眯眼笑、扑到红点＝你那张嘴努子、长时间不动＝你那张耷拉眼。矢量用 currentColor 上色，跟着站点主色自动反色，深色底上不会再看不见；零图片零请求，任意尺寸都锐利。发光走 drop-shadow（双层描边对手稿猫会把线糊粗，已标 flat）。",
+    con:"耳朵和脸一笔连续之后，耳朵不再是独立元素，「抖耳朵」改成了整张头微抖（约 3°）。另外重画毕竟不是原样描，铅笔毛边只做到「像」，要 100% 原样得回位图 C7/C8。",
+    body:handCat(true) },
+  C6:{ name:"C6 · 手稿素线", tag:"克制", vb:40, hot:[20,20], mouth:[20.93,29.74], flat:true, four:true,
+    note:"和 C5 同一套重画轮廓、同一套四态表情（含方头断口），只去掉腮红。",
+    pro:"安静版：专业听众面前不抢戏，深色底上轮廓更干净；同样可反色、零图片。",
+    con:"少了腮红，「你画的那味」比 C5 弱一档。",
+    body:handCat(false) },
+  C7:{ name:"C7 · 你的原稿 · 带腮红", tag:"原稿", vb:40, hot:[20,20], flat:true,
+    note:"把你画的那只猫直接做成位图贴进来，我没有重绘、也没有描边参数可调。三态：idle＝竖瞳那只、眯眼＝^^ 大▼ 那只、眨眼＝＞＜ω 那只，换表情就是换一张图。",
+    pro:"100% 是你的笔触：铅笔的粗细变化、断口、腮红全在，一眼能看出这是手画的，不会有 AI 味；三态是真的换了三张脸，戏比矢量版足。",
+    con:"位图不能跟着站点主色变色（色系切换对 C7/C8 无效）；132px 放大看有轻微锯齿；三态共约 74KB 要先加载；腮红是除红外红点之外全站仅有的另一处彩色。",
+    body:rasterFace("c7") },
+  C8:{ name:"C8 · 你的原稿 · 黑白透明", tag:"素线", vb:40, hot:[20,20], flat:true,
+    note:"同一只猫，去腮红的黑白透明版，三态和 C7 一一对应。",
+    pro:"深色底上最干净，不和暖金色系抢；文件更小（三态约 56KB）；去掉腮红后在专业听众面前更克制。",
+    con:"同样不能变色、同样有轻微锯齿；少了腮红，「你画的那味」弱一档，和 C7 的差别只剩颜色。",
+    body:rasterFace("c8") }
+};
+
+var QUESTIONS = [
+  { t:"红外小圆点用哪种红？",
+    o:'<b style="color:#93C0A3">✔ 已定（你选了用 #FF2D2D 的 W8）</b> · <b>亮红 #FF2D2D</b>：最像真的激光笔，暗底上最跳，猫扑它的动机最强。／ 深红外红 #B31212：更沉、和暖金站色不打架，但「激光」的说服力弱一半。／ 暖金 #B7AB98：完全融入站点色系，可它就不是红外点了，「猫扑红点」的叙事也跟着散。<b>另外要确认一句：红点是全站唯一的高饱和色，你接受吗？</b>' },
+  { t:"猫停下多久之后扑向红点？",
+    o:'<b style="color:#93C0A3">✔ 已定</b> · <b>0.35s</b>：刚好是「手停了、还没开始读内容」的空档，扑一下不打断阅读。／ 0.2s：反应最快、最像活猫，但你每次停顿它都扑，容易烦。／ 0.6s：很克制，只有真停下来才扑，但会让人觉得「延迟了」。试玩区 D 段可以切「扑点 / 偏右下 / 正对指针 / 更远」，停手感受一下。' },
+  { t:"猫头要多少戏份？",
+    o:'<b style="color:#93C0A3">✔ 已定：全套</b> · 看棒 + 悬停眯眼：有生命感但克制，专业听众不会觉得幼稚。／ 纯静态：最安全，但就只是一个猫形圈圈。／ 全套（再加点击眨眼、抖耳朵、棒随速度摆动）：最有趣，也最抢眼。' },
+  { t:"尺寸能接受吗？",
+    o:'<b>棒 24px、猫 44px、悬停时猫 60px（推荐）</b>。比现在的 8px / 40px 略大一号，因为线条图形需要面积才认得出。可用滑杆试 18–34 / 34–64，告诉我你停在哪个数。' },
+  { t:"浅色区要不要做「自动加深」？（补充）",
+    o:'<b style="color:#93C0A3">✔ 已定：要，而且浅色区直接把红点换成羽毛棒</b>。丢掉反色混合后，象牙白光标在浅色背景上会直接消失。做法是给浅色板块加一个 <code>data-cursor-theme="light"</code>，光标进去就自动换成深墨色。<b>顺便问一句：你的站点现在除了深色还有大面积浅色板块吗？</b>如果全程深色，这段逻辑可以先不做。' },
+  { t:"加载页（loading）期间也用新光标吗？（补充）",
+    o:'<b>要（推荐）</b>：从 0% 到点 Start 之前就用逗猫棒，第一印象更完整。／ 不要：loading 期间用系统默认箭头，进站点后再切换。' },
+  { t:"鼠标停下时，猫头坐在哪里？（补充）",
+    o:'<b style="color:#93C0A3">✔ 已定</b> · <b>扑点</b>：按你 9/22 的新想法——停手 0.35s 后猫从右下方扑向红外红点，扑到就眯眼笑，手一动立刻松口退回原位。／ 偏右下：只坐不扑，静止时猫头坐在指针右下方约半个身位，不挡点击目标，最安全。／ 正对指针：和现在的圆环一样居中，但红点会一直压在猫脸中间。／ 更远：像小跟班，距离感更强但和点击目标关系变弱。' }
+];
+
+/* ---------- 渲染 ---------- */
+
+function hotMark(h){
+  return '<g class="hot"><circle cx="'+h[0]+'" cy="'+h[1]+'" r="2.6"/>'+
+    '<path d="M'+(h[0]-5)+' '+h[1]+'H'+(h[0]+5)+'M'+h[0]+' '+(h[1]-5)+'V'+(h[1]+5)+'"/></g>';
+}
+
+function svgFor(kind, key, px, o){
+  o = o || {};
+  var d = (kind === "wand" ? WANDS : CATS)[key];
+  var cs = COLORSETS[o.colorKey || state.color];
+  var color = o.color || cs.main;
+  var glow = o.glow || state.glow;
+  var body = d.body;
+  var inner = "";
+  if (glow === "double" && !d.flat) inner += '<g class="gu">'+body+'</g><g class="gu2">'+body+'</g>';
+  inner += body;
+  var st = o.varMode ? "color:var(--cc)" : "color:" + color;
+  if (glow === "filter"){
+    var blur = Math.max(2, (px/24*4)).toFixed(1);
+    st += ";filter:drop-shadow(0 0 " + blur + "px " +
+      (o.varMode ? "var(--ccg)" : (o.glowColor || cs.glow)) + ")";
+  }
+  return '<svg class="csvg'+(o.extraClass?" "+o.extraClass:"")+'" width="'+px+'" height="'+px+
+    '" viewBox="0 0 '+d.vb+' '+d.vb+'" fill="none" style="'+st+'" aria-hidden="true">'+
+    '<g class="ln" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'+inner+'</g>'+
+    (o.hot ? hotMark(d.hot) : "") + '</svg>';
+}
+
+function wandCard(k){
+  var d = WANDS[k];
+  return '<button type="button" class="card" data-kind="wand" data-key="'+k+'">'+
+    '<span class="cname">'+d.name+(d.tag?' <span class="badge">'+d.tag+'</span>':'')+'</span>'+
+    '<span class="prevrow">'+
+      '<span class="prev">'+svgFor("wand",k,96,{glow:state.glow,hot:state.hot})+'<em>4× · 96px</em></span>'+
+      '<span class="prev">'+svgFor("wand",k,state.wandPx,{glow:state.glow,hot:state.hot})+'<em>1:1 · '+state.wandPx+'px</em></span>'+
+    '</span>'+
+    '<p class="note">'+d.note+'</p>'+
+    '<p class="pc pro">'+d.pro+'</p>'+
+    '<p class="pc con">'+d.con+'</p>'+
+  '</button>';
+}
+
+function catCard(k){
+  var d = CATS[k];
+  return '<button type="button" class="card" data-kind="cat" data-key="'+k+'">'+
+    '<span class="cname">'+d.name+(d.tag?' <span class="badge">'+d.tag+'</span>':'')+'</span>'+
+    '<span class="prevrow">'+
+      '<span class="prev">'+svgFor("cat",k,132,{glow:state.glow,hot:state.hot})+'<em>3× · 132px</em></span>'+
+      '<span class="prev">'+svgFor("cat",k,132,{glow:state.glow,extraClass:"squint"})+'<em>眯眼笑</em></span>'+
+      (d.four ? '<span class="prev">'+svgFor("cat",k,132,{glow:state.glow,extraClass:"pout"})+'<em>嘴努子·扑到</em></span>'+
+                '<span class="prev">'+svgFor("cat",k,132,{glow:state.glow,extraClass:"droop"})+'<em>耷拉眼·等久了</em></span>' : '')+
+      '<span class="prev">'+svgFor("cat",k,state.catPx,{glow:state.glow})+'<em>1:1 · '+state.catPx+'px</em></span>'+
+      '<span class="prev">'+svgFor("cat",k,Math.round(state.catPx*1.32),{glow:state.glow})+'<em>悬停 '+Math.round(state.catPx*1.32)+'px</em></span>'+
+    '</span>'+
+    '<p class="note">'+d.note+'</p>'+
+    '<p class="pc pro">'+d.pro+'</p>'+
+    '<p class="pc con">'+d.con+'</p>'+
+  '</button>';
+}
+
+var state = {
+  wand:"W8", cat:"C5", color:"cool", glow:"filter", dyn:"full",
+  catOff:"pounce",
+  wandPx:21, catPx:41, dotLerp:0.2, folLerp:0.04,
+  hot:true, autoDark:true, autoWand:true
+};
+var LIGHT_WAND = "W1";
+
+var el = {};
+["wandGrid","catGrid","qs","pg","pgWand","pgCat","fps","mGlow","mWand","mCat","mHover",
+ "segColor","segGlow","segDyn","segOff","rWand","oWand","rCat","oCat","rLerp","oLerp",
+ "cbHot","cbDark","cbWand","bSquint","bBlink","bPout","bDroop","bTwitch","cfg","bCopy"].forEach(function(id){
+  el[id] = document.getElementById(id);
+});
+
+function buildSegs(){
+  el.segColor.innerHTML = Object.keys(COLORSETS).map(function(k){
+    return '<button type="button" data-v="'+k+'" title="'+COLORSETS[k].desc+'">'+COLORSETS[k].label+'</button>';
+  }).join("");
+  el.segGlow.innerHTML = Object.keys(GLOWS).map(function(k){
+    return '<button type="button" data-v="'+k+'" title="'+GLOWS[k].desc+'">'+GLOWS[k].label+'</button>';
+  }).join("");
+  el.segDyn.innerHTML = Object.keys(DYN).map(function(k){
+    return '<button type="button" data-v="'+k+'" title="'+DYN[k].desc+'">'+DYN[k].label+'</button>';
+  }).join("");
+  el.segOff.innerHTML = Object.keys(CATOFF).map(function(k){
+    return '<button type="button" data-v="'+k+'" title="'+CATOFF[k].desc+'">'+CATOFF[k].label+'</button>';
+  }).join("");
+}
+
+function buildQuestions(){
+  el.qs.innerHTML = QUESTIONS.map(function(q){
+    return '<div class="q"><div class="t">'+q.t+'</div><p class="o">'+q.o+'</p></div>';
+  }).join("");
+}
+
+function syncSegs(){
+  [["segColor","color"],["segGlow","glow"],["segDyn","dyn"],["segOff","catOff"]].forEach(function(p){
+    var btns = el[p[0]].querySelectorAll("button");
+    for (var i=0;i<btns.length;i++) btns[i].classList.toggle("on", btns[i].getAttribute("data-v") === state[p[1]]);
+  });
+}
+
+function paintCards(){
+  el.wandGrid.innerHTML = Object.keys(WANDS).map(wandCard).join("");
+  el.catGrid.innerHTML = Object.keys(CATS).map(catCard).join("");
+  var all = document.querySelectorAll(".card");
+  for (var i=0;i<all.length;i++){
+    var c = all[i];
+    var on = (c.getAttribute("data-kind")==="wand" && c.getAttribute("data-key")===state.wand) ||
+             (c.getAttribute("data-kind")==="cat"  && c.getAttribute("data-key")===state.cat);
+    c.classList.toggle("sel", on);
+  }
+}
+
+/* ---------- 试玩区 ---------- */
+
+var wandSvg = null, catSvg = null, eyesG = null;
+
+function paintPlayground(){
+  var cs = COLORSETS[state.color];
+  el.pg.style.setProperty("--cc", cs.main);
+  el.pg.style.setProperty("--ccg", cs.glow);
+  el.pgCat.querySelector(".cur-in").innerHTML =
+    svgFor("cat", state.cat, state.catPx, {varMode:true});
+  var c = CATS[state.cat], sc = state.catPx / c.vb;
+  var ci = el.pgCat.querySelector(".cur-in");
+  ci.className = "cur-in c";
+  ci.style.left = (-c.hot[0]*sc) + "px";
+  ci.style.top  = (-c.hot[1]*sc) + "px";
+  catSvg = ci.querySelector("svg");
+  var co = (c.hot[0]*sc)+"px "+(c.hot[1]*sc)+"px";
+  if (catSvg) catSvg.style.transformOrigin = co;
+  ci.style.transformOrigin = co;
+  eyesG = catSvg ? catSvg.querySelector(".eyes") : null;
+  applyFaces();
+  applyHalf(lastHalf);
+}
+
+/* 红点是发光体，只在深色底上成立；浅色底上自动换成羽毛逗猫棒（反射体） */
+function wandKeyFor(half){
+  var w = WANDS[state.wand];
+  return (half === "l" && state.autoDark && state.autoWand && w.red) ? LIGHT_WAND : state.wand;
+}
+
+function renderWand(k){
+  var w = WANDS[k], sw = state.wandPx / w.vb;
+  var wi = el.pgWand.querySelector(".cur-in");
+  wi.innerHTML = svgFor("wand", k, state.wandPx, {varMode:true});
+  wi.className = "cur-in w";
+  wi.style.left = (-w.hot[0]*sw) + "px";
+  wi.style.top  = (-w.hot[1]*sw) + "px";
+  wandSvg = wi.querySelector("svg");
+  var o = (w.hot[0]*sw)+"px "+(w.hot[1]*sw)+"px";
+  if (wandSvg) wandSvg.style.transformOrigin = o;
+  wi.style.transformOrigin = o;
+  el.mWand.textContent = k + " " + state.wandPx + "px";
+}
+
+function applyHalf(half){
+  var cs = COLORSETS[state.color];
+  var light = (half === "l" && state.autoDark);
+  el.pg.style.setProperty("--cc", light ? cs.ink : cs.main);
+  el.pg.style.setProperty("--ccg", light ? "rgba(255,255,255,.55)" : cs.glow);
+  if (catSvg){
+    var imgs = catSvg.querySelectorAll("image[data-base]");
+    for (var i=0;i<imgs.length;i++){
+      imgs[i].setAttribute("href", imgs[i].getAttribute("data-base") + (light ? "_ink" : "") + ".png");
+    }
+  }
+  renderWand(wandKeyFor(half));
+}
+
+function applyFaces(){
+  if (!catSvg) return;
+  var f = faceNow, cl = catSvg.classList;
+  cl.toggle("squint", f === "squint");
+  cl.toggle("blink",  f === "blink");
+  cl.toggle("pout",   f === "pout");
+  cl.toggle("droop",  f === "droop");
+  cl.toggle("twitch", twitching);
+}
+function setFace(f){ if (f !== faceNow){ faceNow = f; applyFaces(); } }
+function faceTick(k, ms){
+  forceFace = k; setFace(k);
+  clearTimeout(forceT);
+  forceT = setTimeout(function(){ forceFace = ""; }, ms);
+}
+/* 扑到之后不是「猫脸中心压住红点」，而是把嘴送到红点上——「叼住」才成立 */
+function pounceOff(){
+  var c = CATS[state.cat], sc = state.catPx / c.vb;
+  var m = c.mouth || [c.hot[0], c.hot[1] + 5.5];
+  return [-(m[0]-c.hot[0])*sc, -(m[1]-c.hot[1])*sc];
+}
+
+function catOffset(){
+  if (state.catOff === "center") return [0,0];
+  var m = state.catOff === "far" ? [0.82,0.92] : [0.55,0.64];
+  return [state.catPx*m[0], state.catPx*m[1]];
+}
+
+var mx=0,my=0,cx=0,cy=0,fx=0,fy=0,pcx=0,pcy=0,sway=0,inside=false,hovering=false;
+var blinking=false, twitching=false, lastHalf=null;
+var faceNow="", forceFace="", forceT=null;
+var lastMoveT=0, pounced=false;
+var rect=null;
+
+function measure(){ rect = el.pg.getBoundingClientRect(); }
+
+el.pg.addEventListener("mouseenter", function(){
+  inside=true; measure(); lastMoveT = performance.now(); el.pg.classList.add("live");
+});
+el.pg.addEventListener("mouseleave", function(){
+  inside=false; el.pg.classList.remove("live");
+  if (hovering){ hovering=false; el.pg.classList.remove("hov"); el.mHover.textContent="无"; }
+  pounced=false; hovering=false;
+});
+el.pg.addEventListener("mousemove", function(e){
+  if (!rect) measure();
+  mx = e.clientX - rect.left; my = e.clientY - rect.top;
+  lastMoveT = performance.now();
+  if (!inside){ inside = true; el.pg.classList.add("live"); }
+
+  var t = e.target.closest ? e.target.closest("a,button,.fk-card,.fk-link") : null;
+  var nh = !!t;
+  if (nh !== hovering){
+    hovering = nh;
+    el.pg.classList.toggle("hov", nh);
+    el.mHover.textContent = nh ? (t.className || t.tagName) : "无";
+  }
+  var half = (mx > rect.width/2) ? "l" : "d";
+  if (half !== lastHalf){
+    lastHalf = half;
+    applyHalf(half);
+  }
+});
+el.pg.addEventListener("mousedown", function(){
+  if (state.dyn === "full"){
+    blinking = true; twitching = true;
+    setTimeout(function(){ blinking=false; }, 170);
+    setTimeout(function(){ twitching=false; applyFaces(); }, 1000);
+  }
+});
+window.addEventListener("resize", measure);
+window.addEventListener("scroll", measure, {passive:true});
+
+var frames=0, lastT=performance.now();
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+
+function loop(t){
+  frames++;
+  if (t - lastT >= 1000){ el.fps.textContent = frames; frames=0; lastT=t; }
+
+  cx += (mx-cx)*state.dotLerp; cy += (my-cy)*state.dotLerp;
+  var off = catOffset(), fl = state.folLerp;
+  var idleMs = t - lastMoveT;
+  var idleP = state.catOff === "pounce" && inside && idleMs > 350;
+  if (state.catOff === "pounce"){
+    if (idleP){ off = pounceOff(); fl = 0.3; }
+    else { off = [state.catPx*0.55, state.catPx*0.64]; }
+    if (idleP && !pounced){
+      /* 判定「扑到了」要比的是嘴和指针的距离：扑过去的目标点本身带了叼红点的偏移 */
+      var pdx = mx+off[0]-fx, pdy = my+off[1]-fy;
+      if (Math.sqrt(pdx*pdx + pdy*pdy) < 3) pounced = true;
+    }
+  }
+  if (pounced && !idleP) pounced = false;
+  setFace(forceFace ? forceFace
+    : !inside ? ""
+    : blinking ? "blink"
+    : (state.dyn === "full" && hovering) ? "squint"
+    : state.dyn === "off" ? ""
+    : idleMs > 4000 ? "droop"
+    : pounced ? "pout" : "");
+  fx += (mx+off[0]-fx)*fl; fy += (my+off[1]-fy)*fl;
+  el.pgWand.style.transform = "translate3d("+cx.toFixed(2)+"px,"+cy.toFixed(2)+"px,0)";
+  el.pgCat.style.transform  = "translate3d("+fx.toFixed(2)+"px,"+fy.toFixed(2)+"px,0)";
+
+  if (state.dyn !== "off" && eyesG){
+    var dx = cx-fx, dy = cy-fy, dist = Math.sqrt(dx*dx+dy*dy) || 1;
+    var k = Math.min(dist/45, 1);
+    eyesG.setAttribute("transform","translate("+(dx/dist*2.4*k).toFixed(2)+" "+(dy/dist*2.4*k).toFixed(2)+")");
+    if (catSvg) catSvg.style.transform = "rotate("+(clamp(dx/55,-1,1)*8*k).toFixed(2)+"deg)";
+  }
+  if (state.dyn === "full" && wandSvg){
+    var vx = cx-pcx; pcx=cx; pcy=cy;
+    sway += (clamp(vx*1.1,-15,15) - sway)*0.16;
+    wandSvg.style.transform = "rotate("+sway.toFixed(2)+"deg)";
+  }
+  requestAnimationFrame(loop);
+}
+
+/* ---------- 控件 ---------- */
+
+function paintConfig(){
+  var w = WANDS[state.wand], c = CATS[state.cat], cs = COLORSETS[state.color];
+  el.mGlow.textContent = GLOWS[state.glow].label;
+  el.mWand.textContent = wandKeyFor(lastHalf) + " " + state.wandPx + "px";
+  el.mCat.textContent  = state.cat + " " + state.catPx + "px";
+  el.cfg.innerHTML =
+    "<b>棒</b>  " + state.wand + " " + w.name.replace(/^W\d · /,"") + "（热点 " + w.hot.join(",") + "）\n" +
+    "<b>猫</b>  " + state.cat + " " + c.name.replace(/^C\d · /,"") + "\n" +
+    "<b>色系</b> " + cs.label + " " + cs.main + "\n" +
+    "<b>发光</b> " + GLOWS[state.glow].label + "\n" +
+    "<b>尺寸</b> 棒 " + state.wandPx + "px / 猫 " + state.catPx + "px（悬停 ×1.32 ≈ " + Math.round(state.catPx*1.32) + "px）\n" +
+    "<b>动态</b> " + DYN[state.dyn].label + "（" + DYN[state.dyn].desc + "）\n" +
+    "<b>静止位置</b> " + CATOFF[state.catOff].label + "\n" +
+    "<b>lerp</b> 棒 " + state.dotLerp + " / 猫 " + state.folLerp + "\n" +
+    "<b>浅色区自动加深</b> " + (state.autoDark ? "要" : "不要") + "\n" +
+    "<b>浅色区的棒</b> " + (state.autoDark && state.autoWand && w.red
+      ? "自动换 " + LIGHT_WAND + " 羽毛逗猫棒（红点是发光体，浅色底上会失效）"
+      : "不换，保持 " + state.wand);
+}
+
+function refreshAll(){ paintCards(); paintPlayground(); paintConfig(); syncSegs(); }
+
+el.segColor.addEventListener("click", function(e){
+  var b = e.target.closest("button"); if(!b) return;
+  state.color = b.getAttribute("data-v");
+  lastHalf = null;
+  refreshAll();
+});
+el.segGlow.addEventListener("click", function(e){
+  var b = e.target.closest("button"); if(!b) return;
+  state.glow = b.getAttribute("data-v"); refreshAll();
+});
+el.segDyn.addEventListener("click", function(e){
+  var b = e.target.closest("button"); if(!b) return;
+  state.dyn = b.getAttribute("data-v");
+  if (state.dyn === "off" && eyesG) eyesG.setAttribute("transform","translate(0 0)");
+  if (state.dyn === "off" && catSvg) catSvg.style.transform = "";
+  if (state.dyn !== "full"){ blinking=false; twitching=false; }
+  if (state.dyn !== "full" && wandSvg) wandSvg.style.transform = "";
+  syncSegs(); paintConfig();
+});
+
+el.segOff.addEventListener("click", function(e){
+  var b = e.target.closest("button"); if(!b) return;
+  state.catOff = b.getAttribute("data-v"); syncSegs(); paintConfig();
+});
+
+el.rWand.addEventListener("input", function(){
+  state.wandPx = +this.value; el.oWand.textContent = state.wandPx+"px";
+  paintCards(); paintPlayground(); paintConfig();
+});
+el.rCat.addEventListener("input", function(){
+  state.catPx = +this.value; el.oCat.textContent = state.catPx+"px";
+  paintCards(); paintPlayground(); paintConfig();
+});
+el.rLerp.addEventListener("input", function(){
+  state.folLerp = (+this.value)/100; el.oLerp.textContent = state.folLerp.toFixed(2); paintConfig();
+});
+el.cbHot.addEventListener("change", function(){ state.hot = this.checked; paintCards(); });
+el.cbDark.addEventListener("change", function(){ state.autoDark = this.checked; lastHalf=null; paintConfig(); });
+el.cbDark.addEventListener("change", function(){ applyHalf(lastHalf); });
+el.cbWand.addEventListener("change", function(){ state.autoWand = this.checked; renderWand(wandKeyFor(lastHalf)); paintConfig(); });
+
+el.bSquint.addEventListener("click", function(){ faceTick("squint", 1500); });
+el.bBlink.addEventListener("click", function(){ faceTick("blink", 170); });
+el.bPout.addEventListener("click", function(){ faceTick("pout", 1500); });
+el.bDroop.addEventListener("click", function(){ faceTick("droop", 1500); });
+el.bTwitch.addEventListener("click", function(){
+  twitching = true; applyFaces(); setTimeout(function(){ twitching=false; applyFaces(); }, 1100);
+});
+
+el.bCopy.addEventListener("click", function(){
+  var txt = el.cfg.textContent;
+  var done = function(){ el.bCopy.textContent = "已复制 ✓"; setTimeout(function(){ el.bCopy.textContent="复制这套参数"; },1800); };
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done, function(){ fallback(); });
+  } else fallback();
+  function fallback(){
+    var ta = document.createElement("textarea");
+    ta.value = txt; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); done(); }catch(err){ el.bCopy.textContent="复制失败，请手动截图"; }
+    document.body.removeChild(ta);
+  }
+});
+
+document.addEventListener("click", function(e){
+  var c = e.target.closest ? e.target.closest(".card") : null;
+  if (!c) return;
+  var k = c.getAttribute("data-key");
+  if (c.getAttribute("data-kind") === "wand") state.wand = k; else state.cat = k;
+  lastHalf = null;
+  refreshAll();
+});
+
+/* ---------- 启动 ---------- */
+buildSegs(); refreshAll(); measure();
+mx = cx = pcx = rect ? rect.width*0.3 : 200;
+my = cy = pcy = rect ? rect.height*0.5 : 200;
+fx = mx; fy = my;
+requestAnimationFrame(loop);
+
+})();
+</script>
+</body>
+</html>
