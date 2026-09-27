@@ -74,8 +74,8 @@ footer{border-top:1px solid var(--line);padding:24px 0 46px;font-size:.78rem;col
 </div></section>
 
 <section class="q"><div class="wrap">
-  <div class="q-h">先猜一下：这对 94 岁和 86 岁的夫妻，一天里最该先改造哪个房间？</div>
-  <div class="q-s">点一个房间，我把我数出来的名次给你看。</div>
+  <div class="q-h">这对 94 岁和 86 岁的夫妻，一天里最该先改造哪个房间——我把名次数出来了。</div>
+  <div class="q-s">点任意一个房间，看它在早 / 午 / 晚三档里的次数与名次。</div>
   <div class="rooms" id="rooms" role="group" aria-label="选择一个房间"></div>
   <div class="verdict" id="verdict" aria-live="polite"></div>
 </div></section>
@@ -146,7 +146,7 @@ var cur = '全天', picked = '';
 function renderVerdict() {
   var el = document.getElementById('verdict');
   if (!picked) {
-    el.innerHTML = '全天看：<b>卫生间 22 次</b>排第一，卧室 20 第二。你猜的是哪个？点上面一格，我把它的次数和名次给你。';
+    el.innerHTML = '全天看：<b>卫生间 22 次</b>排第一，卧室 20 第二。点上面任意一个房间，我把它的次数、名次，以及原册到底有没有给它改造项，一并给你。';
     return;
   }
   var r = null, i;
